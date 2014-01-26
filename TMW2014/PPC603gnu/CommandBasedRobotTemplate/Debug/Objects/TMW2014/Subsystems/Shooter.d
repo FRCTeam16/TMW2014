@@ -384,7 +384,9 @@ CommandBasedRobotTemplate/Debug/Objects/TMW2014/Subsystems/Shooter.o:  \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Vision/ColorImage.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/WPIErrors.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../Robotmap.h \
-  C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h
+  C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../CamPIDOut.h \
+  C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDOutput.h
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/Shooter.h:
 
@@ -1155,3 +1157,7 @@ C:/WindRiver/vxworks-6.3/target/h/WPILib/WPIErrors.h:
 C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../Robotmap.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h:
+
+C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../CamPIDOut.h:
+
+C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDOutput.h:

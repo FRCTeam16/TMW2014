@@ -384,6 +384,8 @@ CommandBassedRobotTemplate_partialImage/Debug/Objects/TMW2014/RobotMap.o:  \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Vision/HSLImage.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Vision/ColorImage.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/WPIErrors.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/CamPIDOut.h \
+  C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDOutput.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindow.h
 
 C:/WindRiver/workspace/TMW2014/TMW2014/RobotMap.h:
@@ -1153,5 +1155,9 @@ C:/WindRiver/vxworks-6.3/target/h/WPILib/Vision/HSLImage.h:
 C:/WindRiver/vxworks-6.3/target/h/WPILib/Vision/ColorImage.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/WPIErrors.h:
+
+C:/WindRiver/workspace/TMW2014/TMW2014/CamPIDOut.h:
+
+C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDOutput.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindow.h:

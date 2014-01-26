@@ -258,15 +258,10 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 {	
 //Actually sets the setpoints for all wheels using the correct offsets and driving direction (driveFront)
 //Wheel speed directions will be inverted if it is closer to turn the wheel 180 deg off from actual setpoint
-	
-	SmartDashboard::PutNumber("FLInv",FLInv);
-	SmartDashboard::PutNumber("FRInv",FRInv);
-	SmartDashboard::PutNumber("RLInv",RLInv);
-	SmartDashboard::PutNumber("RRInv",RRInv);
-	
-	if(driveFront) {
 		
-		if(!UseShortcut || fabs(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) < 1.25 || fabs(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) > 3.75)
+	if(driveFront) {
+				
+		if(fabs(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) < 1.25 || fabs(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) > 3.75)
 		{
 			frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset));
 			FLInv = 1;
@@ -277,7 +272,7 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			FLInv = -1;
 		}
 		
-		if(!UseShortcut || fabs(FRSetPoint + FROffset - frontRightPos->GetAverageVoltage()) < 1.25 || fabs(FRSetPoint + FROffset - frontRightPos->GetAverageVoltage()) > 3.75)
+		if(fabs(FRSetPoint + FROffset - frontRightPos->GetAverageVoltage()) < 1.25 || fabs(FRSetPoint + FROffset - frontRightPos->GetAverageVoltage()) > 3.75)
 		{
 			frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset));
 			FRInv = 1;
@@ -288,7 +283,7 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			FRInv = -1;
 		}
 		
-		if(!UseShortcut || fabs(RLSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) < 1.25 || fabs(RLSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) > 3.75)
+		if(fabs(RLSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) < 1.25 || fabs(RLSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) > 3.75)
 		{
 			rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset));
 			RLInv = 1;
@@ -299,7 +294,7 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			RLInv = -1;
 		}
 		
-		if(!UseShortcut || fabs(RRSetPoint + RROffset - rearRightPos->GetAverageVoltage()) < 1.25 || fabs(RRSetPoint + RROffset - rearRightPos->GetAverageVoltage()) > 3.75)
+		if(fabs(RRSetPoint + RROffset - rearRightPos->GetAverageVoltage()) < 1.25 || fabs(RRSetPoint + RROffset - rearRightPos->GetAverageVoltage()) > 3.75)
 		{
 			rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset));
 			RRInv = 1;
@@ -314,7 +309,7 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 	
 	else {
 	
-		if(!UseShortcut || fabs(RRSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) < 1.25 || fabs(RRSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) > 3.75)
+		if(fabs(RRSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) < 1.25 || fabs(RRSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) > 3.75)
 		{
 			frontLeftSteer->Set(CorrectSteerSetpoint(RRSetPoint + FLOffset));
 			//frontLeft->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + FLOffset));
@@ -327,7 +322,7 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			FLInv = -1;
 		}
 		
-		if(!UseShortcut || fabs(RLSetPoint + FROffset - frontRightPos->GetAverageVoltage()) < 1.25 || fabs(RLSetPoint + FROffset - frontRightPos->GetAverageVoltage()) > 3.75)
+		if(fabs(RLSetPoint + FROffset - frontRightPos->GetAverageVoltage()) < 1.25 || fabs(RLSetPoint + FROffset - frontRightPos->GetAverageVoltage()) > 3.75)
 		{
 			frontRight->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + FROffset));
 			FRInv = 1;
@@ -338,7 +333,7 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			FRInv = -1;
 		}
 		
-		if(!UseShortcut || fabs(FRSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) < 1.25 || fabs(FRSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) > 3.75)
+		if(fabs(FRSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) < 1.25 || fabs(FRSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) > 3.75)
 		{
 			rearLeft->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + RLOffset));
 			RLInv = 1;
@@ -349,7 +344,7 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			RLInv = -1;
 		}
 		
-		if(!UseShortcut || fabs(FLSetPoint + RROffset - rearRightPos->GetAverageVoltage()) < 1.25 || fabs(FLSetPoint + RROffset - rearRightPos->GetAverageVoltage()) > 3.75)
+		if(fabs(FLSetPoint + RROffset - rearRightPos->GetAverageVoltage()) < 1.25 || fabs(FLSetPoint + RROffset - rearRightPos->GetAverageVoltage()) > 3.75)
 		{
 			rearRight->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + RROffset));
 			RRInv = 1;

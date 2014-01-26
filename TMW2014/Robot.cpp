@@ -132,7 +132,6 @@ void Robot::SMDB() {
 //	SmartDashboard::PutNumber("WindowMotorOutput", Robot::shooter->windowMotors->Get());
 	SmartDashboard::PutNumber("CamLeftOutput", Robot::shooter->camLeft->Get());
 	SmartDashboard::PutNumber("CamRightOutput", Robot::shooter->camRight->Get());
-
 	//Jaguar Stauses
 	SmartDashboard::PutBoolean("06-FLSteerJagAlive",Robot::driveTrain->frontLeftSteer->IsAlive());
 	SmartDashboard::PutBoolean("07-FRSteerJagAlive",Robot::driveTrain->frontRightSteer->IsAlive());
