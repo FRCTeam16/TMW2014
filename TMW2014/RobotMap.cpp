@@ -146,9 +146,9 @@ void RobotMap::init() {
    
     shooterCamOut = new CamPIDOut(shooterWindowMotors, shooterCamLeft, shooterCamRight);
     
-    shooterCamController = new PIDController(1.0, 0.0, 0.0, shooterCamPos, shooterCamOut, 0.02);
-    shooterCamController->SetContinuous(false);
-    shooterCamController->SetAbsoluteTolerance(0.2);
+    shooterCamController = new PIDController(2.0, 0.0, 0.0, shooterCamPos, shooterCamOut, 0.02);
+    shooterCamController->SetContinuous(true);
+    shooterCamController->SetAbsoluteTolerance(0.1);
     shooterCamController->SetOutputRange(-1.0, 1.0);
         
 }

@@ -73,6 +73,9 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
 	SMDB();
 		
+
+/******************DRIVETRAIN**************************************/	
+	
 	//Resets gyro to zero when crab starts
 	if (!prevTrigger && Robot::oi->getDriverJoystickRight()->GetRawButton(1))
 		Robot::driveTrain->gyro->Reset();
@@ -87,13 +90,28 @@ void Robot::TeleopPeriodic() {
 		//Robot::driveTrain->Steer(Robot::oi->getScaledJoystickRadians(),Robot::oi->getJoystickMagnitude(),0.5);
 		Robot::driveTrain->Steer(Robot::oi->getLeftJoystickXRadians(),Robot::oi->getJoystickY(),0.5);
 	}
+
+/******************SHOOTER**************************************/	
+
 	//if(Robot::shooter->windowMotors->IsAlive())
 		//Robot::shooter->windowMotors->Set(Robot::oi->getGamePad()->GetY(Joystick::kLeftHand));
-	WindowMotorSetTask->SetOutput(Robot::oi->getGamePad()->GetY(Joystick::kLeftHand));
-	if(Robot::shooter->camLeft->IsAlive())
-		Robot::shooter->camLeft->Set(Prefs->GetFloat("CamMotorScaling",0.53)*Robot::oi->getGamePad()->GetY(Joystick::kLeftHand));
-	if(Robot::shooter->camRight->IsAlive())
-		Robot::shooter->camRight->Set(Prefs->GetFloat("CamMotorScaling",0.53)*Robot::oi->getGamePad()->GetY(Joystick::kLeftHand));
+	
+	if(Robot::oi->getGamePad()->GetRawButton(10)){
+		Robot::shooter->camController->Disable();
+		WindowMotorSetTask->SetOutput(Robot::oi->getGamePad()->GetY(Joystick::kLeftHand));
+		Robot::shooter->camLeft->Set(0.53*Robot::oi->getGamePad()->GetY(Joystick::kLeftHand));
+		Robot::shooter->camRight->Set(0.53*Robot::oi->getGamePad()->GetY(Joystick::kLeftHand));
+	}
+	else {
+		Robot::shooter->CamChecker(); //Runs every cycle to control cam postion
+		if(Robot::oi->getGamePad()->GetRawButton(4) && !Robot::shooter->GetFiring())
+			Robot::shooter->Fire();		
+	}
+	
+
+
+
+/******************BEATERBAR**************************************/	
 	
 	if(Robot::pickup->beaterBar->IsAlive())
 		Robot::pickup->beaterBar->Set(Robot::oi->getGamePad()->GetY(Joystick::kRightHand));
@@ -124,14 +142,19 @@ void Robot::SMDB() {
 	SmartDashboard::PutNumber("FRSetPoint", Robot::driveTrain->frontRight->GetSetpoint());
 	SmartDashboard::PutNumber("RLSetPoint", Robot::driveTrain->rearLeft->GetSetpoint());
 	SmartDashboard::PutNumber("RRSetPoint", Robot::driveTrain->rearRight->GetSetpoint());
-	//Wheel Module Outputs
-	SmartDashboard::PutNumber("RLOutput",Robot::driveTrain->rearLeftSteer->Get());
 	
 	//ShooterValues
-	SmartDashboard::PutNumber("CamPostion",Robot::shooter->camPos->GetAverageVoltage());
-//	SmartDashboard::PutNumber("WindowMotorOutput", Robot::shooter->windowMotors->Get());
+	SmartDashboard::PutNumber("CorrectedCamPostion",Robot::shooter->GetCorrectedCamPos());
+	SmartDashboard::PutNumber("RawCamPostion",Robot::shooter->camPos->GetAverageVoltage());
+	SmartDashboard::PutBoolean("CamPIDOnTarget",Robot::shooter->camController->OnTarget());
+	SmartDashboard::PutNumber("WindowMotorOutput", Robot::shooter->windowMotors->Get());
 	SmartDashboard::PutNumber("CamLeftOutput", Robot::shooter->camLeft->Get());
 	SmartDashboard::PutNumber("CamRightOutput", Robot::shooter->camRight->Get());
+	SmartDashboard::PutBoolean("CamPIDEnabled", Robot::shooter->camController->IsEnabled());
+	SmartDashboard::PutNumber("CamPIDSetPoint", Robot::shooter->camController->GetSetpoint());
+	SmartDashboard::PutNumber("CamPIDOutput", Robot::shooter->camController->Get());
+	SmartDashboard::PutNumber("FireTimer", Robot::shooter->fireTimer->Get());
+
 	//Jaguar Stauses
 	SmartDashboard::PutBoolean("06-FLSteerJagAlive",Robot::driveTrain->frontLeftSteer->IsAlive());
 	SmartDashboard::PutBoolean("07-FRSteerJagAlive",Robot::driveTrain->frontRightSteer->IsAlive());
@@ -140,6 +163,7 @@ void Robot::SMDB() {
 	SmartDashboard::PutBoolean("10-WindowMotorJagAlive",Robot::shooter->windowMotors->IsAlive());
 	SmartDashboard::PutBoolean("11-CamLeftJagAlive",Robot::shooter->camLeft->IsAlive());
 	SmartDashboard::PutBoolean("12-CamRightJagAlive",Robot::shooter->camRight->IsAlive());
-	SmartDashboard::PutBoolean("BeaterBarJagAlive",Robot::pickup->beaterBar->IsAlive());
+	SmartDashboard::PutBoolean("13-BeaterBarJagAlive",Robot::pickup->beaterBar->IsAlive());
+
 }
 START_ROBOT_CLASS(Robot);

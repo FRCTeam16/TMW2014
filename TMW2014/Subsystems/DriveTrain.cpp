@@ -235,32 +235,70 @@ void DriveTrain::RightTurn4Wheels()
 	RR = (Z - W) / sin(thetaRR);
 }
 double DriveTrain::CorrectSteerSetpoint(double setpoint) {
-//Used to correct steering setpoints to within the 0 to 5 V scale 
-	
-if (setpoint < 0)
-{
-	return setpoint + 5;
+	//Used to correct steering setpoints to within the 0 to 5 V scale 
+		
+	if (setpoint < 0)
+	{
+		return setpoint + 5;
+	}
+	else if (setpoint > 5)
+	{
+		return setpoint - 5;
+	}
+	else if (setpoint == 5)
+	{
+		return 0;
+	}
+	else
+	{
+		return setpoint;
+	}
 }
-else if (setpoint > 5)
-{
-	return setpoint - 5;
+
+/*void DriveTrain::SetSteerSetpoint(float setpoint, AnalogChannel* actual, float offset, PIDController* PIDCon, int* inv, bool UseShortcut) {
+	if(UseShortcut) {
+		if(fabs(setpoint + offset - actual->GetAverageVoltage()) < 1.25 && fabs(setpoint + offset - actual->GetAverageVoltage() > 3.75))
+			{
+				PIDCon->SetSetpoint(CorrectSteerSetpoint(setpoint + offset));
+				*inv = 1;
+			}
+				else
+			{
+				PIDCon->SetSetpoint(CorrectSteerSetpoint(setpoint + offset-2.5));
+				*inv = -1;
+			}	
+	}
+	else {
+		if(inv > 0)
+			PIDCon->SetSetpoint(CorrectSteerSetpoint(setpoint + offset));
+		else
+			PIDCon->SetSetpoint(CorrectSteerSetpoint(setpoint + offset-2.5));
+	}
+
+}*/
+void DriveTrain::SetSteering(float FLSetPoint, float FRSetPoint, float RLSetPoint, float RRSetPoint, bool UseShortcut) {
+	/*if(driveFront) {
+		SetSteerSetpoint(FLSetPoint, frontLeftPos, FLOffset, frontLeft, &FLInv, UseShortcut);
+		SetSteerSetpoint(FRSetPoint, frontRightPos, FROffset, frontRight, &FRInv, UseShortcut);
+		SetSteerSetpoint(RLSetPoint, rearLeftPos, RLOffset, rearLeft, &RLInv, UseShortcut);
+		SetSteerSetpoint(RRSetPoint, rearRightPos, RROffset, rearRight, &RRInv, UseShortcut);
+	}
+	else
+	{
+		SetSteerSetpoint(RRSetPoint, frontLeftPos, FLOffset, frontLeft, &FLInv, UseShortcut);
+		SetSteerSetpoint(RLSetPoint, frontRightPos, FROffset, frontRight, &FRInv, UseShortcut);
+		SetSteerSetpoint(FRSetPoint, rearLeftPos, RLOffset, rearLeft, &RLInv, UseShortcut);
+		SetSteerSetpoint(FLSetPoint, rearRightPos, RROffset, rearRight,&RRInv, UseShortcut);		
+	}*/
 }
-else if (setpoint == 5)
-{
-	return 0;
-}
-else
-{
-	return setpoint;
-}
-}
+
 void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSetPoint, float RRSetPoint, bool UseShortcut)
 {	
 //Actually sets the setpoints for all wheels using the correct offsets and driving direction (driveFront)
 //Wheel speed directions will be inverted if it is closer to turn the wheel 180 deg off from actual setpoint
 		
 	if(driveFront) {
-				
+		
 		if(fabs(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) < 1.25 || fabs(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) > 3.75)
 		{
 			frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset));
@@ -375,12 +413,12 @@ void DriveTrain::SetDriveSpeed(float FLSpeed, float FRSpeed, float RLSpeed, floa
 }
 void DriveTrain::Lock() //locks wheels to prevent robot movement
 {
-	SetSteerSetpoint(3.0, 1.5, 3.0, 1.5, true);
+	SetSteering(3.0, 1.5, 3.0, 1.5, true);
 	SetDriveSpeed(0,0,0,0);
 }
 void DriveTrain::SideLock() //locks wheels to prevent robot movement
 {
-	SetSteerSetpoint(2.0, 0.75, 3.25, 4.5, true);
+	SetSteering(2.0, 0.75, 3.25, 4.5, true);
 	SetDriveSpeed(0,0,0,0);
 }
 bool DriveTrain::ZeroGyro(float InitTime)  //performs gyro calibration

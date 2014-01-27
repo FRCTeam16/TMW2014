@@ -1,10 +1,12 @@
 #include "JaguarSetTask.h"
 #include "WPILib.h"
 #include <iostream.h>
+#include <stdio.h>
 
 JaguarSetTask::JaguarSetTask(const char* name, CANJaguar *jaguar)
 {
 	m_jaguar = jaguar;
+	m_output = 0;
 	m_task = new Task(name, (FUNCPTR)JaguarSetTask::PrivateStarter);
 	if (!m_task->Start((INT32)this));
 }
@@ -30,6 +32,7 @@ void JaguarSetTask::PrivateStarter(JaguarSetTask *task)
 		else
 		{
 			cout << "Jaguar is dead" << endl;
+			printf ("Jaguar is Dead");
 			Wait(1.0);
 		}
 	}
