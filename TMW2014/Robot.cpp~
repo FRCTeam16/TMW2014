@@ -58,11 +58,9 @@ void Robot::DisabledPeriodic() {
 	Scheduler::GetInstance()->Run();
 }
 	
-
 /*void Robot::SetAutoProgram(AutoProgram program) {
 	autoProgram = program;
 }*/
-
 void Robot::AutonomousInit() {
 	autoStepTimer->Reset();
 	genericAutoProgram.clear();
@@ -93,7 +91,6 @@ void Robot::AutonomousPeriodic() {
 		if(autoStepTimer->HasPeriodPassed(.5))
 			autoStepComplete = true;
 		break;
-
 	case FindTarget:
 		break;
 	
@@ -102,7 +99,6 @@ void Robot::AutonomousPeriodic() {
 	
 	case TurnRight:
 		break;
-
 	case Fire:
 		break;
 	
@@ -129,7 +125,6 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
 	SMDB();
 		
-
 /******************DRIVETRAIN**************************************/	
 	
 	//Resets gyro to zero when crab starts
@@ -146,9 +141,7 @@ void Robot::TeleopPeriodic() {
 		//Robot::driveTrain->Steer(Robot::oi->getScaledJoystickRadians(),Robot::oi->getJoystickMagnitude(),0.5);
 		Robot::driveTrain->Steer(Robot::oi->getLeftJoystickXRadians(),Robot::oi->getJoystickY(),0.5);
 	}
-
 /******************SHOOTER**************************************/	
-
 	//if(Robot::shooter->windowMotors->IsAlive())
 		//Robot::shooter->windowMotors->Set(Robot::oi->getGamePad()->GetY(Joystick::kLeftHand));
 	
@@ -164,9 +157,6 @@ void Robot::TeleopPeriodic() {
 			Robot::shooter->Fire();		
 	}
 	
-
-
-
 /******************BEATERBAR**************************************/	
 	
 	if(Robot::pickup->beaterBar->IsAlive())
@@ -182,7 +172,6 @@ void Robot::SMDB() {
 	SmartDashboard::PutNumber("StickTwist",Robot::oi->getDriverJoystickRight()->GetTwist());
 	SmartDashboard::PutNumber("ScaledRadians",Robot::oi->getScaledJoystickRadians());
 	SmartDashboard::PutNumber("ScalingFactor",Robot::oi->getJoystickTwist());
-
 	//Gyro Variables
 	SmartDashboard::PutNumber("GyroAngle", Robot::driveTrain->gyro->GetAngle());
 	SmartDashboard::PutNumber("GyroCenter", Robot::driveTrain->gyro->GetCenter());
@@ -218,7 +207,6 @@ void Robot::SMDB() {
 	SmartDashboard::PutNumber("WindowMotorCurrent", Robot::shooter->windowMotors->GetOutputCurrent());
 	SmartDashboard::PutNumber("CamLeftCurrent", Robot::shooter->camLeft->GetOutputCurrent());
 	SmartDashboard::PutNumber("CamRightCurrent", Robot::shooter->camRight->GetOutputCurrent());
-
 	//BeaterBar
 	SmartDashboard::PutNumber("BeaterBarCurrent", Robot::pickup->beaterBar->GetOutputCurrent());
 	
@@ -231,6 +219,5 @@ void Robot::SMDB() {
 	SmartDashboard::PutBoolean("11-CamLeftJagAlive",Robot::shooter->camLeft->IsAlive());
 	SmartDashboard::PutBoolean("12-CamRightJagAlive",Robot::shooter->camRight->IsAlive());
 	SmartDashboard::PutBoolean("13-BeaterBarJagAlive",Robot::pickup->beaterBar->IsAlive());
-
 }
 START_ROBOT_CLASS(Robot);

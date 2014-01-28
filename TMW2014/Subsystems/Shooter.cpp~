@@ -37,8 +37,6 @@ void Shooter::InitDefaultCommand() {
 }
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
-
-
 void Shooter::CamChecker() {
 	if(fireFlag){
 		if(!fireTimer->HasPeriodPassed(.5) || CorrectVoltage(camPos->GetAverageVoltage() - camPosOffset) > stage1Voltage) {
@@ -66,18 +64,15 @@ void Shooter::CamChecker() {
 		camRight->Set(0);
 	}
 }
-
 void Shooter::Fire() {
 	if(!fireFlag) {
 		fireFlag = true;
 		fireTimer->Reset();
 	}
 }
-
 bool Shooter::GetFiring() {
 	return fireFlag;
 }
-
 float Shooter::CorrectVoltage(float setpoint) {
 	
 	if (setpoint < 0)
@@ -97,7 +92,6 @@ float Shooter::CorrectVoltage(float setpoint) {
 		return setpoint;
 	}
 }
-
 float Shooter::GetCorrectedCamPos(){
 	return (CorrectVoltage(camPos->GetAverageVoltage()-camPosOffset));
 }

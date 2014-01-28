@@ -413,6 +413,7 @@ CommandBasedRobotTemplate/Debug/Objects/TMW2014/OI.o:  \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../JaguarSetTask.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../UsefulTimer.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/InitGyro.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetWheelOffsets.h
 
 C:/WindRiver/workspace/TMW2014/TMW2014/OI.h:
@@ -1240,5 +1241,7 @@ C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../JaguarSetTask.h:
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../UsefulTimer.h:
+
+C:/WindRiver/workspace/TMW2014/TMW2014/Commands/InitGyro.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetWheelOffsets.h:

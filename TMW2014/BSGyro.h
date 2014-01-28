@@ -56,9 +56,10 @@ public:
 	std::string GetSmartDashboardType();
 	void InitTable(ITable *subTable);
 	ITable * GetTable();
+	
+	void InitGyro();
 
 private:
-	void InitGyro();
 
 	AnalogChannel *m_analog;
 	float m_voltsPerDegreePerSecond;
