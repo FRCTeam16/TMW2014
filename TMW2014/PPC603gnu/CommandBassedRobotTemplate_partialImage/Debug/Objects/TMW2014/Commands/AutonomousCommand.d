@@ -390,19 +390,25 @@
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../RobotMap.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../CamPIDOut.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDOutput.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSGyro.h \
+  C:/WindRiver/vxworks-6.3/target/h/WPILib/SensorBase.h \
+  C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDSource.h \
+  C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindowSendable.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindow.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Commands/AutonomousCommand.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/DriveTrain.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Commands/Subsystem.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h \
   C:/WindRiver/vxworks-6.3/target/h/math.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../BSGyro.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Pickup.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Shooter.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../CamPIDOut.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../UsefulTimer.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Base.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../JaguarSetTask.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h
+  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../UsefulTimer.h
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/AutonomousCommand.h:
 
@@ -1182,6 +1188,14 @@ C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../CamPIDOut.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDOutput.h:
 
+C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSGyro.h:
+
+C:/WindRiver/vxworks-6.3/target/h/WPILib/SensorBase.h:
+
+C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDSource.h:
+
+C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindowSendable.h:
+
 C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindow.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Commands/AutonomousCommand.h:
@@ -1193,6 +1207,8 @@ C:/WindRiver/vxworks-6.3/target/h/WPILib/Commands/Subsystem.h:
 C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h:
 
 C:/WindRiver/vxworks-6.3/target/h/math.h:
+
+C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../BSGyro.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Pickup.h:
 
@@ -1207,3 +1223,5 @@ C:/WindRiver/vxworks-6.3/target/h/WPILib/Base.h:
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../JaguarSetTask.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h:
+
+C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../UsefulTimer.h:

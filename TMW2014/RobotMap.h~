@@ -11,6 +11,7 @@
 #define ROBOTMAP_H
 #include "WPILib.h"
 #include "CamPIDOut.h"
+#include "BSGyro.h"
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -36,7 +37,7 @@ public:
 	static AnalogChannel* driveTrainRearRightPos;
 	static CANJaguar* driveTrainRearRightSteer;
 	static PIDController* driveTrainRearRight;
-	static Gyro* driveTrainGyro;
+	static BSGyro* driveTrainGyro;
 	static Encoder* driveTrainWheelX;
 	static Encoder* driveTrainWheelY;
 	static CANJaguar* shooterWindowMotors;

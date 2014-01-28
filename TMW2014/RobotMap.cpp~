@@ -26,7 +26,7 @@ PIDController* RobotMap::driveTrainRearLeft = NULL;
 AnalogChannel* RobotMap::driveTrainRearRightPos = NULL;
 CANJaguar* RobotMap::driveTrainRearRightSteer = NULL;
 PIDController* RobotMap::driveTrainRearRight = NULL;
-Gyro* RobotMap::driveTrainGyro = NULL;
+BSGyro* RobotMap::driveTrainGyro = NULL;
 Encoder* RobotMap::driveTrainWheelX = NULL;
 Encoder* RobotMap::driveTrainWheelY = NULL;
 CANJaguar* RobotMap::shooterWindowMotors = NULL;
@@ -59,7 +59,7 @@ void RobotMap::init() {
 	driveTrainFrontLeftSteer = new CANJaguar(6);
 	
 	
-	driveTrainFrontLeft = new PIDController(1.0, 0.0, 0.0,/* F: 0.0, */ driveTrainFrontLeftPos, driveTrainFrontLeftSteer, 0.02);
+	driveTrainFrontLeft = new PIDController(3.0, 0.0, 0.0,/* F: 0.0, */ driveTrainFrontLeftPos, driveTrainFrontLeftSteer, 0.02);
 	lw->AddActuator("DriveTrain", "FrontLeft", driveTrainFrontLeft);
 	driveTrainFrontLeft->SetContinuous(true); driveTrainFrontLeft->SetAbsoluteTolerance(0.2); 
         driveTrainFrontLeft->SetOutputRange(-0.75, 0.75);
@@ -69,7 +69,7 @@ void RobotMap::init() {
 	driveTrainFrontRightSteer = new CANJaguar(7);
 	
 	
-	driveTrainFrontRight = new PIDController(1.0, 0.0, 0.0,/* F: 0.0, */ driveTrainFrontRightPos, driveTrainFrontRightSteer, 0.02);
+	driveTrainFrontRight = new PIDController(3.0, 0.0, 0.0,/* F: 0.0, */ driveTrainFrontRightPos, driveTrainFrontRightSteer, 0.02);
 	lw->AddActuator("DriveTrain", "FrontRight", driveTrainFrontRight);
 	driveTrainFrontRight->SetContinuous(true); driveTrainFrontRight->SetAbsoluteTolerance(0.2); 
         driveTrainFrontRight->SetOutputRange(-0.75, 0.75);
@@ -89,13 +89,10 @@ void RobotMap::init() {
 	driveTrainRearRightSteer = new CANJaguar(9);
 	
 	
-	driveTrainRearRight = new PIDController(1.0, 0.0, 0.0,/* F: 0.0, */ driveTrainRearRightPos, driveTrainRearRightSteer, 0.02);
+	driveTrainRearRight = new PIDController(3.0, 0.0, 0.0,/* F: 0.0, */ driveTrainRearRightPos, driveTrainRearRightSteer, 0.02);
 	lw->AddActuator("DriveTrain", "RearRight", driveTrainRearRight);
 	driveTrainRearRight->SetContinuous(true); driveTrainRearRight->SetAbsoluteTolerance(0.2); 
         driveTrainRearRight->SetOutputRange(-0.75, 0.75);
-	driveTrainGyro = new Gyro(1, 1);
-	lw->AddSensor("DriveTrain", "Gyro", driveTrainGyro);
-	driveTrainGyro->SetSensitivity(0.007);
 	driveTrainWheelX = new Encoder(1, 1, 1, 2, false, Encoder::k4X);
 	lw->AddSensor("DriveTrain", "WheelX", driveTrainWheelX);
 	driveTrainWheelX->SetDistancePerPulse(0.006565);
@@ -146,11 +143,13 @@ void RobotMap::init() {
    
     shooterCamOut = new CamPIDOut(shooterWindowMotors, shooterCamLeft, shooterCamRight);
     
-    shooterCamController = new PIDController(1.0, 0.0, 0.0, shooterCamPos, shooterCamOut, 0.02);
-    shooterCamController->SetContinuous(false);
-    shooterCamController->SetAbsoluteTolerance(0.2);
+    shooterCamController = new PIDController(5.0, 0.0, 0.0, shooterCamPos, shooterCamOut, 0.02);
+    shooterCamController->SetContinuous(true);
+    shooterCamController->SetAbsoluteTolerance(0.1);
     shooterCamController->SetOutputRange(-1.0, 1.0);
-    
- 
-    
+        
+	driveTrainGyro = new BSGyro(1, 1);
+	lw->AddSensor("DriveTrain", "Gyro", driveTrainGyro);
+	driveTrainGyro->SetSensitivity(0.007);
+
 }

@@ -371,24 +371,6 @@ Children:
           value: 3.0}
         Maximum Input: !!robotbuilder.data.properties.DoubleProperty {default: 5,
           name: Maximum Input, validators: null, value: 5.0}
-    - Name: Gyro
-      Base: Gyro
-      Children: []
-      Properties:
-        Sensitivity: !!robotbuilder.data.properties.DoubleProperty {default: 0.007,
-          name: Sensitivity, validators: null, value: 0.007}
-        Input Module (Analog): !!robotbuilder.data.properties.ChoicesProperty
-          choices: ['1']
-          default: '1'
-          name: Input Module (Analog)
-          validators: [AnalogInput]
-          value: '1'
-        Input Channel (Analog): !!robotbuilder.data.properties.ChoicesProperty
-          choices: ['1', '2']
-          default: '1'
-          name: Input Channel (Analog)
-          validators: [AnalogInput]
-          value: '1'
     - Name: WheelX
       Base: Quadrature Encoder
       Children: []
@@ -652,6 +634,6 @@ Properties:
     validators: null, value: 16}
   Export Commands: !!robotbuilder.data.properties.BooleanProperty {default: true,
     name: Export Commands, validators: null, value: true}
-  Java Project Directory: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\Owner\NetBeansProjects',
+  Java Project Directory: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\clemenj\NetBeansProjects',
     extension: null, folder: true, name: Java Project Directory, validators: null,
     value: 'C:\Users\Owner\NetBeansProjects'}
