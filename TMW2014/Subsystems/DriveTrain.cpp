@@ -131,7 +131,7 @@ void DriveTrain::Crab(float twist, float y, float x, bool UseGyro) {
     }
     
 	//Set drive speeds
-	SetDriveSpeed(FLRatio, -FRRatio, RLRatio, -RRRatio);
+    SetSteering(FLRatio, -FRRatio, RLRatio, -RRRatio, true);
 	
 }
 void DriveTrain::Steer(float radian, float speed, float a) {
@@ -255,17 +255,17 @@ double DriveTrain::CorrectSteerSetpoint(double setpoint) {
 	}
 }
 
-/*void DriveTrain::SetSteerSetpoint(float setpoint, AnalogChannel* actual, float offset, PIDController* PIDCon, int* inv, bool UseShortcut) {
+void DriveTrain::SetSteerSetpoint(float setpoint, AnalogChannel* actual, float offset, PIDController* PIDCon, int &inv, bool UseShortcut) {
 	if(UseShortcut) {
 		if(fabs(setpoint + offset - actual->GetAverageVoltage()) < 1.25 && fabs(setpoint + offset - actual->GetAverageVoltage() > 3.75))
 			{
 				PIDCon->SetSetpoint(CorrectSteerSetpoint(setpoint + offset));
-				*inv = 1;
+				inv = 1;
 			}
 				else
 			{
 				PIDCon->SetSetpoint(CorrectSteerSetpoint(setpoint + offset-2.5));
-				*inv = -1;
+				inv = -1;
 			}	
 	}
 	else {
@@ -275,21 +275,21 @@ double DriveTrain::CorrectSteerSetpoint(double setpoint) {
 			PIDCon->SetSetpoint(CorrectSteerSetpoint(setpoint + offset-2.5));
 	}
 
-}*/
+}
 void DriveTrain::SetSteering(float FLSetPoint, float FRSetPoint, float RLSetPoint, float RRSetPoint, bool UseShortcut) {
-	/*if(driveFront) {
-		SetSteerSetpoint(FLSetPoint, frontLeftPos, FLOffset, frontLeft, &FLInv, UseShortcut);
-		SetSteerSetpoint(FRSetPoint, frontRightPos, FROffset, frontRight, &FRInv, UseShortcut);
-		SetSteerSetpoint(RLSetPoint, rearLeftPos, RLOffset, rearLeft, &RLInv, UseShortcut);
-		SetSteerSetpoint(RRSetPoint, rearRightPos, RROffset, rearRight, &RRInv, UseShortcut);
+	if(driveFront) {
+		SetSteerSetpoint(FLSetPoint, frontLeftPos, FLOffset, frontLeft, FLInv, UseShortcut);
+		SetSteerSetpoint(FRSetPoint, frontRightPos, FROffset, frontRight, FRInv, UseShortcut);
+		SetSteerSetpoint(RLSetPoint, rearLeftPos, RLOffset, rearLeft, RLInv, UseShortcut);
+		SetSteerSetpoint(RRSetPoint, rearRightPos, RROffset, rearRight, RRInv, UseShortcut);
 	}
 	else
 	{
-		SetSteerSetpoint(RRSetPoint, frontLeftPos, FLOffset, frontLeft, &FLInv, UseShortcut);
-		SetSteerSetpoint(RLSetPoint, frontRightPos, FROffset, frontRight, &FRInv, UseShortcut);
-		SetSteerSetpoint(FRSetPoint, rearLeftPos, RLOffset, rearLeft, &RLInv, UseShortcut);
-		SetSteerSetpoint(FLSetPoint, rearRightPos, RROffset, rearRight,&RRInv, UseShortcut);		
-	}*/
+		SetSteerSetpoint(RRSetPoint, frontLeftPos, FLOffset, frontLeft, FLInv, UseShortcut);
+		SetSteerSetpoint(RLSetPoint, frontRightPos, FROffset, frontRight, FRInv, UseShortcut);
+		SetSteerSetpoint(FRSetPoint, rearLeftPos, RLOffset, rearLeft, RLInv, UseShortcut);
+		SetSteerSetpoint(FLSetPoint, rearRightPos, RROffset, rearRight, RRInv, UseShortcut);		
+	}
 }
 
 void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSetPoint, float RRSetPoint, bool UseShortcut)

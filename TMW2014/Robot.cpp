@@ -154,7 +154,13 @@ void Robot::SMDB() {
 	SmartDashboard::PutNumber("CamPIDSetPoint", Robot::shooter->camController->GetSetpoint());
 	SmartDashboard::PutNumber("CamPIDOutput", Robot::shooter->camController->Get());
 	SmartDashboard::PutNumber("FireTimer", Robot::shooter->fireTimer->Get());
+	SmartDashboard::PutNumber("WindowMotorCurrent", Robot::shooter->windowMotors->GetOutputCurrent());
+	SmartDashboard::PutNumber("CamLeftCurrent", Robot::shooter->camLeft->GetOutputCurrent());
+	SmartDashboard::PutNumber("CamRightCurrent", Robot::shooter->camRight->GetOutputCurrent());
 
+	//BeaterBar
+	SmartDashboard::PutNumber("BeaterBarCurrent", Robot::pickup->beaterBar->GetOutputCurrent());
+	
 	//Jaguar Stauses
 	SmartDashboard::PutBoolean("06-FLSteerJagAlive",Robot::driveTrain->frontLeftSteer->IsAlive());
 	SmartDashboard::PutBoolean("07-FRSteerJagAlive",Robot::driveTrain->frontRightSteer->IsAlive());
