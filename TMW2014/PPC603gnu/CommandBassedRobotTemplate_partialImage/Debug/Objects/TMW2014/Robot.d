@@ -409,7 +409,12 @@ CommandBassedRobotTemplate_partialImage/Debug/Objects/TMW2014/Robot.o:  \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Base.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/JaguarSetTask.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/OI.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/UsefulTimer.h
+  C:/WindRiver/workspace/TMW2014/TMW2014/UsefulTimer.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/AutoProgramming.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/BSChooser.h \
+  C:/WindRiver/vxworks-6.3/target/h/WPILib/SmartDashboard/Sendable.h \
+  C:/WindRiver/vxworks-6.3/target/h/WPILib/tables/ITable.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Autoprogramming.h
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Robot.h:
 
@@ -1230,3 +1235,13 @@ C:/WindRiver/workspace/TMW2014/TMW2014/JaguarSetTask.h:
 C:/WindRiver/workspace/TMW2014/TMW2014/OI.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/UsefulTimer.h:
+
+C:/WindRiver/workspace/TMW2014/TMW2014/AutoProgramming.h:
+
+C:/WindRiver/workspace/TMW2014/TMW2014/BSChooser.h:
+
+C:/WindRiver/vxworks-6.3/target/h/WPILib/SmartDashboard/Sendable.h:
+
+C:/WindRiver/vxworks-6.3/target/h/WPILib/tables/ITable.h:
+
+C:/WindRiver/workspace/TMW2014/TMW2014/Autoprogramming.h:

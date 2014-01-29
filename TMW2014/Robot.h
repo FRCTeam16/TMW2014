@@ -23,6 +23,8 @@
 #include "JaguarSetTask.h"
 #include "OI.h"
 #include "UsefulTimer.h"
+#include "AutoProgramming.h"
+#include "BSChooser.h"
 class Robot : public IterativeRobot {
 public:
 	Command *autonomousCommand;
@@ -40,7 +42,7 @@ public:
 	virtual void TeleopPeriodic();
 	virtual void TestPeriodic();
 	virtual void DisabledPeriodic();
-//	void SetAutoProgram(AutoProgram program);
+
 private:
 	void SMDB();
 	RAWCConstants* File;
@@ -52,13 +54,12 @@ private:
 	Preferences* Prefs;
 	JaguarSetTask* WindowMotorSetTask;
 	typedef enum {Initiate, FindTarget, TurnLeft, TurnRight, Fire, LoadBall, DriveForward}AutoStep;
-	typedef enum {fire2FromCenter, fire1}AutoProgram;
 	AutoStep autoStep;
 	AutoProgram autoProgram;
 	bool autoStepComplete;
 	UsefulTimer* autoStepTimer;
 	int autoStepIncrementer;
 	vector<AutoStep> genericAutoProgram;
-//	AutoStep fire2FromCenter[7];
+	BSChooser* autoChooser;
 };
 #endif

@@ -37,6 +37,7 @@ public:
 	bool GetFiring();
 	float GetCorrectedCamPos();
 	static UsefulTimer* fireTimer;
+	void RunCams(float output);
 	
 private:
 	bool fireFlag;

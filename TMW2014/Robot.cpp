@@ -42,26 +42,25 @@ void Robot::RobotInit() {
 	RROffset = File->getValueForKey("RROff");
 	Robot::driveTrain->SetOffsets(FLOffset, FROffset, RLOffset, RROffset);
 	
-	Prefs = Preferences::GetInstance();
-	if(!Prefs->ContainsKey("CamMotorScaling"))
-		Prefs->PutFloat("CamMotorScaling",.53);
 	WindowMotorSetTask = new JaguarSetTask("WindowMotors",Robot::shooter->windowMotors);
 	autoStep = Initiate;
 	autoProgram = fire2FromCenter;
 	autoStepComplete = false;
 	autoStepIncrementer = 0;
 	
-}
+	autoChooser = new BSChooser();
+	autoChooser->AddDefault("1. Fire 1", fire1);
+	autoChooser->AddDefault("2. Fire 2 From Center", fire2FromCenter);
+	
+}	
 void Robot::DisabledPeriodic() {
 		SMDB();
 	
 	Scheduler::GetInstance()->Run();
 }
 	
-/*void Robot::SetAutoProgram(AutoProgram program) {
-	autoProgram = program;
-}*/
 void Robot::AutonomousInit() {
+	autoProgram = autoChooser->GetSelected();
 	autoStepTimer->Reset();
 	genericAutoProgram.clear();
 	switch(autoProgram) {
@@ -91,6 +90,7 @@ void Robot::AutonomousPeriodic() {
 		if(autoStepTimer->HasPeriodPassed(.5))
 			autoStepComplete = true;
 		break;
+		
 	case FindTarget:
 		break;
 	
@@ -99,6 +99,7 @@ void Robot::AutonomousPeriodic() {
 	
 	case TurnRight:
 		break;
+		
 	case Fire:
 		break;
 	
@@ -111,7 +112,9 @@ void Robot::AutonomousPeriodic() {
 		
 if (autoStepComplete)
 	autoStepTimer->Reset();
+	autoStepComplete = false;
 	autoStepIncrementer ++;
+	autoStep = genericAutoProgram[autoStepIncrementer];
 }
 	
 void Robot::TeleopInit() {
@@ -119,7 +122,6 @@ void Robot::TeleopInit() {
 	// teleop starts running. If you want the autonomous to 
 	// continue until interrupted by another command, remove
 	// this line or comment it out.
-	autonomousCommand->Cancel();
 }
 	
 void Robot::TeleopPeriodic() {
@@ -147,9 +149,7 @@ void Robot::TeleopPeriodic() {
 	
 	if(Robot::oi->getGamePad()->GetRawButton(10)){
 		Robot::shooter->camController->Disable();
-		WindowMotorSetTask->SetOutput(Robot::oi->getGamePad()->GetY(Joystick::kLeftHand));
-		Robot::shooter->camLeft->Set(0.53*Robot::oi->getGamePad()->GetY(Joystick::kLeftHand));
-		Robot::shooter->camRight->Set(0.53*Robot::oi->getGamePad()->GetY(Joystick::kLeftHand));
+		Robot::shooter->RunCams(-Robot::oi->getGamePad()->GetRawAxis(2));
 	}
 	else {
 		Robot::shooter->CamChecker(); //Runs every cycle to control cam postion
@@ -160,7 +160,7 @@ void Robot::TeleopPeriodic() {
 /******************BEATERBAR**************************************/	
 	
 	if(Robot::pickup->beaterBar->IsAlive())
-		Robot::pickup->beaterBar->Set(Robot::oi->getGamePad()->GetY(Joystick::kRightHand));
+		Robot::pickup->beaterBar->Set(Robot::oi->getGamePad()->GetRawAxis(4));
 }
 void Robot::TestPeriodic() {
 	lw->Run();

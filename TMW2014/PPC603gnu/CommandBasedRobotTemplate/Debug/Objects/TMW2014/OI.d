@@ -413,6 +413,11 @@ CommandBasedRobotTemplate/Debug/Objects/TMW2014/OI.o:  \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../JaguarSetTask.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../UsefulTimer.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../AutoProgramming.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSChooser.h \
+  C:/WindRiver/vxworks-6.3/target/h/WPILib/SmartDashboard/Sendable.h \
+  C:/WindRiver/vxworks-6.3/target/h/WPILib/tables/ITable.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Autoprogramming.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/InitGyro.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetWheelOffsets.h
 
@@ -1241,6 +1246,16 @@ C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../JaguarSetTask.h:
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../UsefulTimer.h:
+
+C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../AutoProgramming.h:
+
+C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSChooser.h:
+
+C:/WindRiver/vxworks-6.3/target/h/WPILib/SmartDashboard/Sendable.h:
+
+C:/WindRiver/vxworks-6.3/target/h/WPILib/tables/ITable.h:
+
+C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Autoprogramming.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/InitGyro.h:
 

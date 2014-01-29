@@ -40,9 +40,7 @@ void Shooter::InitDefaultCommand() {
 void Shooter::CamChecker() {
 	if(fireFlag){
 		if(!fireTimer->HasPeriodPassed(.5) || CorrectVoltage(camPos->GetAverageVoltage() - camPosOffset) > stage1Voltage) {
-			windowMotors->Set(-1);
-			camLeft->Set(-camMotorRatio);
-			camRight->Set(-camMotorRatio);
+			RunCams(1);
 		}
 		
 		else if(!camController->IsEnabled()){
@@ -53,15 +51,11 @@ void Shooter::CamChecker() {
 		if((camController->OnTarget() && camController->IsEnabled()) || fireTimer->HasPeriodPassed(5)) {
 			camController->Disable();
 			fireFlag = false;
-			windowMotors->Set(0);
-			camLeft->Set(0);
-			camRight->Set(0);
+			RunCams(0);
 		}
 	}
 	else {
-		windowMotors->Set(0);
-		camLeft->Set(0);
-		camRight->Set(0);
+		RunCams(0);
 	}
 }
 void Shooter::Fire() {
@@ -69,6 +63,12 @@ void Shooter::Fire() {
 		fireFlag = true;
 		fireTimer->Reset();
 	}
+}
+
+void Shooter::RunCams(float output) {
+	windowMotors->Set(-output);
+	camLeft->Set(-camMotorRatio*output);
+	camRight->Set(-camMotorRatio*output);
 }
 bool Shooter::GetFiring() {
 	return fireFlag;
