@@ -88,10 +88,9 @@ void Robot::AutonomousPeriodic() {
 	switch(autoStep) {
 	case Initiate:
 		//actuate beater bar and wings solenoids
-		Robot::pickup->beaterBar->Set(1);
 		if(autoStepTimer->HasPeriodPassed(.5))
-			autoStepComplete = true;
-		break;
+		autoStepComplete = true;
+	break;
 		
 	case FindTarget:
 		break;
@@ -169,8 +168,7 @@ void Robot::TeleopPeriodic() {
 	
 /******************BEATERBAR**************************************/	
 	
-	if(Robot::pickup->beaterBar->IsAlive())
-		Robot::pickup->beaterBar->Set(Robot::oi->getGamePad()->GetRawAxis(4));
+	Robot::pickup->beaterBar->SetOutput((Robot::oi->getGamePad()->GetRawAxis(4)));
 }
 void Robot::TestPeriodic() {
 	lw->Run();
@@ -219,7 +217,7 @@ void Robot::SMDB() {
 	SmartDashboard::PutNumber("CamRightCurrent", Robot::shooter->camRight->GetOutputCurrent());
 	
 	//BeaterBar
-	SmartDashboard::PutNumber("BeaterBarCurrent", Robot::pickup->beaterBar->GetOutputCurrent());
+//	SmartDashboard::PutNumber("BeaterBarCurrent", Robot::pickup->beaterBar->GetOutputCurrent());
 	
 	//Jaguar Stauses
 	SmartDashboard::PutBoolean("06-FLSteerJagAlive",Robot::driveTrain->frontLeftSteer->IsAlive());
@@ -229,6 +227,6 @@ void Robot::SMDB() {
 	SmartDashboard::PutBoolean("10-WindowMotorJagAlive",Robot::shooter->windowMotors->IsAlive());
 	SmartDashboard::PutBoolean("11-CamLeftJagAlive",Robot::shooter->camLeft->IsAlive());
 	SmartDashboard::PutBoolean("12-CamRightJagAlive",Robot::shooter->camRight->IsAlive());
-	SmartDashboard::PutBoolean("13-BeaterBarJagAlive",Robot::pickup->beaterBar->IsAlive());
+//	SmartDashboard::PutBoolean("13-BeaterBarJagAlive",Robot::pickup->beaterBar->IsAlive());
 }
 START_ROBOT_CLASS(Robot);

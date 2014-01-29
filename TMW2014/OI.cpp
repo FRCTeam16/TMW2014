@@ -94,11 +94,8 @@ double OI::getLeftJoystickXRadians() {
 		return scaledRadians(pi/2 + driverJoystickLeft->GetX()*pi/2);
 }
 double OI::scaledRadians(double radians) {
-	double bottomScaling = 1.5;
-	double topScaling = 1.75;
 	double scaledradians = pi/2;
 	double scalingFactor = 1;
-	//scalingFactor = bottomScaling + driverJoystickRight->GetY()*(topScaling - bottomScaling);
 	scalingFactor = getDriverJoystickRight()->GetTwist()/2+1.5;
 	if(radians <= pi/2)
 		scaledradians = (-(pi/2)/pow(pow(-pi/2,2),scalingFactor/2))*pow(pow(radians-pi/2,2),scalingFactor/2) + pi/2;

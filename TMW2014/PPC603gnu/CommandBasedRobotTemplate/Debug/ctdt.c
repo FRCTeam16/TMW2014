@@ -9,6 +9,8 @@
 
 void _GLOBAL__I__ZN18BSSwerveControllerC2EP13PIDControllerS1_S1_S1_P15SpeedControllerS3_S3_S3_P4GyroP8JoystickS7_();
 
+void _GLOBAL__I__ZN13CANJaguarTaskC2Ei();
+
 void _GLOBAL__I__ZN9CamPIDOutC2EP9CANJaguarS1_S1_();
 
 void _GLOBAL__I__ZN17AutonomousCommandC2Ev();
@@ -89,6 +91,7 @@ extern void (*_ctors[])();
 void (*_ctors[])() =
     {
     _GLOBAL__I__ZN18BSSwerveControllerC2EP13PIDControllerS1_S1_S1_P15SpeedControllerS3_S3_S3_P4GyroP8JoystickS7_,
+    _GLOBAL__I__ZN13CANJaguarTaskC2Ei,
     _GLOBAL__I__ZN9CamPIDOutC2EP9CANJaguarS1_S1_,
     _GLOBAL__I__ZN17AutonomousCommandC2Ev,
     _GLOBAL__I__ZN8InitGyroC2Ev,
@@ -131,6 +134,8 @@ void (*_ctors[])() =
     };
 
 void _GLOBAL__D__ZN18BSSwerveControllerC2EP13PIDControllerS1_S1_S1_P15SpeedControllerS3_S3_S3_P4GyroP8JoystickS7_();
+
+void _GLOBAL__D__ZN13CANJaguarTaskC2Ei();
 
 void _GLOBAL__D__ZN9CamPIDOutC2EP9CANJaguarS1_S1_();
 
@@ -202,6 +207,7 @@ extern void (*_dtors[])();
 void (*_dtors[])() =
     {
     _GLOBAL__D__ZN18BSSwerveControllerC2EP13PIDControllerS1_S1_S1_P15SpeedControllerS3_S3_S3_P4GyroP8JoystickS7_,
+    _GLOBAL__D__ZN13CANJaguarTaskC2Ei,
     _GLOBAL__D__ZN9CamPIDOutC2EP9CANJaguarS1_S1_,
     _GLOBAL__D__ZN17AutonomousCommandC2Ev,
     _GLOBAL__D__ZN8InitGyroC2Ev,

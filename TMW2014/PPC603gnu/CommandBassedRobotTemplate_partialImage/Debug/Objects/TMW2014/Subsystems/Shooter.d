@@ -394,7 +394,8 @@
   C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../BSGyro.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/SensorBase.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDSource.h \
-  C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindowSendable.h
+  C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindowSendable.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../CANJaguarTask.h
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/Shooter.h:
 
@@ -1183,3 +1184,5 @@ C:/WindRiver/vxworks-6.3/target/h/WPILib/SensorBase.h:
 C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDSource.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindowSendable.h:
+
+C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../CANJaguarTask.h:
