@@ -131,7 +131,7 @@ void DriveTrain::Crab(float twist, float y, float x, bool UseGyro) {
     }
     
 	//Set drive speeds
-    SetSteering(FLRatio, -FRRatio, RLRatio, -RRRatio, true);
+    SetSteerSetpoint(FLRatio, -FRRatio, RLRatio, -RRRatio, true);
 	
 }
 void DriveTrain::Steer(float radian, float speed, float a) {
@@ -410,12 +410,12 @@ void DriveTrain::SetDriveSpeed(float FLSpeed, float FRSpeed, float RLSpeed, floa
 }
 void DriveTrain::Lock() //locks wheels to prevent robot movement
 {
-	SetSteering(3.0, 1.5, 3.0, 1.5, true);
+	SetSteerSetpoint(3.0, 1.5, 3.0, 1.5, true);
 	SetDriveSpeed(0,0,0,0);
 }
 void DriveTrain::SideLock() //locks wheels to prevent robot movement
 {
-	SetSteering(2.0, 0.75, 3.25, 4.5, true);
+	SetSteerSetpoint(2.0, 0.75, 3.25, 4.5, true);
 	SetDriveSpeed(0,0,0,0);
 }
 bool DriveTrain::ZeroGyro(float InitTime)  //performs gyro calibration
