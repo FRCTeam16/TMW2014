@@ -12,7 +12,7 @@
 #include "Commands/Subsystem.h"
 #include "WPILib.h"
 #include "../CamPIDOut.h"
-#include "../UsefulTimer.h"
+#include "../BSTimer.h"
 /**
  *
  *
@@ -36,7 +36,7 @@ public:
 	void Fire();
 	bool GetFiring();
 	float GetCorrectedCamPos();
-	static UsefulTimer* fireTimer;
+	static BSTimer* fireTimer;
 	void RunCams(float output);
 	
 private:

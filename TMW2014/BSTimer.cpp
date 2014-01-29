@@ -4,7 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in $(WIND_BASE)/WPILib.  */
 /*----------------------------------------------------------------------------*/
 
-#include "UsefulTimer.h"
+#include "BSTimer.h"
 
 #include <sysLib.h> // for sysClkRateGet
 #include <time.h>
@@ -19,7 +19,7 @@
  * Create a new timer object and reset the time to zero. The timer is initially not running and
  * must be started.
  */
-UsefulTimer::UsefulTimer()
+BSTimer::BSTimer()
 	: m_startTime (0.0)
 	, m_accumulatedTime (0.0)
 	, m_running (false)
@@ -31,7 +31,7 @@ UsefulTimer::UsefulTimer()
 	Reset();
 }
 
-UsefulTimer::~UsefulTimer()
+BSTimer::~BSTimer()
 {
 	semDelete(m_semaphore);
 }
@@ -43,7 +43,7 @@ UsefulTimer::~UsefulTimer()
  * 
  * @return unsigned Current time value for this timer in seconds
  */
-double UsefulTimer::Get()
+double BSTimer::Get()
 {
 	double result;
 	double currentTime = GetFPGATimestamp();
@@ -68,7 +68,7 @@ double UsefulTimer::Get()
  * 
  * Make the timer startTime the current time so new requests will be relative to now
  */
-void UsefulTimer::Reset()
+void BSTimer::Reset()
 {
 	Synchronized sync(m_semaphore);
 	m_accumulatedTime = 0;
@@ -80,7 +80,7 @@ void UsefulTimer::Reset()
  * Just set the running flag to true indicating that all time requests should be
  * relative to the system clock.
  */
-void UsefulTimer::Start()
+void BSTimer::Start()
 {
 	Synchronized sync(m_semaphore);
 	if (!m_running)
@@ -96,7 +96,7 @@ void UsefulTimer::Start()
  * subsequent time requests to be read from the accumulated time rather than
  * looking at the system clock.
  */
-void UsefulTimer::Stop()
+void BSTimer::Stop()
 {
 	double temp = Get();
 
@@ -116,7 +116,7 @@ void UsefulTimer::Stop()
  * @param period The period to check for (in seconds).
  * @return If the period has passed.
  */
-bool UsefulTimer::HasPeriodPassed(double period)
+bool BSTimer::HasPeriodPassed(double period)
 {
 	/*if (Get() > period)
 	{
@@ -139,7 +139,7 @@ bool UsefulTimer::HasPeriodPassed(double period)
  * Rolls over after 71 minutes.
  * @returns Robot running time in seconds.
  */
-double UsefulTimer::GetFPGATimestamp()
+double BSTimer::GetFPGATimestamp()
 {
 	// FPGA returns the timestamp in microseconds
 	// Call the helper GetFPGATime() in Utility.cpp
@@ -159,7 +159,7 @@ extern "C"
  * This is lower overhead than GetFPGATimestamp() but not synchronized with other FPGA timestamps.
  * @returns Robot running time in seconds.
  */
-double UsefulTimer::GetPPCTimestamp()
+double BSTimer::GetPPCTimestamp()
 {
 	// PPC system clock is 33MHz
 	return niTimestamp64() / 33.0e6;

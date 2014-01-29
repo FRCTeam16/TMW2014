@@ -4,8 +4,8 @@
 /* must be accompanied by the FIRST BSD license file in $(WIND_BASE)/WPILib.  */
 /*----------------------------------------------------------------------------*/
 
-#ifndef USEFULTIMER_H_
-#define USEFULTIMER_H_
+#ifndef BSTIMER_H_
+#define BSTIMER_H_
 
 #include "semLib.h"
 #include "Base.h"
@@ -18,11 +18,11 @@
  * value. The implementation simply records the time when started and subtracts the current time
  * whenever the value is requested.
  */
-class UsefulTimer
+class BSTimer
 {
 public:
-	UsefulTimer();
-	virtual ~UsefulTimer();
+	BSTimer();
+	virtual ~BSTimer();
 	double Get();
 	void Reset();
 	void Start();
@@ -37,7 +37,7 @@ private:
 	double m_accumulatedTime;
 	bool m_running;
 	SEM_ID m_semaphore;
-	DISALLOW_COPY_AND_ASSIGN(UsefulTimer);
+	DISALLOW_COPY_AND_ASSIGN(BSTimer);
 };
 
 #endif

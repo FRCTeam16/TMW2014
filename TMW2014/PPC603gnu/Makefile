@@ -129,6 +129,10 @@ CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/BSSwerveController.o : $(P
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP -mlongcall $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
 
 
+CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/BSTimer.o : $(PRJ_ROOT_DIR)/BSTimer.cpp $(FORCE_FILE_BUILD)
+	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP -mlongcall $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
+
+
 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/CamPIDOut.o : $(PRJ_ROOT_DIR)/CamPIDOut.cpp $(FORCE_FILE_BUILD)
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP -mlongcall $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
 
@@ -177,13 +181,10 @@ CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Subsystems/Shooter.o : $(P
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP -mlongcall $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
 
 
-CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/UsefulTimer.o : $(PRJ_ROOT_DIR)/UsefulTimer.cpp $(FORCE_FILE_BUILD)
-	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP -mlongcall $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
-
-
 OBJECTS_CommandBasedRobotTemplate = CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/BSChooser.o \
 	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/BSGyro.o \
 	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/BSSwerveController.o \
+	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/BSTimer.o \
 	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/CamPIDOut.o \
 	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Commands/AutonomousCommand.o \
 	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Commands/InitGyro.o \
@@ -195,8 +196,7 @@ OBJECTS_CommandBasedRobotTemplate = CommandBasedRobotTemplate/$(MODE_DIR)/Object
 	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/RobotMap.o \
 	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Subsystems/DriveTrain.o \
 	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Subsystems/Pickup.o \
-	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Subsystems/Shooter.o \
-	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/UsefulTimer.o
+	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Subsystems/Shooter.o
 
 CommandBasedRobotTemplate/$(MODE_DIR)/CommandBasedRobotTemplate.out : $(OBJECTS_CommandBasedRobotTemplate)
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@";rm -f "$@";nmppc $(OBJECTS_CommandBasedRobotTemplate) $(IDE_LIBRARIES) | tclsh $(WIND_BASE)/host/resource/hutils/tcl/munch.tcl -c ppc > $(OBJ_DIR)/ctdt.c; $(TOOL_PATH)ccppc $(DEBUGFLAGS_Linker) $(CC_ARCH_SPEC) -fdollars-in-identifiers -Wall $(ADDED_CFLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES)  -o $(OBJ_DIR)/ctdt.o -c $(OBJ_DIR)/ctdt.c; $(TOOL_PATH)ccppc -r -nostdlib -Wl,-X -T $(WIND_BASE)/target/h/tool/gnu/ldscripts/link.OUT -o "$@" $(OBJ_DIR)/ctdt.o $(OBJECTS_CommandBasedRobotTemplate) $(IDE_LIBRARIES) $(LIBPATH) $(LIBS)  $(ADDED_LIBPATH) $(ADDED_LIBS) && if [ "$(EXPAND_DBG)" = "1" ]; then plink "$@";fi
@@ -253,6 +253,10 @@ CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/BSSwerveCont
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP -mlongcall $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
 
 
+CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/BSTimer.o : $(PRJ_ROOT_DIR)/BSTimer.cpp $(FORCE_FILE_BUILD)
+	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP -mlongcall $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
+
+
 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/CamPIDOut.o : $(PRJ_ROOT_DIR)/CamPIDOut.cpp $(FORCE_FILE_BUILD)
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP -mlongcall $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
 
@@ -301,13 +305,10 @@ CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Subsystems/S
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP -mlongcall $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
 
 
-CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/UsefulTimer.o : $(PRJ_ROOT_DIR)/UsefulTimer.cpp $(FORCE_FILE_BUILD)
-	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP -mlongcall $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
-
-
 OBJECTS_CommandBassedRobotTemplate_partialImage = CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/BSChooser.o \
 	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/BSGyro.o \
 	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/BSSwerveController.o \
+	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/BSTimer.o \
 	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/CamPIDOut.o \
 	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Commands/AutonomousCommand.o \
 	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Commands/InitGyro.o \
@@ -319,8 +320,7 @@ OBJECTS_CommandBassedRobotTemplate_partialImage = CommandBassedRobotTemplate_par
 	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/RobotMap.o \
 	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Subsystems/DriveTrain.o \
 	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Subsystems/Pickup.o \
-	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Subsystems/Shooter.o \
-	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/UsefulTimer.o
+	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Subsystems/Shooter.o
 
 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/CommandBassedRobotTemplate_partialImage.o : $(OBJECTS_CommandBassedRobotTemplate_partialImage)
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc -r -nostdlib -Wl,-X  -o "$@" $(OBJECTS_CommandBassedRobotTemplate_partialImage) $(LIBPATH) $(LIBS) $(ADDED_LIBPATH) $(ADDED_LIBS)  && if [ "$(EXPAND_DBG)" = "1" ]; then plink "$@";fi
@@ -335,16 +335,16 @@ CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/CommandBassedRobotTemplate_p
 force : 
 
 DEP_FILES := CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/BSChooser.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/BSGyro.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/BSSwerveController.d \
-	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/CamPIDOut.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Commands/AutonomousCommand.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Commands/InitGyro.d \
-	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Commands/SetWheelOffsets.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/JaguarSetTask.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/OI.d \
-	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/RAWCConstants.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Robot.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/RobotMap.d \
-	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Subsystems/DriveTrain.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Subsystems/Pickup.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Subsystems/Shooter.d \
-	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/UsefulTimer.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/BSChooser.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/BSGyro.d \
-	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/BSSwerveController.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/CamPIDOut.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Commands/AutonomousCommand.d \
-	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Commands/InitGyro.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Commands/SetWheelOffsets.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/JaguarSetTask.d \
-	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/OI.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/RAWCConstants.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Robot.d \
-	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/RobotMap.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Subsystems/DriveTrain.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Subsystems/Pickup.d \
-	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Subsystems/Shooter.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/UsefulTimer.d
+	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/BSTimer.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/CamPIDOut.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Commands/AutonomousCommand.d \
+	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Commands/InitGyro.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Commands/SetWheelOffsets.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/JaguarSetTask.d \
+	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/OI.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/RAWCConstants.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Robot.d \
+	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/RobotMap.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Subsystems/DriveTrain.d CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Subsystems/Pickup.d \
+	 CommandBasedRobotTemplate/$(MODE_DIR)/Objects/TMW2014/Subsystems/Shooter.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/BSChooser.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/BSGyro.d \
+	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/BSSwerveController.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/BSTimer.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/CamPIDOut.d \
+	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Commands/AutonomousCommand.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Commands/InitGyro.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Commands/SetWheelOffsets.d \
+	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/JaguarSetTask.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/OI.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/RAWCConstants.d \
+	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Robot.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/RobotMap.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Subsystems/DriveTrain.d \
+	 CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Subsystems/Pickup.d CommandBassedRobotTemplate_partialImage/$(MODE_DIR)/Objects/TMW2014/Subsystems/Shooter.d
 -include $(DEP_FILES)
 
 

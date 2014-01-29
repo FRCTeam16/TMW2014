@@ -408,11 +408,11 @@ CommandBassedRobotTemplate_partialImage/Debug/Objects/TMW2014/OI.o:  \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Pickup.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Shooter.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../CamPIDOut.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../UsefulTimer.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../BSTimer.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Base.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../JaguarSetTask.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../UsefulTimer.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSTimer.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../AutoProgramming.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSChooser.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/SmartDashboard/Sendable.h \
@@ -1237,7 +1237,7 @@ C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Shooter.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../CamPIDOut.h:
 
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../UsefulTimer.h:
+C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../BSTimer.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/Base.h:
 
@@ -1245,7 +1245,7 @@ C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../JaguarSetTask.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h:
 
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../UsefulTimer.h:
+C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSTimer.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../AutoProgramming.h:
 
