@@ -61,5 +61,6 @@ private:
 	int autoStepIncrementer;
 	vector<AutoStep> genericAutoProgram;
 	BSChooser* autoChooser;
+	SendableChooser* sAutoChooser;
 };
 #endif

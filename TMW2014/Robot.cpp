@@ -49,7 +49,10 @@ void Robot::RobotInit() {
 	
 	autoChooser = new BSChooser();
 	autoChooser->AddDefault("1. Fire 1", fire1);
-	autoChooser->AddDefault("2. Fire 2 From Center", fire2FromCenter);
+	autoChooser->AddObject("2. Fire 2 From Center", fire2FromCenter);
+	
+	sAutoChooser = new SendableChooser();
+	sAutoChooser->AddDefault("something", (void*)fire1);
 
 	autoStepTimer = new BSTimer();
 	autoStepTimer->Start();
@@ -62,6 +65,7 @@ void Robot::DisabledPeriodic() {
 	
 void Robot::AutonomousInit() {
 	autoProgram = autoChooser->GetSelected();
+    autoProgram = static_cast<AutoProgram>((int)(sAutoChooser->GetSelected()));
 	autoStepTimer->Reset();
 	genericAutoProgram.clear();
 	switch(autoProgram) {

@@ -131,7 +131,7 @@ void DriveTrain::Crab(float twist, float y, float x, bool UseGyro) {
     }
     
 	//Set drive speeds
-    SetSteerSetpoint(FLRatio, -FRRatio, RLRatio, -RRRatio, true);
+    SetDriveSpeed(FLRatio, -FRRatio, RLRatio, -RRRatio);
 	
 }
 void DriveTrain::Steer(float radian, float speed, float a) {
