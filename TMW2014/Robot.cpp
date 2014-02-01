@@ -39,43 +39,41 @@ void Robot::RobotInit() {
 	RLOffset = File->getValueForKey("RLOff");
 	RROffset = File->getValueForKey("RROff");
 	Robot::driveTrain->SetOffsets(FLOffset, FROffset, RLOffset, RROffset);
-	
-	WindowMotorSetTask = new JaguarSetTask("WindowMotors",Robot::shooter->windowMotors);
+		
+	Robot::pickup->comp->Start();
 	
 	autoStep = Initiate;
 	autoProgram = fire2FromCenter;
 	autoStepComplete = false;
 	autoStepIncrementer = 0;
+	turnDirection = 1;
 	
-	autoChooser = new BSChooser();
-	autoChooser->AddDefault("1. Fire 1", fire1);
-	autoChooser->AddObject("2. Fire 2 From Center", fire2FromCenter);
-	
-	sAutoChooser = new SendableChooser();
-	sAutoChooser->AddDefault("something", (void*)fire1);
-
+	autoChooser = new SendableChooser();
+	autoChooser->AddDefault("1. Fire 1", (void*)fire1);
+	autoChooser->AddObject("2. Shoot 2 From Center", (void*)fire2FromCenter);
+	SmartDashboard::PutData("Autonomous Chooser", autoChooser);
 	autoStepTimer = new BSTimer();
 	autoStepTimer->Start();
 }	
 void Robot::DisabledPeriodic() {
-		SMDB();
+//	SMDB();
 	
 	Scheduler::GetInstance()->Run();
 }
 	
 void Robot::AutonomousInit() {
-	autoProgram = autoChooser->GetSelected();
-    autoProgram = static_cast<AutoProgram>((int)(sAutoChooser->GetSelected()));
+    autoProgram = static_cast<AutoProgram>((int)(autoChooser->GetSelected()));
 	autoStepTimer->Reset();
+	autoStepIncrementer = 0;
 	genericAutoProgram.clear();
 	switch(autoProgram) {
 	case fire2FromCenter:
 		genericAutoProgram.push_back(Initiate);
 		genericAutoProgram.push_back(FindTarget);
-		genericAutoProgram.push_back(TurnLeft);
+		genericAutoProgram.push_back(FirstTurn);
 		genericAutoProgram.push_back(Fire);
 		genericAutoProgram.push_back(LoadBall);
-		genericAutoProgram.push_back(TurnRight);
+		genericAutoProgram.push_back(SecondTurn);
 		genericAutoProgram.push_back(Fire);
 		genericAutoProgram.push_back(DriveForward);
 		genericAutoProgram.push_back(End);
@@ -84,50 +82,154 @@ void Robot::AutonomousInit() {
 	case fire1:
 		break;
 	}
-	autoStepIncrementer = 0;
 	autoStep = genericAutoProgram[autoStepIncrementer];
 }
 	
 void Robot::AutonomousPeriodic() {
+	bool beaterBarOut = false;
+	bool wingsOut = false;
+	float beaterBarSpeed = 0;
+	float driveX = 0;
+	float driveY = 0;
+	float driveTwist = 0;
+	bool fire = false;
+	
 	switch(autoStep) {
 	case Initiate:
-		//actuate beater bar and wings solenoids
-		if(autoStepTimer->HasPeriodPassed(.5))
-		autoStepComplete = true;
-	break;
+		beaterBarOut = true;
+		wingsOut = true;
+		beaterBarSpeed = 0;
+		driveX = 0;
+		driveY = 0;
+		driveTwist = 0;
+		fire = false;
+		SmartDashboard::PutString("AutoStep", "Initiate");
+		if(autoStepTimer->HasPeriodPassed(1.0))
+			autoStepComplete = true;
+		break;
 		
 	case FindTarget:
+		beaterBarOut = true;
+		wingsOut = true;
+		beaterBarSpeed = 0;
+		driveX = 0;
+		driveY = 0;
+		driveTwist = 0;
+		fire = false;
+		if(Robot::driveTrain->targetLeft->Get())
+			turnDirection = -1;
+		SmartDashboard::PutString("AutoStep", "FindTarget");
+		autoStepComplete = true;
 		break;
 	
-	case TurnLeft:
+	case FirstTurn:
+		beaterBarOut = true;
+		wingsOut = true;
+		beaterBarSpeed = 0;
+		driveX = 0;
+		driveY = 0;
+		driveTwist = 10*turnDirection;
+		fire = false;
+		SmartDashboard::PutString("AutoStep", "FirstTurn");
+		if(Robot::driveTrain->DriveControlTwist->OnTarget()){
+			autoStepComplete = true;
+		}
 		break;
 	
-	case TurnRight:
+	case SecondTurn:
+		beaterBarOut = true;
+		wingsOut = true;
+		beaterBarSpeed = 0;
+		driveX = 0;
+		driveY = 0;
+		driveTwist = 10*-turnDirection;
+		fire = false;
+		SmartDashboard::PutString("AutoStep", "SecondTurn");
+		if(Robot::driveTrain->DriveControlTwist->OnTarget()){
+			autoStepComplete = true;
+		}
 		break;
 		
 	case Fire:
+		beaterBarOut = true;
+		wingsOut = true;
+		beaterBarSpeed = 0;
+		driveX = 0;
+		driveY = 0;
+		driveTwist = 0;
+		fire = true;
+		SmartDashboard::PutString("AutoStep", "Fire");
+		if(!Robot::shooter->GetFiring())
+			autoStepComplete = true;
+		fire = true;
 		break;
 	
 	case LoadBall:
+		beaterBarOut = true;
+		wingsOut = true;
+		beaterBarSpeed = 1;
+		driveX = 0;
+		driveY = 0;
+		driveTwist = 0;
+		fire = false;
+		SmartDashboard::PutString("AutoStep", "LoadBall");
+		if(autoStepTimer->HasPeriodPassed(1.0))
+			autoStepComplete = true;
 		break;
 		
 	case DriveForward:
+		beaterBarOut = true;
+		wingsOut = true;
+		beaterBarSpeed = 0;
+		driveX = 0;
+		driveY = 0;
+		driveTwist = 0;
+		fire = false;
+		SmartDashboard::PutString("AutoStep", "DriveForward");
+		if(autoStepTimer->HasPeriodPassed(1.0))
+			autoStepComplete = true;
 		break;
 	
 	case End:
+		beaterBarOut = true;
+		wingsOut = true;
+		beaterBarSpeed =0;
+		driveX = 0;
+		driveY = 0;
+		driveTwist = 0;
+		fire = false;
+		SmartDashboard::PutString("AutoStep", "End");
 		break;
 	}
 		
-if (autoStepComplete)
-	autoStepTimer->Reset();
-	autoStepComplete = false;
-	autoStepIncrementer ++;
-	try {
-		autoStep = genericAutoProgram.at(autoStepIncrementer);
+	Robot::pickup->beaterBarOut->Set(beaterBarOut);
+	Robot::pickup->wings->Set(wingsOut);
+	Robot::pickup->beaterBar->Set(beaterBarSpeed);
+	if(driveX == 0 && driveY == 0 && driveTwist == 0) {
+		Robot::driveTrain->Crab(0,0,0,false);
 	}
-	catch (const out_of_range& oor) {
-		printf ("AutoProgram Vector Out of Range");
+	else {
+		Robot::driveTrain->DriveControlX->SetSetpoint(driveX);
+		Robot::driveTrain->DriveControlY->SetSetpoint(driveY);
+		Robot::driveTrain->DriveControlTwist->SetSetpoint(driveTwist);
 	}
+	if(fire && !Robot::shooter->GetFiring())
+		Robot::shooter->Fire();		
+
+	Robot::shooter->CamChecker();
+	
+if (autoStepComplete) {
+		autoStepTimer->Reset();
+		autoStepComplete = false;
+		autoStepIncrementer ++;
+		try {
+			autoStep = genericAutoProgram.at(autoStepIncrementer);
+		}
+		catch (const out_of_range& oor) {
+			printf ("AutoProgram Vector Out of Range \n");
+		}
+	}
+
 }
 	
 void Robot::TeleopInit() {
@@ -135,10 +237,12 @@ void Robot::TeleopInit() {
 	// teleop starts running. If you want the autonomous to 
 	// continue until interrupted by another command, remove
 	// this line or comment it out.
+	
+	Robot::pickup->beaterBarOut->Set(false);
 }
 	
 void Robot::TeleopPeriodic() {
-	SMDB();
+//	SMDB();
 		
 /******************DRIVETRAIN**************************************/	
 	
@@ -172,7 +276,17 @@ void Robot::TeleopPeriodic() {
 	
 /******************BEATERBAR**************************************/	
 	
-	Robot::pickup->beaterBar->SetOutput((Robot::oi->getGamePad()->GetRawAxis(4)));
+	Robot::pickup->beaterBar->Set((Robot::oi->getGamePad()->GetRawAxis(4)));
+	
+	Robot::shooter->fingers->Set(fabs(Robot::oi->getGamePad()->GetRawAxis(4)) > .2);
+		
+	if(Robot::oi->getGamePad()->GetRawButton(2))
+		Robot::pickup->wings->Set(true);
+	
+	if (Robot::oi->getGamePad()->GetRawButton(8))
+		Robot::pickup->beaterBarOut->Set(true);
+	if (Robot::oi->getGamePad()->GetRawButton(6))
+			Robot::pickup->beaterBarOut->Set(false);
 }
 void Robot::TestPeriodic() {
 	lw->Run();
@@ -209,9 +323,9 @@ void Robot::SMDB() {
 	SmartDashboard::PutNumber("CorrectedCamPostion",Robot::shooter->GetCorrectedCamPos());
 	SmartDashboard::PutNumber("RawCamPostion",Robot::shooter->camPos->GetAverageVoltage());
 	SmartDashboard::PutBoolean("CamPIDOnTarget",Robot::shooter->camController->OnTarget());
-	SmartDashboard::PutNumber("WindowMotorOutput", Robot::shooter->windowMotors->Get());
-	SmartDashboard::PutNumber("CamLeftOutput", Robot::shooter->camLeft->Get());
-	SmartDashboard::PutNumber("CamRightOutput", Robot::shooter->camRight->Get());
+//	SmartDashboard::PutNumber("WindowMotorOutput", Robot::shooter->windowMotors->Get());
+//	SmartDashboard::PutNumber("CamLeftOutput", Robot::shooter->camLeft->Get());
+//	SmartDashboard::PutNumber("CamRightOutput", Robot::shooter->camRight->Get());
 	SmartDashboard::PutBoolean("CamPIDEnabled", Robot::shooter->camController->IsEnabled());
 	SmartDashboard::PutNumber("CamPIDSetPoint", Robot::shooter->camController->GetSetpoint());
 	SmartDashboard::PutNumber("CamPIDOutput", Robot::shooter->camController->Get());

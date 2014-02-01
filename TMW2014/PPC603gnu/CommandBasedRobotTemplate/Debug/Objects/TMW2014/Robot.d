@@ -393,7 +393,7 @@ CommandBasedRobotTemplate/Debug/Objects/TMW2014/Robot.o:  \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/SensorBase.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDSource.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindowSendable.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/CANJaguarTask.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/CrabSpeed.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindow.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/AutonomousCommand.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Commands/Subsystem.h \
@@ -403,20 +403,14 @@ CommandBasedRobotTemplate/Debug/Objects/TMW2014/Robot.o:  \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h \
   C:/WindRiver/vxworks-6.3/target/h/math.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../BSGyro.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../CrabSpeed.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/Pickup.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../CANJaguarTask.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/Shooter.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../CamPIDOut.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../BSTimer.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Base.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/JaguarSetTask.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/OI.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/BSTimer.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/AutoProgramming.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/BSChooser.h \
-  C:/WindRiver/vxworks-6.3/target/h/WPILib/SmartDashboard/Sendable.h \
-  C:/WindRiver/vxworks-6.3/target/h/WPILib/tables/ITable.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Autoprogramming.h
+  C:/WindRiver/workspace/TMW2014/TMW2014/BSTimer.h
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Robot.h:
 
@@ -1204,7 +1198,7 @@ C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDSource.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindowSendable.h:
 
-C:/WindRiver/workspace/TMW2014/TMW2014/CANJaguarTask.h:
+C:/WindRiver/workspace/TMW2014/TMW2014/CrabSpeed.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindow.h:
 
@@ -1224,9 +1218,9 @@ C:/WindRiver/vxworks-6.3/target/h/math.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../BSGyro.h:
 
-C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/Pickup.h:
+C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../CrabSpeed.h:
 
-C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../CANJaguarTask.h:
+C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/Pickup.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/Shooter.h:
 
@@ -1236,18 +1230,6 @@ C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../BSTimer.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/Base.h:
 
-C:/WindRiver/workspace/TMW2014/TMW2014/JaguarSetTask.h:
-
 C:/WindRiver/workspace/TMW2014/TMW2014/OI.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/BSTimer.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/AutoProgramming.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/BSChooser.h:
-
-C:/WindRiver/vxworks-6.3/target/h/WPILib/SmartDashboard/Sendable.h:
-
-C:/WindRiver/vxworks-6.3/target/h/WPILib/tables/ITable.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/Autoprogramming.h:

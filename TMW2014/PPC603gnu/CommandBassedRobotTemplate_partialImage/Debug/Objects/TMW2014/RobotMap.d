@@ -390,7 +390,7 @@ CommandBassedRobotTemplate_partialImage/Debug/Objects/TMW2014/RobotMap.o:  \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/SensorBase.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDSource.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindowSendable.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/CANJaguarTask.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/CrabSpeed.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindow.h
 
 C:/WindRiver/workspace/TMW2014/TMW2014/RobotMap.h:
@@ -1173,6 +1173,6 @@ C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDSource.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindowSendable.h:
 
-C:/WindRiver/workspace/TMW2014/TMW2014/CANJaguarTask.h:
+C:/WindRiver/workspace/TMW2014/TMW2014/CrabSpeed.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindow.h:

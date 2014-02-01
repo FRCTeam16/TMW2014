@@ -7,8 +7,6 @@
 /*       -fdollars-in-identifiers flag.                   */
 
 
-void _GLOBAL__I__ZN13CANJaguarTaskC2Ei();
-
 void _GLOBAL__I__ZN9CamPIDOutC2EP9CANJaguarS1_S1_();
 
 void _GLOBAL__I__ZN17AutonomousCommandC2Ev();
@@ -16,8 +14,6 @@ void _GLOBAL__I__ZN17AutonomousCommandC2Ev();
 void _GLOBAL__I__ZN8InitGyroC2Ev();
 
 void _GLOBAL__I__ZN15SetWheelOffsetsC2Ev();
-
-void _GLOBAL__I__ZN13JaguarSetTaskC2EPKcP9CANJaguar();
 
 void _GLOBAL__I__ZN2OIC2Ev();
 
@@ -88,12 +84,10 @@ void _GLOBAL__I__ZN11StringArray19STRING_ARRAY_RAW_IDE();
 extern void (*_ctors[])();
 void (*_ctors[])() =
     {
-    _GLOBAL__I__ZN13CANJaguarTaskC2Ei,
     _GLOBAL__I__ZN9CamPIDOutC2EP9CANJaguarS1_S1_,
     _GLOBAL__I__ZN17AutonomousCommandC2Ev,
     _GLOBAL__I__ZN8InitGyroC2Ev,
     _GLOBAL__I__ZN15SetWheelOffsetsC2Ev,
-    _GLOBAL__I__ZN13JaguarSetTaskC2EPKcP9CANJaguar,
     _GLOBAL__I__ZN2OIC2Ev,
     _GLOBAL__I__ZN13RAWCConstants17singletonInstanceE,
     _GLOBAL__I__ZN5Robot10driveTrainE,
@@ -130,8 +124,6 @@ void (*_ctors[])() =
     0
     };
 
-void _GLOBAL__D__ZN13CANJaguarTaskC2Ei();
-
 void _GLOBAL__D__ZN9CamPIDOutC2EP9CANJaguarS1_S1_();
 
 void _GLOBAL__D__ZN17AutonomousCommandC2Ev();
@@ -139,8 +131,6 @@ void _GLOBAL__D__ZN17AutonomousCommandC2Ev();
 void _GLOBAL__D__ZN8InitGyroC2Ev();
 
 void _GLOBAL__D__ZN15SetWheelOffsetsC2Ev();
-
-void _GLOBAL__D__ZN13JaguarSetTaskC2EPKcP9CANJaguar();
 
 void _GLOBAL__D__ZN2OIC2Ev();
 
@@ -201,12 +191,10 @@ void _GLOBAL__D__ZN11StringArray19STRING_ARRAY_RAW_IDE();
 extern void (*_dtors[])();
 void (*_dtors[])() =
     {
-    _GLOBAL__D__ZN13CANJaguarTaskC2Ei,
     _GLOBAL__D__ZN9CamPIDOutC2EP9CANJaguarS1_S1_,
     _GLOBAL__D__ZN17AutonomousCommandC2Ev,
     _GLOBAL__D__ZN8InitGyroC2Ev,
     _GLOBAL__D__ZN15SetWheelOffsetsC2Ev,
-    _GLOBAL__D__ZN13JaguarSetTaskC2EPKcP9CANJaguar,
     _GLOBAL__D__ZN2OIC2Ev,
     _GLOBAL__D__ZN13RAWCConstants17singletonInstanceE,
     _GLOBAL__D__ZN5Robot10driveTrainE,
