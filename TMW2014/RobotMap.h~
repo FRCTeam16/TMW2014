@@ -12,6 +12,7 @@
 #include "WPILib.h"
 #include "CamPIDOut.h"
 #include "BSGyro.h"
+#include "CrabSpeed.h"
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -40,6 +41,8 @@ public:
 	static Encoder* driveTrainWheelX;
 	static Encoder* driveTrainWheelY;
 	static Solenoid* driveTrainWheelLock;
+	static DigitalInput* driveTrainTargetLeft;
+	static DigitalOutput* driveTrainSendTarget;
 	static CANJaguar* shooterWindowMotors;
 	static CANJaguar* shooterCamLeft;
 	static CANJaguar* shooterCamRight;
@@ -55,6 +58,16 @@ public:
 	static BSGyro* driveTrainGyro;
 	static CamPIDOut* shooterCamOut;
 	static PIDController* shooterCamController;
+	
+	static CrabSpeed* CrabSpeedX;
+	static CrabSpeed* CrabSpeedY;
+	static CrabSpeed* CrabSpeedTwist;
+	
+	static PIDController* driveTrainDriveControlX;
+	static PIDController* driveTrainDriveControlY;
+	static PIDController* driveTrainDriveControlTwist;
+
+
 	
 	static void init();
 };

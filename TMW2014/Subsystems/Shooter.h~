@@ -46,5 +46,7 @@ private:
 	float stage1Voltage;
 	float camPosOffset;
 	float CorrectVoltage(float setpoint);
+	BSTimer* fireDelayTimer;
+	bool fireDelayFlag;
 };
 #endif

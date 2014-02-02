@@ -48,6 +48,7 @@ public:
 	static CANJaguar* shooterCamRight;
 	static AnalogChannel* shooterCamPos;
 	static Solenoid* shooterFingers;
+	static DigitalInput* shooterballPresent;
 	static CANJaguar* pickupBeaterBar;
 	static Compressor* pickupComp;
 	static Solenoid* pickupBeaterBarOut;
@@ -66,8 +67,6 @@ public:
 	static PIDController* driveTrainDriveControlX;
 	static PIDController* driveTrainDriveControlY;
 	static PIDController* driveTrainDriveControlTwist;
-
-
 	
 	static void init();
 };

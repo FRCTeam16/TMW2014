@@ -48,7 +48,6 @@ DriveTrain::DriveTrain() : Subsystem("DriveTrain") {
 	DriveControlX = RobotMap::driveTrainDriveControlX;
 	DriveControlY = RobotMap::driveTrainDriveControlY;
 	DriveControlTwist = RobotMap::driveTrainDriveControlTwist;
-
 }
     
 void DriveTrain::InitDefaultCommand() {

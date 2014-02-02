@@ -482,17 +482,17 @@ Children:
       Children: []
       Properties:
         Input Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
-            '13', '14']
+          choices: &id028 ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
+            '12', '13', '14']
           default: '1'
           name: Input Channel (Digital)
-          validators: [DigitalChannel]
+          validators: &id029 [DigitalChannel]
           value: '6'
         Input Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: ['1', '2']
+          choices: &id030 ['1', '2']
           default: '1'
           name: Input Module (Digital)
-          validators: [DigitalChannel]
+          validators: &id031 [DigitalChannel]
           value: '1'
     - Name: SendTarget
       Base: Digital Output
@@ -579,6 +579,22 @@ Children:
           name: Output Channel (Solenoid)
           validators: *id027
           value: '3'
+    - Name: ballPresent
+      Base: Digital Input
+      Children: []
+      Properties:
+        Input Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id028
+          default: '1'
+          name: Input Channel (Digital)
+          validators: *id029
+          value: '8'
+        Input Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id030
+          default: '1'
+          name: Input Module (Digital)
+          validators: *id031
+          value: '1'
     Properties:
       Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Default Command, type: Command, validators: null, value: None}
@@ -668,30 +684,30 @@ Children:
     Children: []
     Properties:
       Number: !!robotbuilder.data.properties.ChoicesProperty
-        choices: &id028 ['1', '2', '3', '4']
+        choices: &id032 ['1', '2', '3', '4']
         default: 1
         name: Number
-        validators: &id029 [Joystick]
+        validators: &id033 [Joystick]
         value: '1'
   - Name: DriverJoystickLeft
     Base: Joystick
     Children: []
     Properties:
       Number: !!robotbuilder.data.properties.ChoicesProperty
-        choices: *id028
+        choices: *id032
         default: 1
         name: Number
-        validators: *id029
+        validators: *id033
         value: '2'
   - Name: GamePad
     Base: Joystick
     Children: []
     Properties:
       Number: !!robotbuilder.data.properties.ChoicesProperty
-        choices: *id028
+        choices: *id032
         default: 1
         name: Number
-        validators: *id029
+        validators: *id033
         value: '3'
   Properties: {}
 - Name: Commands

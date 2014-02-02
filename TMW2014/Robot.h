@@ -49,7 +49,7 @@ private:
 	bool prevTrigger;
 	Preferences* Prefs;
 	typedef enum {fire2FromCenter, fire1}AutoProgram;
-	typedef enum {Initiate, FindTarget, FirstTurn, SecondTurn, Fire, LoadBall, DriveForward, End}AutoStep;
+	typedef enum {Initiate, FindTarget, FirstTurn, Fire, Chill, CollectBall, LoadBall, SecondTurn, DropPickup, DriveForward, End}AutoStep;
 	AutoStep autoStep;
 	AutoProgram autoProgram;
 	bool autoStepComplete;

@@ -56,7 +56,7 @@ void Robot::RobotInit() {
 	autoStepTimer->Start();
 }	
 void Robot::DisabledPeriodic() {
-//	SMDB();
+	SMDB();
 	
 	Scheduler::GetInstance()->Run();
 }
@@ -72,17 +72,29 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(FindTarget);
 		genericAutoProgram.push_back(FirstTurn);
 		genericAutoProgram.push_back(Fire);
+		genericAutoProgram.push_back(Chill);
+		genericAutoProgram.push_back(CollectBall);
 		genericAutoProgram.push_back(LoadBall);
 		genericAutoProgram.push_back(SecondTurn);
-		genericAutoProgram.push_back(Fire);
-		genericAutoProgram.push_back(DriveForward);
+		genericAutoProgram.push_back(DropPickup);
+//		genericAutoProgram.push_back(Fire);
+//		genericAutoProgram.push_back(DriveForward);
 		genericAutoProgram.push_back(End);
 		break;
 		
 	case fire1:
+		genericAutoProgram.push_back(Initiate);
+		genericAutoProgram.push_back(FindTarget);
+		genericAutoProgram.push_back(Fire);
+		genericAutoProgram.push_back(DriveForward);
+		genericAutoProgram.push_back(End);
 		break;
 	}
 	autoStep = genericAutoProgram[autoStepIncrementer];
+	
+	Robot::driveTrain->DriveControlX->Enable();
+	Robot::driveTrain->DriveControlY->Enable();
+	Robot::driveTrain->DriveControlTwist->Enable();
 }
 	
 void Robot::AutonomousPeriodic() {
@@ -93,6 +105,8 @@ void Robot::AutonomousPeriodic() {
 	float driveY = 0;
 	float driveTwist = 0;
 	bool fire = false;
+	
+	SMDB();
 	
 	switch(autoStep) {
 	case Initiate:
@@ -131,7 +145,7 @@ void Robot::AutonomousPeriodic() {
 		driveTwist = 10*turnDirection;
 		fire = false;
 		SmartDashboard::PutString("AutoStep", "FirstTurn");
-		if(Robot::driveTrain->DriveControlTwist->OnTarget()){
+		if(fabs(driveTwist - Robot::driveTrain->gyro->GetAngle()) < 1 && autoStepTimer->HasPeriodPassed(2.0)){
 			autoStepComplete = true;
 		}
 		break;
@@ -159,12 +173,24 @@ void Robot::AutonomousPeriodic() {
 		driveTwist = 0;
 		fire = true;
 		SmartDashboard::PutString("AutoStep", "Fire");
-		if(!Robot::shooter->GetFiring())
-			autoStepComplete = true;
-		fire = true;
+		autoStepComplete = true;
 		break;
 	
-	case LoadBall:
+	case Chill:
+		beaterBarOut = true;
+		wingsOut = true;
+		beaterBarSpeed = 0;
+		driveX = 0;
+		driveY = 0;
+		driveTwist = 0;
+		fire = false;
+		SmartDashboard::PutString("AutoStep", "CollectBall");
+		if(autoStepTimer->HasPeriodPassed(1.5))
+			autoStepComplete = true;
+		break;
+
+	
+	case CollectBall:
 		beaterBarOut = true;
 		wingsOut = true;
 		beaterBarSpeed = 1;
@@ -172,11 +198,38 @@ void Robot::AutonomousPeriodic() {
 		driveY = 0;
 		driveTwist = 0;
 		fire = false;
-		SmartDashboard::PutString("AutoStep", "LoadBall");
-		if(autoStepTimer->HasPeriodPassed(1.0))
+		SmartDashboard::PutString("AutoStep", "CollectBall");
+		if(autoStepTimer->HasPeriodPassed(2.0))
 			autoStepComplete = true;
 		break;
 		
+		
+	case LoadBall:
+		beaterBarOut = false;
+		wingsOut = true;
+		beaterBarSpeed = 0;
+		driveX = 0;
+		driveY = 0;
+		driveTwist = 0;
+		fire = false;
+		SmartDashboard::PutString("AutoStep", "LoadBall");
+		if(!Robot::shooter->ballPresent->Get())
+			autoStepComplete = true;
+		break;
+		
+	case DropPickup:
+		beaterBarOut = true;
+		wingsOut = true;
+		beaterBarSpeed = 0;
+		driveX = 0;
+		driveY = 0;
+		driveTwist = 0;
+		fire = false;
+		SmartDashboard::PutString("AutoStep", "DropPickup");
+		if(autoStepTimer->HasPeriodPassed(0.3))
+			autoStepComplete = true;
+		break;
+	
 	case DriveForward:
 		beaterBarOut = true;
 		wingsOut = true;
@@ -201,24 +254,28 @@ void Robot::AutonomousPeriodic() {
 		SmartDashboard::PutString("AutoStep", "End");
 		break;
 	}
+	
+	SmartDashboard::PutNumber("driveTwist", driveTwist);
+	
+	Robot::driveTrain->DriveControlX->SetSetpoint(driveX);
+	Robot::driveTrain->DriveControlY->SetSetpoint(driveY);
+	Robot::driveTrain->DriveControlTwist->SetSetpoint(driveTwist);
 		
 	Robot::pickup->beaterBarOut->Set(beaterBarOut);
 	Robot::pickup->wings->Set(wingsOut);
 	Robot::pickup->beaterBar->Set(beaterBarSpeed);
-	if(driveX == 0 && driveY == 0 && driveTwist == 0) {
-		Robot::driveTrain->Crab(0,0,0,false);
-	}
-	else {
-		Robot::driveTrain->DriveControlX->SetSetpoint(driveX);
-		Robot::driveTrain->DriveControlY->SetSetpoint(driveY);
-		Robot::driveTrain->DriveControlTwist->SetSetpoint(driveTwist);
-	}
+	
+	if(autoStep == FirstTurn)
+		Robot::driveTrain->Crab(.05*(driveTwist - Robot::driveTrain->gyro->GetAngle()), 0 ,0 ,true);
+	else
+		Robot::driveTrain->Crab(.02*(driveTwist - Robot::driveTrain->gyro->GetAngle()), 0 ,0 ,true);
+	
 	if(fire && !Robot::shooter->GetFiring())
-		Robot::shooter->Fire();		
-
+		Robot::shooter->AutoFire();		
+	
 	Robot::shooter->CamChecker();
 	
-if (autoStepComplete) {
+	if (autoStepComplete) {
 		autoStepTimer->Reset();
 		autoStepComplete = false;
 		autoStepIncrementer ++;
@@ -229,7 +286,6 @@ if (autoStepComplete) {
 			printf ("AutoProgram Vector Out of Range \n");
 		}
 	}
-
 }
 	
 void Robot::TeleopInit() {
@@ -237,12 +293,16 @@ void Robot::TeleopInit() {
 	// teleop starts running. If you want the autonomous to 
 	// continue until interrupted by another command, remove
 	// this line or comment it out.
+
+	Robot::driveTrain->DriveControlX->Disable();
+	Robot::driveTrain->DriveControlY->Disable();
+	Robot::driveTrain->DriveControlTwist->Disable();
 	
 	Robot::pickup->beaterBarOut->Set(false);
 }
 	
 void Robot::TeleopPeriodic() {
-//	SMDB();
+	SMDB();
 		
 /******************DRIVETRAIN**************************************/	
 	
@@ -270,18 +330,22 @@ void Robot::TeleopPeriodic() {
 	}
 	else {
 		Robot::shooter->CamChecker(); //Runs every cycle to control cam postion
-		if(Robot::oi->getGamePad()->GetRawButton(4) && !Robot::shooter->GetFiring())
-			Robot::shooter->Fire();		
+		if(Robot::oi->getGamePad()->GetRawButton(4) && !Robot::shooter->GetFiring()) {
+			Robot::pickup->beaterBarOut->Set(true);
+			Robot::shooter->Fire();			
+		}
 	}
 	
 /******************BEATERBAR**************************************/	
 	
 	Robot::pickup->beaterBar->Set((Robot::oi->getGamePad()->GetRawAxis(4)));
 	
-	Robot::shooter->fingers->Set(fabs(Robot::oi->getGamePad()->GetRawAxis(4)) > .2);
-		
-	if(Robot::oi->getGamePad()->GetRawButton(2))
+	Robot::shooter->fingers->Set(Robot::oi->getGamePad()->GetRawButton(2));
+	
+	if(Robot::oi->getGamePad()->GetRawButton(7))
 		Robot::pickup->wings->Set(true);
+	if(Robot::oi->getGamePad()->GetRawButton(5))
+		Robot::pickup->wings->Set(false);
 	
 	if (Robot::oi->getGamePad()->GetRawButton(8))
 		Robot::pickup->beaterBarOut->Set(true);
@@ -346,5 +410,10 @@ void Robot::SMDB() {
 	SmartDashboard::PutBoolean("11-CamLeftJagAlive",Robot::shooter->camLeft->IsAlive());
 	SmartDashboard::PutBoolean("12-CamRightJagAlive",Robot::shooter->camRight->IsAlive());
 //	SmartDashboard::PutBoolean("13-BeaterBarJagAlive",Robot::pickup->beaterBar->IsAlive());
+	
+	SmartDashboard::PutNumber("PIDTwistOutput", Robot::driveTrain->DriveControlTwist->Get());
+	SmartDashboard::PutNumber("PIDTwistError", Robot::driveTrain->DriveControlTwist->GetError());
+	SmartDashboard::PutNumber("PIDTwistSetpoint", Robot::driveTrain->DriveControlTwist->GetSetpoint());
+	
 }
 START_ROBOT_CLASS(Robot);

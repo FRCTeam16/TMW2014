@@ -57,5 +57,6 @@ private:
 	int autoStepIncrementer;
 	vector<AutoStep> genericAutoProgram;
 	SendableChooser* autoChooser;
+	int turnDirection;
 };
 #endif

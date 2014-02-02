@@ -126,6 +126,5 @@ public:
 	PIDController* DriveControlX;
 	PIDController* DriveControlY;
 	PIDController* DriveControlTwist;
-
 };
 #endif

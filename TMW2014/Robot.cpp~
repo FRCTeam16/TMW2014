@@ -46,6 +46,7 @@ void Robot::RobotInit() {
 	autoProgram = fire2FromCenter;
 	autoStepComplete = false;
 	autoStepIncrementer = 0;
+	turnDirection = 1;
 	
 	autoChooser = new SendableChooser();
 	autoChooser->AddDefault("1. Fire 1", (void*)fire1);
@@ -79,9 +80,13 @@ void Robot::AutonomousInit() {
 		break;
 		
 	case fire1:
+		genericAutoProgram.push_back(Initiate);
+		genericAutoProgram.push_back(FindTarget);
+		genericAutoProgram.push_back(Fire);
+		genericAutoProgram.push_back(DriveForward);
+		genericAutoProgram.push_back(End);
 		break;
 	}
-	autoStepIncrementer = 0;
 	autoStep = genericAutoProgram[autoStepIncrementer];
 }
 	
@@ -92,15 +97,17 @@ void Robot::AutonomousPeriodic() {
 	float driveX = 0;
 	float driveY = 0;
 	float driveTwist = 0;
+	bool fire = false;
 	
 	switch(autoStep) {
 	case Initiate:
 		beaterBarOut = true;
 		wingsOut = true;
-		beaterBarSpeed = 1;
+		beaterBarSpeed = 0;
 		driveX = 0;
 		driveY = 0;
 		driveTwist = 0;
+		fire = false;
 		SmartDashboard::PutString("AutoStep", "Initiate");
 		if(autoStepTimer->HasPeriodPassed(1.0))
 			autoStepComplete = true;
@@ -109,51 +116,57 @@ void Robot::AutonomousPeriodic() {
 	case FindTarget:
 		beaterBarOut = true;
 		wingsOut = true;
-		beaterBarSpeed = 1;
+		beaterBarSpeed = 0;
 		driveX = 0;
 		driveY = 0;
 		driveTwist = 0;
-		if(true)
+		fire = false;
+		if(Robot::driveTrain->targetLeft->Get())
 			turnDirection = -1;
 		SmartDashboard::PutString("AutoStep", "FindTarget");
-		if(autoStepTimer->HasPeriodPassed(1.0))
-			autoStepComplete = true;
+		autoStepComplete = true;
 		break;
 	
 	case FirstTurn:
 		beaterBarOut = true;
 		wingsOut = true;
-		beaterBarSpeed = 1;
+		beaterBarSpeed = 0;
 		driveX = 0;
 		driveY = 0;
 		driveTwist = 10*turnDirection;
+		fire = false;
 		SmartDashboard::PutString("AutoStep", "FirstTurn");
-		if(autoStepTimer->HasPeriodPassed(1.0))
+		if(Robot::driveTrain->DriveControlTwist->OnTarget()){
 			autoStepComplete = true;
+		}
 		break;
 	
 	case SecondTurn:
 		beaterBarOut = true;
 		wingsOut = true;
-		beaterBarSpeed = 1;
+		beaterBarSpeed = 0;
 		driveX = 0;
 		driveY = 0;
-		driveTwist = 10*turnDirection;
-		SmartDashboard::PutString("AutoStep", "SeconTurn");
-		if(autoStepTimer->HasPeriodPassed(1.0))
+		driveTwist = 10*-turnDirection;
+		fire = false;
+		SmartDashboard::PutString("AutoStep", "SecondTurn");
+		if(Robot::driveTrain->DriveControlTwist->OnTarget()){
 			autoStepComplete = true;
+		}
 		break;
 		
 	case Fire:
 		beaterBarOut = true;
 		wingsOut = true;
-		beaterBarSpeed = 1;
+		beaterBarSpeed = 0;
 		driveX = 0;
 		driveY = 0;
 		driveTwist = 0;
+		fire = true;
 		SmartDashboard::PutString("AutoStep", "Fire");
-		if(autoStepTimer->HasPeriodPassed(1.0))
+		if(!Robot::shooter->GetFiring())
 			autoStepComplete = true;
+		fire = true;
 		break;
 	
 	case LoadBall:
@@ -163,6 +176,7 @@ void Robot::AutonomousPeriodic() {
 		driveX = 0;
 		driveY = 0;
 		driveTwist = 0;
+		fire = false;
 		SmartDashboard::PutString("AutoStep", "LoadBall");
 		if(autoStepTimer->HasPeriodPassed(1.0))
 			autoStepComplete = true;
@@ -171,10 +185,11 @@ void Robot::AutonomousPeriodic() {
 	case DriveForward:
 		beaterBarOut = true;
 		wingsOut = true;
-		beaterBarSpeed = 1;
+		beaterBarSpeed = 0;
 		driveX = 0;
 		driveY = 0;
 		driveTwist = 0;
+		fire = false;
 		SmartDashboard::PutString("AutoStep", "DriveForward");
 		if(autoStepTimer->HasPeriodPassed(1.0))
 			autoStepComplete = true;
@@ -183,24 +198,43 @@ void Robot::AutonomousPeriodic() {
 	case End:
 		beaterBarOut = true;
 		wingsOut = true;
-		beaterBarSpeed = 1;
+		beaterBarSpeed =0;
 		driveX = 0;
 		driveY = 0;
 		driveTwist = 0;
+		fire = false;
 		SmartDashboard::PutString("AutoStep", "End");
 		break;
 	}
 		
-if (autoStepComplete)
-	autoStepTimer->Reset();
-	autoStepComplete = false;
-	autoStepIncrementer ++;
-	try {
-		autoStep = genericAutoProgram.at(autoStepIncrementer);
+	Robot::pickup->beaterBarOut->Set(beaterBarOut);
+	Robot::pickup->wings->Set(wingsOut);
+	Robot::pickup->beaterBar->Set(beaterBarSpeed);
+	if(driveX == 0 && driveY == 0 && driveTwist == 0) {
+		Robot::driveTrain->Crab(0,0,0,false);
 	}
-	catch (const out_of_range& oor) {
-		printf ("AutoProgram Vector Out of Range \n");
+	else {
+		Robot::driveTrain->DriveControlX->SetSetpoint(driveX);
+		Robot::driveTrain->DriveControlY->SetSetpoint(driveY);
+		Robot::driveTrain->DriveControlTwist->SetSetpoint(driveTwist);
 	}
+	if(fire && !Robot::shooter->GetFiring())
+		Robot::shooter->Fire();		
+
+	Robot::shooter->CamChecker();
+	
+	if (autoStepComplete) {
+		autoStepTimer->Reset();
+		autoStepComplete = false;
+		autoStepIncrementer ++;
+		try {
+			autoStep = genericAutoProgram.at(autoStepIncrementer);
+		}
+		catch (const out_of_range& oor) {
+			printf ("AutoProgram Vector Out of Range \n");
+		}
+	}
+
 }
 	
 void Robot::TeleopInit() {
@@ -208,6 +242,8 @@ void Robot::TeleopInit() {
 	// teleop starts running. If you want the autonomous to 
 	// continue until interrupted by another command, remove
 	// this line or comment it out.
+	
+	Robot::pickup->beaterBarOut->Set(false);
 }
 	
 void Robot::TeleopPeriodic() {
@@ -239,18 +275,23 @@ void Robot::TeleopPeriodic() {
 	}
 	else {
 		Robot::shooter->CamChecker(); //Runs every cycle to control cam postion
-		if(Robot::oi->getGamePad()->GetRawButton(4) && !Robot::shooter->GetFiring())
-			Robot::shooter->Fire();		
+		if(Robot::oi->getGamePad()->GetRawButton(4) && !Robot::shooter->GetFiring()) {
+			Robot::pickup->beaterBarOut->Set(true);
+			Robot::shooter->Fire();			
+		}
+
 	}
 	
 /******************BEATERBAR**************************************/	
 	
 	Robot::pickup->beaterBar->Set((Robot::oi->getGamePad()->GetRawAxis(4)));
 	
-	Robot::shooter->fingers->Set(fabs(Robot::oi->getGamePad()->GetRawAxis(4)) > .2);
-		
-	if(Robot::oi->getGamePad()->GetRawButton(2))
+	Robot::shooter->fingers->Set(Robot::oi->getGamePad()->GetRawButton(2));
+	
+	if(Robot::oi->getGamePad()->GetRawButton(7))
 		Robot::pickup->wings->Set(true);
+	if(Robot::oi->getGamePad()->GetRawButton(5))
+		Robot::pickup->wings->Set(false);
 	
 	if (Robot::oi->getGamePad()->GetRawButton(8))
 		Robot::pickup->beaterBarOut->Set(true);
