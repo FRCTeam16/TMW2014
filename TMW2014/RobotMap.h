@@ -47,8 +47,9 @@ public:
 	static CANJaguar* shooterCamLeft;
 	static CANJaguar* shooterCamRight;
 	static AnalogChannel* shooterCamPos;
+	static AnalogChannel* shooterBackupCamPos;
 	static Solenoid* shooterFingers;
-	static DigitalInput* shooterballPresent;
+	static DigitalInput* shooterBallPresent;
 	static CANJaguar* pickupBeaterBar;
 	static Compressor* pickupComp;
 	static Solenoid* pickupBeaterBarOut;
@@ -59,6 +60,7 @@ public:
 	static BSGyro* driveTrainGyro;
 	static CamPIDOut* shooterCamOut;
 	static PIDController* shooterCamController;
+//	static PIDController* shooterBackupCamController;
 	
 	static CrabSpeed* CrabSpeedX;
 	static CrabSpeed* CrabSpeedY;

@@ -563,6 +563,22 @@ Children:
           name: Input Channel (Analog)
           validators: *id009
           value: '6'
+    - Name: BackupCamPos
+      Base: Analog Input
+      Children: []
+      Properties:
+        Input Module (Analog): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id006
+          default: '1'
+          name: Input Module (Analog)
+          validators: *id007
+          value: '1'
+        Input Channel (Analog): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id008
+          default: '1'
+          name: Input Channel (Analog)
+          validators: *id009
+          value: '7'
     - Name: Fingers
       Base: Solenoid
       Children: []
@@ -579,7 +595,7 @@ Children:
           name: Output Channel (Solenoid)
           validators: *id027
           value: '3'
-    - Name: ballPresent
+    - Name: BallPresent
       Base: Digital Input
       Children: []
       Properties:

@@ -48,12 +48,14 @@ private:
 	double RROffset;
 	bool prevTrigger;
 	Preferences* Prefs;
-	typedef enum {fire2FromCenter, fire1}AutoProgram;
-	typedef enum {Initiate, FindTarget, FirstTurn, Fire, Chill, CollectBall, LoadBall, SecondTurn, DropPickup, DriveForward, End}AutoStep;
+	typedef enum {fire2FromCenter, fire1Left, fire1Right}AutoProgram;
+	typedef enum {Initiate, FindTarget, FirstTurn, Fire, Chill, WaitToFire, CollectBall, LoadBall, SecondTurn, DropPickup, DriveForward, End}AutoStep;
 	AutoStep autoStep;
 	AutoProgram autoProgram;
 	bool autoStepComplete;
 	BSTimer* autoStepTimer;
+	BSTimer* onTargetTimer;
+	BSTimer* autonomousTimer;
 	int autoStepIncrementer;
 	vector<AutoStep> genericAutoProgram;
 	SendableChooser* autoChooser;
