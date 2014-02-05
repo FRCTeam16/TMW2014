@@ -34,6 +34,7 @@ Shooter::Shooter() : Subsystem("Shooter") {
 	backupCamPosStatus = false;
 	previousCamPos = 0;
 	previousBackupCamPos = 0;
+	fireDelay = .3;
 }
     
 void Shooter::InitDefaultCommand() {
@@ -47,7 +48,7 @@ void Shooter::InitDefaultCommand() {
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
 void Shooter::CamChecker() {
-	if(fireDelayTimer->HasPeriodPassed(.3) && fireDelayFlag){
+	if(fireDelayTimer->HasPeriodPassed(fireDelay) && fireDelayFlag && !ballPresent->Get()){
 		fireFlag = true;
 		fireTimer->Reset();
 		fireDelayFlag = false;
@@ -69,7 +70,7 @@ void Shooter::CamChecker() {
 }
 
 void Shooter::PrimaryController() {
-	if(!fireTimer->HasPeriodPassed(.5) || GetCorrectedCamPos() > fireSetpoint) {
+	if(!fireTimer->HasPeriodPassed(.3) || GetCorrectedCamPos() > fireSetpoint) {
 		RunCams(1);
 	}
 	else {
@@ -78,7 +79,7 @@ void Shooter::PrimaryController() {
 	}
 }
 void Shooter::BackupController() {
-	if(!fireTimer->HasPeriodPassed(.5) || GetCorrectedCamPos() > fireSetpoint) {
+	if(!fireTimer->HasPeriodPassed(.3) || GetCorrectedCamPos() > fireSetpoint) {
 		RunCams(1);
 	}
 	else {
@@ -86,18 +87,14 @@ void Shooter::BackupController() {
 		RunCams(0);
 	}
 }
-void Shooter::Fire() {
-	if(!fireDelayFlag && !ballPresent->Get()) {
+void Shooter::Fire(float delay) {
+	if(!fireDelayFlag) {
 		fireDelayTimer->Reset();
+		fireDelay = delay;
 		fireDelayFlag = true;
 	}
 }
-void Shooter::AutoFire() {
-	if(!fireFlag) {
-		fireFlag = true;
-		fireTimer->Reset();
-	}
-}
+
 void Shooter::RunCams(float output) {
 	float f_output;
 	

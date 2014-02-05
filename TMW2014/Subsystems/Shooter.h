@@ -35,8 +35,7 @@ public:
 	Shooter();
 	void InitDefaultCommand();
 	void CamChecker();
-	void Fire();
-	void AutoFire();
+	void Fire(float delay);
 	bool GetFiring();
 	float GetCorrectedCamPos();
 	static BSTimer* fireTimer;
@@ -56,6 +55,7 @@ private:
 	float CorrectVoltage(float setpoint);
 	BSTimer* fireDelayTimer;
 	bool fireDelayFlag;
+	float fireDelay;
 	bool camPosStatus;
 	bool backupCamPosStatus;
 	float previousCamPos;

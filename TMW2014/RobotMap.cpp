@@ -178,8 +178,9 @@ void RobotMap::init() {
     driveTrainRearLeftPos->SetVoltageForPID(true);
     driveTrainRearRightPos->SetVoltageForPID(true);
         
-	driveTrainGyro = new BSGyro(1, 1, 487740, 0);
-	lw->AddSensor("DriveTrain", "Gyro", driveTrainGyro);
+//	driveTrainGyro = new BSGyro(1, 1, 487740, 0);
+    driveTrainGyro = new BSGyro(1, 1);
+    lw->AddSensor("DriveTrain", "Gyro", driveTrainGyro);
 	driveTrainGyro->SetSensitivity(0.007);
 	
 	CrabSpeedX = new CrabSpeed();
@@ -193,5 +194,5 @@ void RobotMap::init() {
 	driveTrainDriveControlTwist = new PIDController(0.1, 0.0, 0.0, driveTrainGyro, CrabSpeedTwist, 0.02);
 	driveTrainDriveControlTwist->SetContinuous(true);
 	driveTrainDriveControlTwist->SetInputRange(-360.0,360.0);
-	driveTrainDriveControlY->SetAbsoluteTolerance(1.0);
+	driveTrainDriveControlTwist->SetAbsoluteTolerance(2.0);
 }
