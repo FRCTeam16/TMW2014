@@ -49,9 +49,10 @@ void Robot::RobotInit() {
 	turnDirection = 0;
 	
 	autoChooser = new SendableChooser();
-	autoChooser->AddDefault("1. Fire 1 From Left", (void*)fire1Left);
-	autoChooser->AddObject("2. Fire 1 From Right", (void*)fire1Right);
+	autoChooser->AddDefault("1. Shoot 1 From Left", (void*)fire1Left);
+	autoChooser->AddObject("2. Shoot 1 From Right", (void*)fire1Right);
 	autoChooser->AddObject("3. Shoot 2 From Center", (void*)fire2FromCenter);
+	autoChooser->AddObject("4. Shoot 3 From Center", (void*)fire3FromCenter);
 	SmartDashboard::PutData("Autonomous Chooser", autoChooser);
 	autoStepTimer = new BSTimer();
 	autoStepTimer->Start();
@@ -61,6 +62,8 @@ void Robot::RobotInit() {
 	autonomousTimer->Start();
 	beaterBarTimer = new BSTimer();
 	beaterBarTimer->Start();
+	
+	Robot::driveTrain->sendProcessImage->Set(1);
 }	
 void Robot::DisabledPeriodic() {
 	if(Robot::oi->getDriverJoystickRight()->GetRawButton(7))
@@ -94,6 +97,25 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(DriveForward);
 		genericAutoProgram.push_back(End);
 		break;
+
+	case fire3FromCenter:
+		genericAutoProgram.push_back(Initiate);
+		genericAutoProgram.push_back(FindTarget);
+		genericAutoProgram.push_back(FirstTurn);
+		genericAutoProgram.push_back(Fire);
+		genericAutoProgram.push_back(CollectBall);
+		genericAutoProgram.push_back(LoadBall);
+		genericAutoProgram.push_back(SecondTurn);
+		genericAutoProgram.push_back(DropPickup);
+		genericAutoProgram.push_back(Fire);		
+		genericAutoProgram.push_back(CollectBall);
+		genericAutoProgram.push_back(LoadBall);
+		genericAutoProgram.push_back(DropPickup);
+		genericAutoProgram.push_back(Fire);		
+		genericAutoProgram.push_back(Chill);
+		genericAutoProgram.push_back(DriveForward);
+		genericAutoProgram.push_back(End);
+		break;
 		
 	case fire1Left:
 		genericAutoProgram.push_back(Initiate);
@@ -115,8 +137,6 @@ void Robot::AutonomousInit() {
 	}
 	autoStep = genericAutoProgram[autoStepIncrementer];
 	
-	Robot::driveTrain->DriveControlX->Enable();
-	Robot::driveTrain->DriveControlY->Enable();
 	Robot::driveTrain->DriveControlTwist->Enable();
 }
 	
@@ -134,18 +154,21 @@ void Robot::AutonomousPeriodic() {
 	
 	switch(autoStep) {
 	case Initiate:
-		beaterBarOut = true;
+		if(autoProgram == fire3FromCenter)
+			beaterBarOut = false;
+		else
+			beaterBarOut = true;
 		wingsOut = false;
 		beaterBarSpeed = 0;
 		drive = false;
-		fire = false;
+		fire = true;
 		SmartDashboard::PutString("AutoStep", "Initiate");
 		if(autoStepTimer->HasPeriodPassed(.5))
 			autoStepComplete = true;
 		break;
 		
 	case FindTarget:
-		beaterBarOut = true;
+		beaterBarOut = Robot::pickup->beaterBarOut->Get();
 		wingsOut = false;
 		beaterBarSpeed = 0;
 		drive = false;
@@ -155,6 +178,7 @@ void Robot::AutonomousPeriodic() {
 		else
 			turnDirection = 1;
 		SmartDashboard::PutString("AutoStep", "FindTarget");
+		Robot::driveTrain->sendProcessImage->Set(1);
 		autoStepComplete = true;
 		break;
 		
@@ -173,14 +197,14 @@ void Robot::AutonomousPeriodic() {
 		break;
 	
 	case FirstTurn:
-		beaterBarOut = true;
+		beaterBarOut = Robot::pickup->beaterBarOut->Get();
 		wingsOut = false;
 		beaterBarSpeed = 0;
 		drive = true;
 		driveX = 0;
 		driveY = 0;
 		driveTwist = 10*turnDirection;
-		Robot::driveTrain->DriveControlTwist->SetPID(.03, 0, .01);
+		Robot::driveTrain->DriveControlTwist->SetPID(.035, 0, .01);
 		fire = false;
 		SmartDashboard::PutString("AutoStep", "FirstTurn");
 		if(!Robot::driveTrain->DriveControlTwist->OnTarget()) {
@@ -189,9 +213,6 @@ void Robot::AutonomousPeriodic() {
 		if(onTargetTimer->HasPeriodPassed(.3)){
 			autoStepComplete = true;
 		}
-		SmartDashboard::PutNumber("OnTargetTimer", onTargetTimer->Get());
-		SmartDashboard::PutBoolean("TwistOnTarget", Robot::driveTrain->DriveControlTwist->OnTarget());
-		SmartDashboard::PutNumber("TwistError", Robot::driveTrain->DriveControlTwist->GetError());
 		break;
 	
 	case SecondTurn:
@@ -202,7 +223,7 @@ void Robot::AutonomousPeriodic() {
 		driveX = 0;
 		driveY = 0;
 		driveTwist = 10*-turnDirection;
-		Robot::driveTrain->DriveControlTwist->SetPID(.02, 0, 0);
+		Robot::driveTrain->DriveControlTwist->SetPID(.025, 0, .01);
 		fire = false;
 		SmartDashboard::PutString("AutoStep", "SecondTurn");
 		if(!Robot::driveTrain->DriveControlTwist->OnTarget()) {
@@ -264,7 +285,7 @@ void Robot::AutonomousPeriodic() {
 		drive = false;
 		fire = false;
 		SmartDashboard::PutString("AutoStep", "DropPickup");
-		if(autoStepTimer->HasPeriodPassed(0.3))
+		if(autoStepTimer->HasPeriodPassed(0.6))
 			autoStepComplete = true;
 		break;
 	
@@ -297,8 +318,6 @@ void Robot::AutonomousPeriodic() {
 	Robot::pickup->wings->Set(wingsOut);
 	Robot::pickup->beaterBar->Set(beaterBarSpeed);
 /***********************Driving****************************/	
-	Robot::driveTrain->DriveControlX->SetSetpoint(driveX);
-	Robot::driveTrain->DriveControlY->SetSetpoint(driveY);
 	Robot::driveTrain->DriveControlTwist->SetSetpoint(driveTwist);
 	if(drive)
 		Robot::driveTrain->Crab(Robot::driveTrain->CrabSpeedTwist->Get(), driveY, driveX, true);	
@@ -306,7 +325,7 @@ void Robot::AutonomousPeriodic() {
 		Robot::driveTrain->Crab(0,0,0,false);
 /***********************Shooter****************************/		
 	if(fire)
-		Robot::shooter->Fire(0);		
+		Robot::shooter->Fire(0, false);		
 	
 	Robot::shooter->CamChecker();
 /***********************Increment Through Program****************************/	
@@ -329,8 +348,6 @@ void Robot::TeleopInit() {
 	// teleop starts running. If you want the autonomous to 
 	// continue until interrupted by another command, remove
 	// this line or comment it out.
-	Robot::driveTrain->DriveControlX->Disable();
-	Robot::driveTrain->DriveControlY->Disable();
 	Robot::driveTrain->DriveControlTwist->Disable();
 }
 	
@@ -364,7 +381,7 @@ void Robot::TeleopPeriodic() {
 			if(!Robot::pickup->beaterBarOut->Get())
 				beaterBarTimer->Reset();
 			Robot::pickup->beaterBarOut->Set(true);			
-			Robot::shooter->Fire(0.3 - beaterBarTimer->Get());
+			Robot::shooter->Fire(0.6 - beaterBarTimer->Get(), true);
 		}
 	}
 	
@@ -394,6 +411,7 @@ void Robot::SMDB() {
 	//Joystick Variables
 	SmartDashboard::PutNumber("StickMagnitude",Robot::oi->getDriverJoystickRight()->GetMagnitude());
 	SmartDashboard::PutNumber("StickDirection",Robot::oi->getDriverJoystickRight()->GetDirectionRadians());
+//	SmartDashboard::PutNumber("LeftStickX", Robot::oi->getDriverJoystickLeft()->GetX());
 	SmartDashboard::PutNumber("StickTwist",Robot::oi->getDriverJoystickRight()->GetTwist());
 	SmartDashboard::PutNumber("ScaledRadians",Robot::oi->getScaledJoystickRadians());
 	SmartDashboard::PutNumber("ScalingFactor",Robot::oi->getJoystickTwist());

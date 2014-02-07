@@ -35,7 +35,7 @@ public:
 	Shooter();
 	void InitDefaultCommand();
 	void CamChecker();
-	void Fire(float delay);
+	void Fire(float delay, bool resetBeaterBar);
 	bool GetFiring();
 	float GetCorrectedCamPos();
 	static BSTimer* fireTimer;
@@ -60,5 +60,6 @@ private:
 	bool backupCamPosStatus;
 	float previousCamPos;
 	float previousBackupCamPos;
+	bool resetBeaterBar;
 };
 #endif

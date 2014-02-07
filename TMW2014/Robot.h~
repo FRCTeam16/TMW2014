@@ -56,6 +56,7 @@ private:
 	BSTimer* autoStepTimer;
 	BSTimer* onTargetTimer;
 	BSTimer* autonomousTimer;
+	BSTimer* beaterBarTimer;
 	int autoStepIncrementer;
 	vector<AutoStep> genericAutoProgram;
 	SendableChooser* autoChooser;
