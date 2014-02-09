@@ -43,6 +43,7 @@ public:
 	bool GetCamPosStatus();
 	bool GetBackupCamPosStatus();
 	void Reset();
+	void RelieveStress();
 	
 private:
 	void PrimaryController();
@@ -61,5 +62,6 @@ private:
 	float previousCamPos;
 	float previousBackupCamPos;
 	bool resetBeaterBar;
+	float stressRelieveSetpoint;
 };
 #endif

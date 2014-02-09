@@ -38,10 +38,9 @@ public:
 	static AnalogChannel* driveTrainRearRightPos;
 	static CANJaguar* driveTrainRearRightSteer;
 	static PIDController* driveTrainRearRight;
-	static Solenoid* driveTrainWheelLock;
-	static DigitalInput* driveTrainTargetLeft;
 	static DigitalOutput* driveTrainSendProcessImage;
-	static DigitalInput* driveTrainReservedOdroidInput;
+	static DigitalInput* driveTrainTargetLeft;
+	static DigitalInput* driveTrainOdroidHeartBeat;
 	static CANJaguar* shooterWindowMotors;
 	static CANJaguar* shooterCamLeft;
 	static CANJaguar* shooterCamRight;

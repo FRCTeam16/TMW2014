@@ -97,7 +97,6 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(DriveForward);
 		genericAutoProgram.push_back(End);
 		break;
-
 	case fire3FromCenter:
 		genericAutoProgram.push_back(Initiate);
 		genericAutoProgram.push_back(FindTarget);
@@ -210,7 +209,7 @@ void Robot::AutonomousPeriodic() {
 		if(!Robot::driveTrain->DriveControlTwist->OnTarget()) {
 			onTargetTimer->Reset();
 		}
-		if(onTargetTimer->HasPeriodPassed(.3)){
+		if(onTargetTimer->HasPeriodPassed(.3) && Robot::shooter->GetCorrectedCamPos() < 1.0){
 			autoStepComplete = true;
 		}
 		break;
@@ -229,7 +228,7 @@ void Robot::AutonomousPeriodic() {
 		if(!Robot::driveTrain->DriveControlTwist->OnTarget()) {
 			onTargetTimer->Reset();
 		}
-		if(onTargetTimer->HasPeriodPassed(.3)){
+		if(onTargetTimer->HasPeriodPassed(.3) && Robot::shooter->GetCorrectedCamPos() < 1.0){
 			autoStepComplete = true;
 		}
 		break;
@@ -352,6 +351,7 @@ void Robot::TeleopInit() {
 }
 	
 void Robot::TeleopPeriodic() {
+	
 	if(Robot::oi->getDriverJoystickRight()->GetRawButton(7))
 	SMDB();
 		
@@ -371,9 +371,22 @@ void Robot::TeleopPeriodic() {
 		//Robot::driveTrain->Steer(Robot::oi->getScaledJoystickRadians(),Robot::oi->getJoystickMagnitude(),0.5);
 		Robot::driveTrain->Steer(Robot::oi->getLeftJoystickXRadians(),Robot::oi->getJoystickY(),0.5);
 	}
-/******************SHOOTER**************************************/	
+/******************SHOOTER**************************************/
+	if(Robot::oi->getDriverJoystickRight()->GetRawButton(9)){
+		Robot::shooter->RelieveStress();
+	}
+	if(Robot::oi->getDriverJoystickRight()->GetRawButton(11)){
+			Robot::shooter->Reset();
+	}
+	
 	if(Robot::oi->getGamePad()->GetRawButton(10)){
 		Robot::shooter->RunCams(-Robot::oi->getGamePad()->GetRawAxis(2));
+	}
+	else if(Robot::oi->getDriverJoystickRight()->GetRawButton(9)){
+		Robot::shooter->RelieveStress();
+	}
+	else if(Robot::oi->getDriverJoystickRight()->GetRawButton(11)){
+		Robot::shooter->Reset();
 	}
 	else {
 		Robot::shooter->CamChecker(); //Runs every cycle to control cam postion
@@ -465,6 +478,9 @@ void Robot::SMDB() {
 	SmartDashboard::PutNumber("PIDTwistOutput", Robot::driveTrain->DriveControlTwist->Get());
 	SmartDashboard::PutNumber("PIDTwistError", Robot::driveTrain->DriveControlTwist->GetError());
 	SmartDashboard::PutNumber("PIDTwistSetpoint", Robot::driveTrain->DriveControlTwist->GetSetpoint());
+	SmartDashboard::PutBoolean("targetleft",Robot::driveTrain->targetLeft->Get());
+	SmartDashboard::PutBoolean("odroidHeartBeat",Robot::driveTrain->odroidHeartBeat->Get());
+	
 	
 }
 START_ROBOT_CLASS(Robot);

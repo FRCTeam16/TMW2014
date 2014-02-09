@@ -38,11 +38,9 @@ public:
 	static AnalogChannel* driveTrainRearRightPos;
 	static CANJaguar* driveTrainRearRightSteer;
 	static PIDController* driveTrainRearRight;
-	static Encoder* driveTrainWheelX;
-	static Encoder* driveTrainWheelY;
-	static Solenoid* driveTrainWheelLock;
-	static DigitalInput* driveTrainTargetLeft;
-	static DigitalOutput* driveTrainSendTarget;
+	static DigitalOutput* driveTrainSendProcessImage;
+	static DigitalInput* driveTrainTagetLeft;
+	static DigitalInput* driveTrainOdroidHeartBeat;
 	static CANJaguar* shooterWindowMotors;
 	static CANJaguar* shooterCamLeft;
 	static CANJaguar* shooterCamRight;
@@ -62,12 +60,8 @@ public:
 	static PIDController* shooterCamController;
 //	static PIDController* shooterBackupCamController;
 	
-	static CrabSpeed* CrabSpeedX;
-	static CrabSpeed* CrabSpeedY;
 	static CrabSpeed* CrabSpeedTwist;
 	
-	static PIDController* driveTrainDriveControlX;
-	static PIDController* driveTrainDriveControlY;
 	static PIDController* driveTrainDriveControlTwist;
 	
 	static void init();

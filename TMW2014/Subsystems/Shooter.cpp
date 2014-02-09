@@ -23,6 +23,7 @@ Shooter::Shooter() : Subsystem("Shooter") {
 	fireFlag = false;
 	camMotorRatio = .80;
 	fireSetpoint = 0.1;
+	stressRelieveSetpoint = 3.5;
 	camPosOffset = 4.46;
 	backupCamPosOffset = 0;//NEED TO SET THIS
 	fireTimer = new BSTimer();
@@ -49,13 +50,15 @@ void Shooter::InitDefaultCommand() {
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
 void Shooter::CamChecker() {
-	if(fireDelayTimer->HasPeriodPassed(fireDelay) && fireDelayFlag){
+	if(fireDelayTimer->HasPeriodPassed(fireDelay) && fireDelayFlag)
+	{
 		fireFlag = true;
 		fireTimer->Reset();
 		fireDelayFlag = false;
-		}
+	}
 	
-	if(fireFlag && !fireTimer->HasPeriodPassed(3.0)) {
+	if(fireFlag && !fireTimer->HasPeriodPassed(3.0)) 
+	{
 		if(camPosStatus)
 			PrimaryController();
 		else if(backupCamPosStatus)
@@ -65,8 +68,11 @@ void Shooter::CamChecker() {
 		}
 	}
 	else
+	{
 		RunCams(0);
+	}
 }
+
 void Shooter::PrimaryController() {
 	if(!fireTimer->HasPeriodPassed(.2) || GetCorrectedCamPos() > fireSetpoint) {
 		RunCams(1);
@@ -124,6 +130,20 @@ void Shooter::RunCams(float output) {
 	camRight->Set(-camMotorRatio*f_output);
 	
 }
+
+void Shooter::RelieveStress() {
+	if(camPosStatus) {
+		if (GetCorrectedCamPos() < stressRelieveSetpoint) 
+		{
+			RunCams(-1);
+		}
+		else
+		{
+			RunCams(0);
+		}
+	}
+}
+
 void Shooter::Reset() {
 	if(camPosStatus) {
 		if(GetCorrectedCamPos() > fireSetpoint) {
@@ -158,10 +178,10 @@ float Shooter::CorrectVoltage(float setpoint) {
 }
 float Shooter::GetCorrectedCamPos(){
 	float correctedVoltage;
-		if(camPosStatus)
-			correctedVoltage = CorrectVoltage(camPos->GetAverageVoltage()-camPosOffset);
-		else
-			CorrectVoltage(backupCamPos->GetAverageVoltage()-backupCamPosOffset);
+	if(camPosStatus)
+		correctedVoltage = CorrectVoltage(camPos->GetAverageVoltage()-camPosOffset);
+	else
+		correctedVoltage = CorrectVoltage(backupCamPos->GetAverageVoltage()-backupCamPosOffset);
 		
 	return correctedVoltage;
 }

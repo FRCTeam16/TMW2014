@@ -26,10 +26,9 @@ PIDController* RobotMap::driveTrainRearLeft = NULL;
 AnalogChannel* RobotMap::driveTrainRearRightPos = NULL;
 CANJaguar* RobotMap::driveTrainRearRightSteer = NULL;
 PIDController* RobotMap::driveTrainRearRight = NULL;
-Solenoid* RobotMap::driveTrainWheelLock = NULL;
-DigitalInput* RobotMap::driveTrainTargetLeft = NULL;
 DigitalOutput* RobotMap::driveTrainSendProcessImage = NULL;
-DigitalInput* RobotMap::driveTrainReservedOdroidInput = NULL;
+DigitalInput* RobotMap::driveTrainTargetLeft = NULL;
+DigitalInput* RobotMap::driveTrainOdroidHeartBeat = NULL;
 CANJaguar* RobotMap::shooterWindowMotors = NULL;
 CANJaguar* RobotMap::shooterCamLeft = NULL;
 CANJaguar* RobotMap::shooterCamRight = NULL;
@@ -102,17 +101,14 @@ void RobotMap::init() {
 	lw->AddActuator("DriveTrain", "RearRight", driveTrainRearRight);
 	driveTrainRearRight->SetContinuous(true); driveTrainRearRight->SetAbsoluteTolerance(0.2); 
         driveTrainRearRight->SetOutputRange(-0.75, 0.75);
-	driveTrainWheelLock = new Solenoid(2, 4);
-	lw->AddActuator("DriveTrain", "WheelLock", driveTrainWheelLock);
+	driveTrainSendProcessImage = new DigitalOutput(1, 1);
 	
-	driveTrainTargetLeft = new DigitalInput(1, 1);
+	
+	driveTrainTargetLeft = new DigitalInput(1, 2);
 	lw->AddSensor("DriveTrain", "TargetLeft", driveTrainTargetLeft);
 	
-	driveTrainSendProcessImage = new DigitalOutput(1, 2);
-	
-	
-	driveTrainReservedOdroidInput = new DigitalInput(1, 3);
-	lw->AddSensor("DriveTrain", "ReservedOdroidInput", driveTrainReservedOdroidInput);
+	driveTrainOdroidHeartBeat = new DigitalInput(1, 3);
+	lw->AddSensor("DriveTrain", "OdroidHeartBeat", driveTrainOdroidHeartBeat);
 	
 	shooterWindowMotors = new CANJaguar(10);
 	

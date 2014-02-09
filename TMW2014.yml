@@ -371,39 +371,6 @@ Children:
           value: 3.0}
         Maximum Input: !!robotbuilder.data.properties.DoubleProperty {default: 5,
           name: Maximum Input, validators: null, value: 5.0}
-    - Name: WheelLock
-      Base: Solenoid
-      Children: []
-      Properties:
-        Output Module (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
-          choices: &id018 ['1', '2']
-          default: '1'
-          name: Output Module (Solenoid)
-          validators: &id019 [Solenoid]
-          value: '2'
-        Output Channel (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
-          choices: &id020 ['1', '2', '3', '4', '5', '6', '7', '8']
-          default: '1'
-          name: Output Channel (Solenoid)
-          validators: &id021 [Solenoid]
-          value: '4'
-    - Name: TargetLeft
-      Base: Digital Input
-      Children: []
-      Properties:
-        Input Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: &id014 ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
-            '12', '13', '14']
-          default: '1'
-          name: Input Channel (Digital)
-          validators: &id015 [DigitalChannel]
-          value: '1'
-        Input Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: &id016 ['1', '2']
-          default: '1'
-          name: Input Module (Digital)
-          validators: &id017 [DigitalChannel]
-          value: '1'
     - Name: SendProcessImage
       Base: Digital Output
       Children: []
@@ -420,8 +387,25 @@ Children:
           default: '1'
           name: Output Channel (Digital)
           validators: [DigitalChannel]
+          value: '1'
+    - Name: TagetLeft
+      Base: Digital Input
+      Children: []
+      Properties:
+        Input Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: &id014 ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
+            '12', '13', '14']
+          default: '1'
+          name: Input Channel (Digital)
+          validators: &id015 [DigitalChannel]
           value: '2'
-    - Name: ReservedOdroidInput
+        Input Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: &id016 ['1', '2']
+          default: '1'
+          name: Input Module (Digital)
+          validators: &id017 [DigitalChannel]
+          value: '1'
+    - Name: OdroidHeartBeat
       Base: Digital Input
       Children: []
       Properties:
@@ -510,16 +494,16 @@ Children:
       Children: []
       Properties:
         Output Module (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id018
+          choices: &id018 ['1', '2']
           default: '1'
           name: Output Module (Solenoid)
-          validators: *id019
+          validators: &id019 [Solenoid]
           value: '2'
         Output Channel (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id020
+          choices: &id020 ['1', '2', '3', '4', '5', '6', '7', '8']
           default: '1'
           name: Output Channel (Solenoid)
-          validators: *id021
+          validators: &id021 [Solenoid]
           value: '3'
     - Name: BallPresent
       Base: Digital Input
@@ -698,6 +682,6 @@ Properties:
     validators: null, value: 16}
   Export Commands: !!robotbuilder.data.properties.BooleanProperty {default: true,
     name: Export Commands, validators: null, value: true}
-  Java Project Directory: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\clemenj\NetBeansProjects',
+  Java Project Directory: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\Owner\NetBeansProjects',
     extension: null, folder: true, name: Java Project Directory, validators: null,
     value: 'C:\Users\Owner\NetBeansProjects'}
