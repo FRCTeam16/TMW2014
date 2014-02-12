@@ -29,13 +29,14 @@ PIDController* RobotMap::driveTrainRearRight = NULL;
 DigitalOutput* RobotMap::driveTrainSendProcessImage = NULL;
 DigitalInput* RobotMap::driveTrainTargetLeft = NULL;
 DigitalInput* RobotMap::driveTrainOdroidHeartBeat = NULL;
+Solenoid* RobotMap::driveTrainRingLights = NULL;
 CANJaguar* RobotMap::shooterWindowMotors = NULL;
 CANJaguar* RobotMap::shooterCamLeft = NULL;
 CANJaguar* RobotMap::shooterCamRight = NULL;
 AnalogChannel* RobotMap::shooterCamPos = NULL;
 AnalogChannel* RobotMap::shooterBackupCamPos = NULL;
 Solenoid* RobotMap::shooterFingers = NULL;
-DigitalInput* RobotMap::shooterBallPresent = NULL;
+DigitalInput* RobotMap::shooterBallNotPresent = NULL;
 CANJaguar* RobotMap::pickupBeaterBar = NULL;
 Compressor* RobotMap::pickupComp = NULL;
 Solenoid* RobotMap::pickupBeaterBarOut = NULL;
@@ -110,6 +111,9 @@ void RobotMap::init() {
 	driveTrainOdroidHeartBeat = new DigitalInput(1, 3);
 	lw->AddSensor("DriveTrain", "OdroidHeartBeat", driveTrainOdroidHeartBeat);
 	
+	driveTrainRingLights = new Solenoid(2, 5);
+	lw->AddActuator("DriveTrain", "RingLights", driveTrainRingLights);
+	
 	shooterWindowMotors = new CANJaguar(10);
 	
 	
@@ -128,8 +132,8 @@ void RobotMap::init() {
 	shooterFingers = new Solenoid(2, 3);
 	lw->AddActuator("Shooter", "Fingers", shooterFingers);
 	
-	shooterBallPresent = new DigitalInput(1, 8);
-	lw->AddSensor("Shooter", "BallPresent", shooterBallPresent);
+	shooterBallNotPresent = new DigitalInput(1, 8);
+	lw->AddSensor("Shooter", "BallNotPresent", shooterBallNotPresent);
 	
 	pickupBeaterBar = new CANJaguar(13);
 	

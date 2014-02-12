@@ -48,8 +48,8 @@ private:
 	double RROffset;
 	bool prevTrigger;
 	Preferences* Prefs;
-	typedef enum {fire2FromCenter, fire1Left, fire1Right, fire3FromCenter}AutoProgram;
-	typedef enum {Initiate, FindTarget, FirstTurn, Fire, Chill, WaitToFire, CollectBall, LoadBall, SecondTurn, DropPickup, DriveForward, End}AutoStep;
+	typedef enum {fire2FromCenterNarrow, fire2FromCenterWide, fire1Left, fire1Right, fire3FromCenter, wideTurnTest, narrowTurnTest}AutoProgram;
+	typedef enum {Initiate, RelieveStress, ResetShooter, FindTarget, FirstTurn, Fire, Chill, WaitToFire, CollectBall, LoadBall, SecondTurn, DropPickup, DriveForward, End}AutoStep;
 	AutoStep autoStep;
 	AutoProgram autoProgram;
 	bool autoStepComplete;
@@ -61,5 +61,7 @@ private:
 	vector<AutoStep> genericAutoProgram;
 	SendableChooser* autoChooser;
 	int turnDirection;
+	float primaryCamOffset;
+	float backupCamOffset;
 };
 #endif

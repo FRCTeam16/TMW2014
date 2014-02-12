@@ -41,13 +41,14 @@ public:
 	static DigitalOutput* driveTrainSendProcessImage;
 	static DigitalInput* driveTrainTargetLeft;
 	static DigitalInput* driveTrainOdroidHeartBeat;
+	static Solenoid* driveTrainRingLights;
 	static CANJaguar* shooterWindowMotors;
 	static CANJaguar* shooterCamLeft;
 	static CANJaguar* shooterCamRight;
 	static AnalogChannel* shooterCamPos;
 	static AnalogChannel* shooterBackupCamPos;
 	static Solenoid* shooterFingers;
-	static DigitalInput* shooterBallPresent;
+	static DigitalInput* shooterBallNotPresent;
 	static CANJaguar* pickupBeaterBar;
 	static Compressor* pickupComp;
 	static Solenoid* pickupBeaterBarOut;

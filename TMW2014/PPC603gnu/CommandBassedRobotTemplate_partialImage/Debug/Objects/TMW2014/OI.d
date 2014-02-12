@@ -415,6 +415,7 @@ CommandBassedRobotTemplate_partialImage/Debug/Objects/TMW2014/OI.o:  \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSTimer.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/InitGyro.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetCamOffsets.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetWheelOffsets.h
 
 C:/WindRiver/workspace/TMW2014/TMW2014/OI.h:
@@ -1246,5 +1247,7 @@ C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h:
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSTimer.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/InitGyro.h:
+
+C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetCamOffsets.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetWheelOffsets.h:
