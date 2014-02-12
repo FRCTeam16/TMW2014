@@ -173,7 +173,7 @@ void RobotMap::init() {
 	
 	CrabSpeedTwist = new CrabSpeed();
 	
-	driveTrainDriveControlTwist = new PIDController(0.1, 0.0, 0.0, driveTrainGyro, CrabSpeedTwist, 0.02);
+	driveTrainDriveControlTwist = new PIDController(.035, 0, .1, driveTrainGyro, CrabSpeedTwist, 0.02);
 	driveTrainDriveControlTwist->SetContinuous(true);
 	driveTrainDriveControlTwist->SetInputRange(-360.0,360.0);
 	driveTrainDriveControlTwist->SetAbsoluteTolerance(2.0);

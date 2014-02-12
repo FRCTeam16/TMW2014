@@ -29,6 +29,8 @@ public:
 	virtual bool IsFinished();
 	virtual void End();
 	virtual void Interrupted();
+private:
+	uint32_t previousCenter;
 };
 
 #endif

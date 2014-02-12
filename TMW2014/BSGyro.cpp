@@ -97,7 +97,7 @@ BSGyro::BSGyro(uint32_t channel)
 	InitGyro();
 }
 
-BSGyro::BSGyro(uint8_t moduleNumber, uint32_t channel, uint32_t center, uint32_t offset) {
+BSGyro::BSGyro(uint8_t moduleNumber, uint32_t channel, uint32_t center, float offset) {
 	m_analog = new AnalogChannel(moduleNumber, channel);
 	m_channelAllocated = true;
 
@@ -290,7 +290,7 @@ uint32_t BSGyro::GetCenter() {
 	return m_center;
 }
 
-uint32_t BSGyro::GetOffset() {
+float BSGyro::GetOffset() {
 	return m_offset;
 }
 

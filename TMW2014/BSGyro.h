@@ -34,7 +34,7 @@ public:
 	static constexpr float kDefaultVoltsPerDegreePerSecond = 0.007;
 
 	BSGyro(uint8_t moduleNumber, uint32_t channel);
-	BSGyro(uint8_t moduleNumber, uint32_t channel, uint32_t center, uint32_t offset);
+	BSGyro(uint8_t moduleNumber, uint32_t channel, uint32_t center, float offset);
 	explicit BSGyro(uint32_t channel);
 	explicit BSGyro(AnalogChannel *channel);
 	explicit BSGyro(AnalogChannel &channel);
@@ -45,7 +45,7 @@ public:
 	void SetPIDSourceParameter(PIDSourceParameter pidSource);
 	virtual void Reset();
 	uint32_t GetCenter();
-	uint32_t GetOffset();
+	float GetOffset();
 
 	// PIDSource interface
 	double PIDGet();
