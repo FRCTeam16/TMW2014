@@ -70,6 +70,7 @@ void Robot::RobotInit() {
 	beaterBarTimer = new BSTimer();
 	beaterBarTimer->Start();
 	Robot::driveTrain->sendProcessImage->Set(1);
+	driveForwardAngle = 0;
 }	
 void Robot::DisabledPeriodic() {
 	if(Robot::oi->getDriverJoystickRight()->GetRawButton(7))
@@ -101,6 +102,7 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(LoadBall);
 		genericAutoProgram.push_back(SecondTurn);
 		genericAutoProgram.push_back(DropPickup);
+		genericAutoProgram.push_back(WaitToFire);
 		genericAutoProgram.push_back(Fire);
 		genericAutoProgram.push_back(Chill);
 		genericAutoProgram.push_back(DriveForward);
@@ -117,12 +119,12 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(LoadBall);
 		genericAutoProgram.push_back(SecondTurn);
 		genericAutoProgram.push_back(DropPickup);
+		genericAutoProgram.push_back(WaitToFire);
 		genericAutoProgram.push_back(Fire);		
 		genericAutoProgram.push_back(CollectBall);
 		genericAutoProgram.push_back(LoadBall);
 		genericAutoProgram.push_back(DropPickup);
 		genericAutoProgram.push_back(Fire);		
-		genericAutoProgram.push_back(Chill);
 		genericAutoProgram.push_back(DriveForward);
 		genericAutoProgram.push_back(End);
 		break;
@@ -153,6 +155,7 @@ void Robot::AutonomousInit() {
 	
 	Robot::driveTrain->DriveControlTwist->Enable();
 	Robot::driveTrain->ringLights->Set(true);
+	driveForwardAngle = 0;
 	//Robot::driveTrain->sendProcessImage->Set(true);
 }
 	
@@ -330,13 +333,15 @@ void Robot::AutonomousPeriodic() {
 		break;
 	
 	case DriveForward:
+		if(driveForwardAngle == 0)
+			driveForwardAngle = Robot::driveTrain->gyro->GetAngle();
 		beaterBarOut = true;
 		wingsOut = false;
 		beaterBarSpeed = 0;
 		drive = true;
 		driveX = 0;
 		driveY = -1;
-		driveTwist = turnDegree*-turnDirection;
+		driveTwist = driveForwardAngle;
 		SmartDashboard::PutString("AutoStep", "DriveForward");
 		if(autoStepTimer->HasPeriodPassed(1.0))
 			autoStepComplete = true;

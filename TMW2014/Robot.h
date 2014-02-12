@@ -63,5 +63,6 @@ private:
 	int turnDirection;
 	float primaryCamOffset;
 	float backupCamOffset;
+	float driveForwardAngle;
 };
 #endif
