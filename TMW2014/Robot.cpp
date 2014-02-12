@@ -97,7 +97,7 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(FindTarget);
 		genericAutoProgram.push_back(FirstTurn);
 		genericAutoProgram.push_back(Fire);
-		genericAutoProgram.push_back(Chill); //Remove when back drive is corrected.
+		genericAutoProgram.push_back(ResetShooter);
 		genericAutoProgram.push_back(CollectBall);
 		genericAutoProgram.push_back(LoadBall);
 		genericAutoProgram.push_back(SecondTurn);
@@ -108,6 +108,7 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(DriveForward);
 		genericAutoProgram.push_back(End);
 		break;
+		
 	case fire3FromCenter:
 		genericAutoProgram.push_back(Initiate);
 		genericAutoProgram.push_back(RelieveStress);
@@ -115,12 +116,14 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(FindTarget);
 		genericAutoProgram.push_back(FirstTurn);
 		genericAutoProgram.push_back(Fire);
+		genericAutoProgram.push_back(ResetShooter);
 		genericAutoProgram.push_back(CollectBall);
 		genericAutoProgram.push_back(LoadBall);
 		genericAutoProgram.push_back(SecondTurn);
 		genericAutoProgram.push_back(DropPickup);
 		genericAutoProgram.push_back(WaitToFire);
 		genericAutoProgram.push_back(Fire);		
+		genericAutoProgram.push_back(ResetShooter);
 		genericAutoProgram.push_back(CollectBall);
 		genericAutoProgram.push_back(LoadBall);
 		genericAutoProgram.push_back(DropPickup);
@@ -288,9 +291,10 @@ void Robot::AutonomousPeriodic() {
 		drive = false;
 		Robot::shooter->Fire(0, false);
 		SmartDashboard::PutString("AutoStep", "Fire");
-		autoStepComplete = true;
+		if(Robot::shooter->GetCorrectedCamPos() > 4.0)
+			autoStepComplete = true;
 		break;
-	
+			
 	case Chill:
 		beaterBarOut = true;
 		wingsOut = false;

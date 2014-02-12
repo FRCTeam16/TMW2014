@@ -80,7 +80,7 @@ void Shooter::CamChecker() {
 	SmartDashboard::PutBoolean("FireDelayFlag", fireDelayFlag);
 }
 void Shooter::Fire(float delay, bool ResetBeaterBar) {
-	if(!fireDelayFlag && !ballNotPresent->Get()) {
+	if(!GetFiring() && !ballNotPresent->Get()) {
 		fireDelayTimer->Reset();
 		fireDelay = delay;
 		fireDelayFlag = true;
@@ -128,6 +128,8 @@ void Shooter::RelieveStress() {
 	{
 		RunCams(-0.5, false);
 		stressReliefComplete = false;
+		fireFlag = false;
+		fireDelayFlag = false;
 	}
 	else
 	{
@@ -143,6 +145,8 @@ void Shooter::Reset() {
 	if(GetCorrectedCamPos() > fireSetpoint) {
 		RunCams(1, false);
 		resetCamComplete = false;
+		fireFlag = false;
+		fireDelayFlag = false;
 	}
 	else {
 		RunCams(0, false);
