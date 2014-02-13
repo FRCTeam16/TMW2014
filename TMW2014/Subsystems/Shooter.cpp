@@ -62,7 +62,7 @@ void Shooter::CamChecker() {
 	{
 		if(!fireTimer->HasPeriodPassed(.5) || GetCorrectedCamPos() > fireSetpoint) {
 			RunCams(1, false);
-			if(resetBeaterBar)
+			if(resetBeaterBar && GetCorrectedCamPos() > 4.5)
 				RobotMap::pickupBeaterBarOut->Set(false);
 		}
 		else {
@@ -74,11 +74,8 @@ void Shooter::CamChecker() {
 		fireFlag = false;
 		RunCams(0, false);
 	}
-	
-	
-	SmartDashboard::PutBoolean("FireFlag", fireFlag);
-	SmartDashboard::PutBoolean("FireDelayFlag", fireDelayFlag);
 }
+
 void Shooter::Fire(float delay, bool ResetBeaterBar) {
 	if(!GetFiring() && !ballNotPresent->Get()) {
 		fireDelayTimer->Reset();
@@ -87,6 +84,7 @@ void Shooter::Fire(float delay, bool ResetBeaterBar) {
 		resetBeaterBar = ResetBeaterBar;
 	}
 }
+
 void Shooter::RunCams(float output, bool forceRun) {
 	float f_output;
 	
@@ -142,15 +140,18 @@ void Shooter::SetCamOffsets(float primaryOffset, float backupOffset){
 	backupCamPosOffset = backupOffset;
 }
 void Shooter::Reset() {
-	if(GetCorrectedCamPos() > fireSetpoint) {
+	if(GetCorrectedCamPos() > fireSetpoint && !resetCamComplete) {
 		RunCams(1, false);
-		resetCamComplete = false;
 		fireFlag = false;
 		fireDelayFlag = false;
 	}
 	else {
 		RunCams(0, false);
 		resetCamComplete = true;
+	}
+	
+	if(resetCamComplete && GetCorrectedCamPos() > fireSetpoint + .3) {
+		resetCamComplete = false;
 	}
 }
 bool Shooter::GetFiring() {
