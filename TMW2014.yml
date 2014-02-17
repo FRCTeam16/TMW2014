@@ -443,16 +443,6 @@ Children:
   - Name: Shooter
     Base: Subsystem
     Children:
-    - Name: WindowMotors
-      Base: CAN Jaguar
-      Children: []
-      Properties:
-        CAN ID: !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id010
-          default: '2'
-          name: CAN ID
-          validators: *id011
-          value: '10'
     - Name: CamLeft
       Base: CAN Jaguar
       Children: []

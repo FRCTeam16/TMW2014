@@ -48,8 +48,8 @@ private:
 	double RROffset;
 	bool prevTrigger;
 	Preferences* Prefs;
-	typedef enum {fire2FromCenterNarrow, fire2FromCenterWide, fire1Left, fire1Right, fire3FromCenter, wideTurnTest, narrowTurnTest}AutoProgram;
-	typedef enum {Initiate, RelieveStress, ResetShooter, FindTarget, FirstTurn, Fire, Chill, WaitToFire, CollectBall, LoadBall, SecondTurn, DropPickup, DriveForward, DriveForwardAndFire, End}AutoStep;
+	typedef enum {testVisionSystem, fire2FromCenterNarrow, fire2FromCenterWide, fire1Left, fire1Right, fire3FromCenter, wideTurnTest, narrowTurnTest}AutoProgram;
+	typedef enum {RelieveStress, ResetShooter, FindTarget, FirstTurn, Fire, Chill, WaitToFire, CollectBall, LoadBall, SecondTurn, DropPickup, RaisePickup, DriveForward, DriveForwardAndFire, End}AutoStep;
 	AutoStep autoStep;
 	AutoProgram autoProgram;
 	bool autoStepComplete;

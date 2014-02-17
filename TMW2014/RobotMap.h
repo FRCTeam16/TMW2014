@@ -42,7 +42,6 @@ public:
 	static DigitalInput* driveTrainTargetLeft;
 	static DigitalInput* driveTrainOdroidHeartBeat;
 	static Solenoid* driveTrainRingLights;
-	static CANJaguar* shooterWindowMotors;
 	static CANJaguar* shooterCamLeft;
 	static CANJaguar* shooterCamRight;
 	static AnalogChannel* shooterCamPos;

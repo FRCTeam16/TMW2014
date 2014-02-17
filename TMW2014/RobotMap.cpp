@@ -30,7 +30,6 @@ DigitalOutput* RobotMap::driveTrainSendProcessImage = NULL;
 DigitalInput* RobotMap::driveTrainTargetLeft = NULL;
 DigitalInput* RobotMap::driveTrainOdroidHeartBeat = NULL;
 Solenoid* RobotMap::driveTrainRingLights = NULL;
-CANJaguar* RobotMap::shooterWindowMotors = NULL;
 CANJaguar* RobotMap::shooterCamLeft = NULL;
 CANJaguar* RobotMap::shooterCamRight = NULL;
 AnalogChannel* RobotMap::shooterCamPos = NULL;
@@ -114,9 +113,6 @@ void RobotMap::init() {
 	driveTrainRingLights = new Solenoid(2, 5);
 	lw->AddActuator("DriveTrain", "RingLights", driveTrainRingLights);
 	
-	shooterWindowMotors = new CANJaguar(10);
-	
-	
 	shooterCamLeft = new CANJaguar(11);
 	
 	
@@ -155,11 +151,6 @@ void RobotMap::init() {
 	driveTrainRearRightPos->SetAverageBits(256);
 	shooterCamPos->SetAverageBits(256);
 		
-	driveTrainFrontLeft->Enable();
-	driveTrainFrontRight->Enable();
-	driveTrainRearLeft->Enable();
-	driveTrainRearRight->Enable();
-	
 	
     driveTrainFrontLeftPos->SetVoltageForPID(true);
     driveTrainFrontRightPos->SetVoltageForPID(true);

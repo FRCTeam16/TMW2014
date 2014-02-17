@@ -97,8 +97,7 @@ double OI::getLeftJoystickXRadians() {
 }
 double OI::scaledRadians(double radians) {
 	double scaledradians = pi/2;
-	double scalingFactor = 1;
-	scalingFactor = getDriverJoystickRight()->GetTwist()/2+1.5;
+	double scalingFactor = 1.8;
 	if(radians <= pi/2)
 		scaledradians = (-(pi/2)/pow(pow(-pi/2,2),scalingFactor/2))*pow(pow(radians-pi/2,2),scalingFactor/2) + pi/2;
 	else //if(steerAngle <= pi)

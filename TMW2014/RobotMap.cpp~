@@ -36,7 +36,7 @@ CANJaguar* RobotMap::shooterCamRight = NULL;
 AnalogChannel* RobotMap::shooterCamPos = NULL;
 AnalogChannel* RobotMap::shooterBackupCamPos = NULL;
 Solenoid* RobotMap::shooterFingers = NULL;
-DigitalInput* RobotMap::shooterBallPresent = NULL;
+DigitalInput* RobotMap::shooterBallNotPresent = NULL;
 CANJaguar* RobotMap::pickupBeaterBar = NULL;
 Compressor* RobotMap::pickupComp = NULL;
 Solenoid* RobotMap::pickupBeaterBarOut = NULL;
@@ -132,8 +132,8 @@ void RobotMap::init() {
 	shooterFingers = new Solenoid(2, 3);
 	lw->AddActuator("Shooter", "Fingers", shooterFingers);
 	
-	shooterBallPresent = new DigitalInput(1, 8);
-	lw->AddSensor("Shooter", "BallPresent", shooterBallPresent);
+	shooterBallNotPresent = new DigitalInput(1, 8);
+	lw->AddSensor("Shooter", "BallNotPresent", shooterBallNotPresent);
 	
 	pickupBeaterBar = new CANJaguar(13);
 	
@@ -155,11 +155,6 @@ void RobotMap::init() {
 	driveTrainRearRightPos->SetAverageBits(256);
 	shooterCamPos->SetAverageBits(256);
 		
-	driveTrainFrontLeft->Enable();
-	driveTrainFrontRight->Enable();
-	driveTrainRearLeft->Enable();
-	driveTrainRearRight->Enable();
-	
 	
     driveTrainFrontLeftPos->SetVoltageForPID(true);
     driveTrainFrontRightPos->SetVoltageForPID(true);
@@ -173,7 +168,7 @@ void RobotMap::init() {
 	
 	CrabSpeedTwist = new CrabSpeed();
 	
-	driveTrainDriveControlTwist = new PIDController(0.1, 0.0, 0.0, driveTrainGyro, CrabSpeedTwist, 0.02);
+	driveTrainDriveControlTwist = new PIDController(.035, 0, .1, driveTrainGyro, CrabSpeedTwist, 0.02);
 	driveTrainDriveControlTwist->SetContinuous(true);
 	driveTrainDriveControlTwist->SetInputRange(-360.0,360.0);
 	driveTrainDriveControlTwist->SetAbsoluteTolerance(2.0);

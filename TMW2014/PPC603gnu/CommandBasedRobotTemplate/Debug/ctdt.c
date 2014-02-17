@@ -29,7 +29,7 @@ void _GLOBAL__I__ZN10DriveTrainC2Ev();
 
 void _GLOBAL__I__ZN6PickupC2Ev();
 
-void _GLOBAL__I__ZN7Shooter9fireTimerE();
+void _GLOBAL__I__ZN7ShooterC2Ev();
 
 void _GLOBAL__I__ZN12PrintCommandC2EPKc();
 
@@ -97,7 +97,7 @@ void (*_ctors[])() =
     _GLOBAL__I__ZN8RobotMap24driveTrainFrontLeftDriveE,
     _GLOBAL__I__ZN10DriveTrainC2Ev,
     _GLOBAL__I__ZN6PickupC2Ev,
-    _GLOBAL__I__ZN7Shooter9fireTimerE,
+    _GLOBAL__I__ZN7ShooterC2Ev,
     _GLOBAL__I__ZN12PrintCommandC2EPKc,
     _GLOBAL__I__ZN9Scheduler9_instanceE,
     _GLOBAL__I__ZN11WaitCommandC2Ed,
@@ -149,7 +149,7 @@ void _GLOBAL__D__ZN10DriveTrainC2Ev();
 
 void _GLOBAL__D__ZN6PickupC2Ev();
 
-void _GLOBAL__D__ZN7Shooter9fireTimerE();
+void _GLOBAL__D__ZN7ShooterC2Ev();
 
 void _GLOBAL__D__ZN9Scheduler9_instanceE();
 
@@ -207,7 +207,7 @@ void (*_dtors[])() =
     _GLOBAL__D__ZN8RobotMap24driveTrainFrontLeftDriveE,
     _GLOBAL__D__ZN10DriveTrainC2Ev,
     _GLOBAL__D__ZN6PickupC2Ev,
-    _GLOBAL__D__ZN7Shooter9fireTimerE,
+    _GLOBAL__D__ZN7ShooterC2Ev,
     _GLOBAL__D__ZN9Scheduler9_instanceE,
     _GLOBAL__D_wpi_error_s_ModuleIndexOutOfRange,
     _GLOBAL__D__ZN17MotorSafetyHelper12m_headHelperE,
