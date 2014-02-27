@@ -1,7 +1,6 @@
- \
- CommandBassedRobotTemplate_partialImage/Debug/Objects/TMW2014/Commands/SetWheelOffsets.o:  \
- C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetWheelOffsets.cpp \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetWheelOffsets.h \
+CommandBasedRobotTemplate/Debug/Objects/TMW2014/Subsystems/Odroid.o:  \
+ C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/Odroid.cpp \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/Odroid.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Commands/Subsystem.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/ErrorBase.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Base.h \
@@ -109,8 +108,6 @@
   C:/WindRiver/vxworks-6.3/target/h/WPILib/networktables2/type/ComplexData.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/tables/ITableListener.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/tables/ITable.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Robot.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../RAWCConstants.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h \
   c:/windriver/gnu/3.4.4-vxworks-6.3/x86-win32/lib/gcc/../../../x86-win32/include/c++/3.4.4/iostream \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Accelerometer.h \
@@ -386,35 +383,17 @@
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Vision/HSLImage.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Vision/ColorImage.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/WPIErrors.h \
-  C:/WindRiver/vxworks-6.3/target/h/WPILib/Commands/Command.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../RobotMap.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../CamPIDOut.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../Robotmap.h \
+  C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../CamPIDOut.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDOutput.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSGyro.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../BSGyro.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/SensorBase.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDSource.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindowSendable.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../CrabSpeed.h \
-  C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindow.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Commands/AutonomousCommand.h \
-  C:/WindRiver/vxworks-6.3/target/h/WPILib/Commands/Subsystem.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Commands/../Robot.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/DriveTrain.h \
-  C:/WindRiver/vxworks-6.3/target/h/WPILib/Commands/Subsystem.h \
-  C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h \
-  C:/WindRiver/vxworks-6.3/target/h/math.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../BSGyro.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../CrabSpeed.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Odroid.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Pickup.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Shooter.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../CamPIDOut.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../BSTimer.h \
-  C:/WindRiver/vxworks-6.3/target/h/WPILib/Base.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSTimer.h
+  C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../CrabSpeed.h
 
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetWheelOffsets.h:
+C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/Odroid.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/Commands/Subsystem.h:
 
@@ -629,10 +608,6 @@ C:/WindRiver/vxworks-6.3/target/h/WPILib/networktables2/type/ComplexData.h:
 C:/WindRiver/vxworks-6.3/target/h/WPILib/tables/ITableListener.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/tables/ITable.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Robot.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../RAWCConstants.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h:
 
@@ -1184,15 +1159,15 @@ C:/WindRiver/vxworks-6.3/target/h/WPILib/Vision/ColorImage.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/WPIErrors.h:
 
-C:/WindRiver/vxworks-6.3/target/h/WPILib/Commands/Command.h:
+C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../Robotmap.h:
 
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../RobotMap.h:
+C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h:
 
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../CamPIDOut.h:
+C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../CamPIDOut.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDOutput.h:
 
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSGyro.h:
+C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../BSGyro.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/SensorBase.h:
 
@@ -1200,40 +1175,4 @@ C:/WindRiver/vxworks-6.3/target/h/WPILib/PIDSource.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindowSendable.h:
 
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../CrabSpeed.h:
-
-C:/WindRiver/vxworks-6.3/target/h/WPILib/LiveWindow/LiveWindow.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Commands/AutonomousCommand.h:
-
-C:/WindRiver/vxworks-6.3/target/h/WPILib/Commands/Subsystem.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Commands/../Robot.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/DriveTrain.h:
-
-C:/WindRiver/vxworks-6.3/target/h/WPILib/Commands/Subsystem.h:
-
-C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h:
-
-C:/WindRiver/vxworks-6.3/target/h/math.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../BSGyro.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../CrabSpeed.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Odroid.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Pickup.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Shooter.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../CamPIDOut.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../BSTimer.h:
-
-C:/WindRiver/vxworks-6.3/target/h/WPILib/Base.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h:
-
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSTimer.h:
+C:/WindRiver/workspace/TMW2014/TMW2014/Subsystems/../CrabSpeed.h:

@@ -371,72 +371,6 @@ Children:
           value: 3.0}
         Maximum Input: !!robotbuilder.data.properties.DoubleProperty {default: 5,
           name: Maximum Input, validators: null, value: 5.0}
-    - Name: SendProcessImage
-      Base: Digital Output
-      Children: []
-      Properties:
-        Output Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: ['1', '2']
-          default: '1'
-          name: Output Module (Digital)
-          validators: [DigitalChannel]
-          value: '1'
-        Output Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
-            '13', '14']
-          default: '1'
-          name: Output Channel (Digital)
-          validators: [DigitalChannel]
-          value: '1'
-    - Name: TargetLeft
-      Base: Digital Input
-      Children: []
-      Properties:
-        Input Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: &id014 ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
-            '12', '13', '14']
-          default: '1'
-          name: Input Channel (Digital)
-          validators: &id015 [DigitalChannel]
-          value: '2'
-        Input Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: &id016 ['1', '2']
-          default: '1'
-          name: Input Module (Digital)
-          validators: &id017 [DigitalChannel]
-          value: '1'
-    - Name: OdroidHeartBeat
-      Base: Digital Input
-      Children: []
-      Properties:
-        Input Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id014
-          default: '1'
-          name: Input Channel (Digital)
-          validators: *id015
-          value: '3'
-        Input Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id016
-          default: '1'
-          name: Input Module (Digital)
-          validators: *id017
-          value: '1'
-    - Name: RingLights
-      Base: Solenoid
-      Children: []
-      Properties:
-        Output Module (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
-          choices: &id018 ['1', '2']
-          default: '1'
-          name: Output Module (Solenoid)
-          validators: &id019 [Solenoid]
-          value: '2'
-        Output Channel (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
-          choices: &id020 ['1', '2', '3', '4', '5', '6', '7', '8']
-          default: '1'
-          name: Output Channel (Solenoid)
-          validators: &id021 [Solenoid]
-          value: '5'
     Properties:
       Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Default Command, type: Command, validators: null, value: None}
@@ -500,32 +434,33 @@ Children:
       Children: []
       Properties:
         Output Module (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id018
+          choices: &id014 ['1', '2']
           default: '1'
           name: Output Module (Solenoid)
-          validators: *id019
+          validators: &id015 [Solenoid]
           value: '2'
         Output Channel (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id020
+          choices: &id016 ['1', '2', '3', '4', '5', '6', '7', '8']
           default: '1'
           name: Output Channel (Solenoid)
-          validators: *id021
+          validators: &id017 [Solenoid]
           value: '3'
     - Name: BallNotPresent
       Base: Digital Input
       Children: []
       Properties:
         Input Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id014
+          choices: &id018 ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
+            '12', '13', '14']
           default: '1'
           name: Input Channel (Digital)
-          validators: *id015
+          validators: &id019 [DigitalChannel]
           value: '8'
         Input Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id016
+          choices: &id020 ['1', '2']
           default: '1'
           name: Input Module (Digital)
-          validators: *id017
+          validators: &id021 [DigitalChannel]
           value: '1'
     Properties:
       Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
@@ -571,39 +506,158 @@ Children:
           default: '1'
           name: Pressure Switch Channel (Digital)
           validators: [DigitalChannel]
-          value: '5'
+          value: '4'
     - Name: BeaterBarOut
       Base: Solenoid
       Children: []
       Properties:
         Output Module (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id018
+          choices: *id014
           default: '1'
           name: Output Module (Solenoid)
-          validators: *id019
+          validators: *id015
           value: '2'
         Output Channel (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id020
+          choices: *id016
           default: '1'
           name: Output Channel (Solenoid)
-          validators: *id021
+          validators: *id017
           value: '1'
     - Name: Wings
       Base: Solenoid
       Children: []
       Properties:
         Output Module (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id018
+          choices: *id014
           default: '1'
           name: Output Module (Solenoid)
-          validators: *id019
+          validators: *id015
           value: '2'
         Output Channel (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id020
+          choices: *id016
           default: '1'
           name: Output Channel (Solenoid)
-          validators: *id021
+          validators: *id017
           value: '2'
+    Properties:
+      Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Default Command, type: Command, validators: null, value: None}
+  - Name: Odroid
+    Base: Subsystem
+    Children:
+    - Name: OdroidHeartBeat
+      Base: Digital Input
+      Children: []
+      Properties:
+        Input Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id018
+          default: '1'
+          name: Input Channel (Digital)
+          validators: *id019
+          value: '3'
+        Input Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id020
+          default: '1'
+          name: Input Module (Digital)
+          validators: *id021
+          value: '1'
+    - Name: RingLights
+      Base: Solenoid
+      Children: []
+      Properties:
+        Output Module (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id014
+          default: '1'
+          name: Output Module (Solenoid)
+          validators: *id015
+          value: '2'
+        Output Channel (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id016
+          default: '1'
+          name: Output Channel (Solenoid)
+          validators: *id017
+          value: '5'
+    - Name: TargetLeft
+      Base: Digital Input
+      Children: []
+      Properties:
+        Input Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id018
+          default: '1'
+          name: Input Channel (Digital)
+          validators: *id019
+          value: '2'
+        Input Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id020
+          default: '1'
+          name: Input Module (Digital)
+          validators: *id021
+          value: '1'
+    - Name: SendProcessImage
+      Base: Digital Output
+      Children: []
+      Properties:
+        Output Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: &id022 ['1', '2']
+          default: '1'
+          name: Output Module (Digital)
+          validators: &id023 [DigitalChannel]
+          value: '1'
+        Output Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: &id024 ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
+            '12', '13', '14']
+          default: '1'
+          name: Output Channel (Digital)
+          validators: &id025 [DigitalChannel]
+          value: '1'
+    - Name: LEDSelect1
+      Base: Digital Output
+      Children: []
+      Properties:
+        Output Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id022
+          default: '1'
+          name: Output Module (Digital)
+          validators: *id023
+          value: '1'
+        Output Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id024
+          default: '1'
+          name: Output Channel (Digital)
+          validators: *id025
+          value: '5'
+    - Name: LEDSelect2
+      Base: Digital Output
+      Children: []
+      Properties:
+        Output Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id022
+          default: '1'
+          name: Output Module (Digital)
+          validators: *id023
+          value: '1'
+        Output Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id024
+          default: '1'
+          name: Output Channel (Digital)
+          validators: *id025
+          value: '6'
+    - Name: LEDSelect3
+      Base: Digital Output
+      Children: []
+      Properties:
+        Output Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id022
+          default: '1'
+          name: Output Module (Digital)
+          validators: *id023
+          value: '1'
+        Output Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id024
+          default: '1'
+          name: Output Channel (Digital)
+          validators: *id025
+          value: '7'
     Properties:
       Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Default Command, type: Command, validators: null, value: None}
@@ -616,30 +670,30 @@ Children:
     Children: []
     Properties:
       Number: !!robotbuilder.data.properties.ChoicesProperty
-        choices: &id022 ['1', '2', '3', '4']
+        choices: &id026 ['1', '2', '3', '4']
         default: 1
         name: Number
-        validators: &id023 [Joystick]
+        validators: &id027 [Joystick]
         value: '1'
   - Name: DriverJoystickLeft
     Base: Joystick
     Children: []
     Properties:
       Number: !!robotbuilder.data.properties.ChoicesProperty
-        choices: *id022
+        choices: *id026
         default: 1
         name: Number
-        validators: *id023
+        validators: *id027
         value: '2'
   - Name: GamePad
     Base: Joystick
     Children: []
     Properties:
       Number: !!robotbuilder.data.properties.ChoicesProperty
-        choices: *id022
+        choices: *id026
         default: 1
         name: Number
-        validators: *id023
+        validators: *id027
         value: '3'
   Properties: {}
 - Name: Commands
@@ -675,6 +729,14 @@ Children:
     Properties:
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: Shooter}
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: true}
+  - Name: RingLightOn
+    Base: Command
+    Children: []
+    Properties:
+      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Requires, type: Subsystem, validators: null, value: None}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
   Properties: {}

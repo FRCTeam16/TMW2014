@@ -13,6 +13,8 @@ void _GLOBAL__I__ZN17AutonomousCommandC2Ev();
 
 void _GLOBAL__I__ZN8InitGyroC2Ev();
 
+void _GLOBAL__I__ZN11RingLightOnC2Ev();
+
 void _GLOBAL__I__ZN13SetCamOffsetsC2Ev();
 
 void _GLOBAL__I__ZN15SetWheelOffsetsC2Ev();
@@ -26,6 +28,8 @@ void _GLOBAL__I__ZN5Robot10driveTrainE();
 void _GLOBAL__I__ZN8RobotMap24driveTrainFrontLeftDriveE();
 
 void _GLOBAL__I__ZN10DriveTrainC2Ev();
+
+void _GLOBAL__I__ZN6OdroidC2Ev();
 
 void _GLOBAL__I__ZN6PickupC2Ev();
 
@@ -89,6 +93,7 @@ void (*_ctors[])() =
     _GLOBAL__I__ZN9CamPIDOutC2EP9CANJaguarS1_S1_,
     _GLOBAL__I__ZN17AutonomousCommandC2Ev,
     _GLOBAL__I__ZN8InitGyroC2Ev,
+    _GLOBAL__I__ZN11RingLightOnC2Ev,
     _GLOBAL__I__ZN13SetCamOffsetsC2Ev,
     _GLOBAL__I__ZN15SetWheelOffsetsC2Ev,
     _GLOBAL__I__ZN2OIC2Ev,
@@ -96,6 +101,7 @@ void (*_ctors[])() =
     _GLOBAL__I__ZN5Robot10driveTrainE,
     _GLOBAL__I__ZN8RobotMap24driveTrainFrontLeftDriveE,
     _GLOBAL__I__ZN10DriveTrainC2Ev,
+    _GLOBAL__I__ZN6OdroidC2Ev,
     _GLOBAL__I__ZN6PickupC2Ev,
     _GLOBAL__I__ZN7ShooterC2Ev,
     _GLOBAL__I__ZN12PrintCommandC2EPKc,
@@ -133,6 +139,8 @@ void _GLOBAL__D__ZN17AutonomousCommandC2Ev();
 
 void _GLOBAL__D__ZN8InitGyroC2Ev();
 
+void _GLOBAL__D__ZN11RingLightOnC2Ev();
+
 void _GLOBAL__D__ZN13SetCamOffsetsC2Ev();
 
 void _GLOBAL__D__ZN15SetWheelOffsetsC2Ev();
@@ -146,6 +154,8 @@ void _GLOBAL__D__ZN5Robot10driveTrainE();
 void _GLOBAL__D__ZN8RobotMap24driveTrainFrontLeftDriveE();
 
 void _GLOBAL__D__ZN10DriveTrainC2Ev();
+
+void _GLOBAL__D__ZN6OdroidC2Ev();
 
 void _GLOBAL__D__ZN6PickupC2Ev();
 
@@ -199,6 +209,7 @@ void (*_dtors[])() =
     _GLOBAL__D__ZN9CamPIDOutC2EP9CANJaguarS1_S1_,
     _GLOBAL__D__ZN17AutonomousCommandC2Ev,
     _GLOBAL__D__ZN8InitGyroC2Ev,
+    _GLOBAL__D__ZN11RingLightOnC2Ev,
     _GLOBAL__D__ZN13SetCamOffsetsC2Ev,
     _GLOBAL__D__ZN15SetWheelOffsetsC2Ev,
     _GLOBAL__D__ZN2OIC2Ev,
@@ -206,6 +217,7 @@ void (*_dtors[])() =
     _GLOBAL__D__ZN5Robot10driveTrainE,
     _GLOBAL__D__ZN8RobotMap24driveTrainFrontLeftDriveE,
     _GLOBAL__D__ZN10DriveTrainC2Ev,
+    _GLOBAL__D__ZN6OdroidC2Ev,
     _GLOBAL__D__ZN6PickupC2Ev,
     _GLOBAL__D__ZN7ShooterC2Ev,
     _GLOBAL__D__ZN9Scheduler9_instanceE,

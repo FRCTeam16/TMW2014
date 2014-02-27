@@ -1,7 +1,7 @@
  \
- CommandBassedRobotTemplate_partialImage/Debug/Objects/TMW2014/Commands/SetWheelOffsets.o:  \
- C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetWheelOffsets.cpp \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetWheelOffsets.h \
+ CommandBassedRobotTemplate_partialImage/Debug/Objects/TMW2014/Commands/RingLights.o:  \
+ C:/WindRiver/workspace/TMW2014/TMW2014/Commands/RingLights.cpp \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/RingLights.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Commands/Subsystem.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/ErrorBase.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Base.h \
@@ -414,7 +414,7 @@
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSTimer.h
 
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetWheelOffsets.h:
+C:/WindRiver/workspace/TMW2014/TMW2014/Commands/RingLights.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/Commands/Subsystem.h:
 

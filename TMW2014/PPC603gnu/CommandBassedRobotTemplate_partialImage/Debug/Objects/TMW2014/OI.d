@@ -407,6 +407,7 @@ CommandBassedRobotTemplate_partialImage/Debug/Objects/TMW2014/OI.o:  \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../BSGyro.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../CrabSpeed.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Odroid.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Pickup.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Shooter.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../CamPIDOut.h \
@@ -415,6 +416,7 @@ CommandBassedRobotTemplate_partialImage/Debug/Objects/TMW2014/OI.o:  \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSTimer.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/InitGyro.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/RingLightOn.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetCamOffsets.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetWheelOffsets.h
 
@@ -1232,6 +1234,8 @@ C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../BSGyro.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/../CrabSpeed.h:
 
+C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Odroid.h:
+
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Pickup.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../Subsystems/Shooter.h:
@@ -1247,6 +1251,8 @@ C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h:
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSTimer.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/InitGyro.h:
+
+C:/WindRiver/workspace/TMW2014/TMW2014/Commands/RingLightOn.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetCamOffsets.h:
 
