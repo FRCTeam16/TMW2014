@@ -411,11 +411,6 @@ void DriveTrain::SetDriveSpeed(float FLSpeed, float FRSpeed, float RLSpeed, floa
 }
 void DriveTrain::Lock() //locks wheels to prevent robot movement
 {
-	SetSteerSetpoint(3.0, 1.5, 3.0, 1.5, true);
-	SetDriveSpeed(0,0,0,0);
-}
-void DriveTrain::SideLock() //locks wheels to prevent robot movement
-{
 	SetSteerSetpoint(2.0, 0.75, 3.25, 4.5, true);
 	SetDriveSpeed(0,0,0,0);
 }

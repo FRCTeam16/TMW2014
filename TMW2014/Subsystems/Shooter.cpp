@@ -117,7 +117,7 @@ bool Shooter::GetResetCamComplete() {
 void Shooter::RelieveStress() {
 	if (GetCorrectedCamPos() < stressReliefSetpoint || GetCorrectedCamPos() > 4.9) 
 	{
-		RunCams(-0.5, false);
+		RunCams(-0.25, false);
 		stressReliefComplete = false;
 		fireFlag = false;
 		fireDelayFlag = false;
