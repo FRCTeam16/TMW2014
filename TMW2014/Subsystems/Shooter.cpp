@@ -101,6 +101,9 @@ void Shooter::RunCams(float output, bool forceRun) {
 	if(!camPosStatus && !backupCamPosStatus && !forceRun)
 		f_output = 0;
 	
+	if(output < 0)
+		resetCamComplete = false;
+	
 	previousCamPos = camPos->GetAverageVoltage();
 	previousBackupCamPos = backupCamPos->GetAverageVoltage();
 	
@@ -127,31 +130,29 @@ void Shooter::RelieveStress() {
 		RunCams(0, false);
 		stressReliefComplete = true;
 	}
+
 }
 void Shooter::SetCamOffsets(float primaryOffset, float backupOffset){
 	camPosOffset = primaryOffset;
 	backupCamPosOffset = backupOffset;
 }
 void Shooter::Reset() {
-	if(GetCorrectedCamPos() < 4.8) {	
+	if(GetCorrectedCamPos() < 4.8 && !resetCamComplete) {	
 		if(GetCorrectedCamPos() > stage1Setpoint) {
 			resetCamComplete = false;
 			RunCams(1, false);
 		}
-		else if (GetCorrectedCamPos() > fireSetpoint){
+		else {
 			RunCams(.7, false);
 			resetCamComplete = false;
-		}
-		else {
-			RunCams(0, false);
-			resetCamComplete = true;
-			fireFlag = false;
-			fireDelayFlag = false;
 		}
 	}
 	else {
 		RunCams(0, false);
 		resetCamComplete = true;
+		fireFlag = false;
+		fireDelayFlag = false;
+
 	}
 }
 bool Shooter::GetFiring() {

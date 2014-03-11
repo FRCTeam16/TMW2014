@@ -731,7 +731,7 @@ Children:
         name: Requires, type: Subsystem, validators: null, value: Shooter}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
-  - Name: RingLightOn
+  - Name: Command 1
     Base: Command
     Children: []
     Properties:

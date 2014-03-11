@@ -78,7 +78,7 @@ void Robot::RobotInit() {
 	autonomousTimer->Start();
 	beaterBarTimer = new BSTimer();
 	beaterBarTimer->Start();
-	odroid->sendProcessImage->Set(1);
+	odroid->sendProcessImage->Set(0);
 	odroid->ringLights->Set(true);
 	driveForwardAngle = 0;
 	
@@ -107,10 +107,11 @@ void Robot::DisabledPeriodic() {
 	
 	Scheduler::GetInstance()->Run();
 	
-//	LEDSet(5);
+	LEDSet(4);
 }
 	
 void Robot::AutonomousInit() {
+	LEDSet(7);
     autoProgram = static_cast<AutoProgram>((int)(autoChooser->GetSelected()));
 	autoStepTimer->Reset();
 	autoStepIncrementer = 0;
@@ -199,11 +200,12 @@ void Robot::AutonomousInit() {
 		//genericAutoProgram.push_back(RelieveStress);
 		genericAutoProgram.push_back(FirstResetShooter);
 		genericAutoProgram.push_back(FindTarget);
-		genericAutoProgram.push_back(WaitToFire);
+		//genericAutoProgram.push_back(WaitToFire);
 		genericAutoProgram.push_back(Fire);	
 		genericAutoProgram.push_back(ResetShooterAndCollect);
 		genericAutoProgram.push_back(LoadBall);
 		genericAutoProgram.push_back(DriveForward);
+		genericAutoProgram.push_back(WaitToFire75);
 		genericAutoProgram.push_back(DropPickup);
 		genericAutoProgram.push_back(Fire);
 		genericAutoProgram.push_back(End);		
@@ -223,6 +225,7 @@ void Robot::AutonomousPeriodic() {
 		SMDB();
 //	if (autonomousTimer->HasPeriodPassed(1))
 //		LEDSet(4);
+	LEDSet(7);
 	if(autoStep != FirstResetShooter) {
 		shooter->CamChecker();
 	}
@@ -230,7 +233,7 @@ void Robot::AutonomousPeriodic() {
 	int turnDegree = 10;
 	
 	if (autoProgram == fire2FromCenterWide || autoProgram == wideTurnTest || autoProgram == fire3FromCenter) {
-		turnDegree = 15;
+		turnDegree = 20;
 	}
 	
 	if(autoProgram == fire1Right || autoProgram == fire1Left) {
@@ -281,8 +284,9 @@ void Robot::AutonomousPeriodic() {
 			pickup->beaterBar->Set(0);
 		shooter->Reset();
 		if(turnDirection != -1) {
-			if(odroid->targetLeft->Get() == 1)
+			if(odroid->targetLeft->Get() == 1) {
 				turnDirection = -1;  //left
+			}
 			else
 				turnDirection = 1; //right
 		}
@@ -290,6 +294,7 @@ void Robot::AutonomousPeriodic() {
 		if(shooter->GetResetCamComplete()) {
 			autoStepComplete = true;
 			pickup->beaterBar->Set(0);
+			odroid->sendProcessImage->Set(1);
 		}
 		break;
 		
@@ -305,8 +310,7 @@ void Robot::AutonomousPeriodic() {
 		SmartDashboard::PutString("AutoStep", "FindTarget");
 		if(autonomousTimer->HasPeriodPassed(1.0) || turnDirection == -1) {
 			autoStepComplete = true;
-			odroid->ringLights->Set(false);
-			odroid->sendProcessImage->Set(false);
+			odroid->sendProcessImage->Set(1);
 			SmartDashboard::PutNumber("TargetTimer", autonomousTimer->Get());
 			}
 		break;
@@ -350,6 +354,7 @@ void Robot::AutonomousPeriodic() {
 		}
 		if(onTargetTimer->HasPeriodPassed(.2) && shooter->GetResetCamComplete()){
 			autoStepComplete = true;
+			odroid->ringLights->Set(false);
 			pickup->beaterBar->Set(0);
 		}
 		break;
@@ -413,7 +418,9 @@ void Robot::AutonomousPeriodic() {
 		x = 0;
 		y = 0;
 		SmartDashboard::PutString("AutoStep", "LoadBall");
-		autoStepComplete = true;
+		if(autoStepTimer->HasPeriodPassed(.2)){
+			autoStepComplete = true;
+		}
 		break;
 		
 	case DropPickup:
@@ -512,8 +519,7 @@ void Robot::TeleopInit() {
 }
 	
 void Robot::TeleopPeriodic() {
-	//if (DriverStation::GetAlliance() == kRed)
-//	LEDSet(2);
+	LEDSet(5);
 	
 	if(oi->getDriverJoystickRight()->GetRawButton(7))
 		SMDB();
@@ -653,7 +659,38 @@ void Robot::SMDB() {
 	
 	//Vision Processing Info
 	SmartDashboard::PutBoolean("targetleft",odroid->targetLeft->Get());
-	SmartDashboard::PutBoolean("odroidHeartBeat",odroid->odroidHeartBeat->Get());}
+	SmartDashboard::PutBoolean("odroidHeartBeat",odroid->odroidHeartBeat->Get());
+	
+	//AutoInfo
+	//SmartDashboard::PutNumber("AutonomousSelection", (int)(autoChooser->GetSelected())+1);
+	
+	switch (static_cast<AutoProgram>((int)(autoChooser->GetSelected())))
+	{
+	case fire1Left:
+		SmartDashboard::PutNumber("AutonomousSelection", 1);
+		break;
+	case fire2Right:
+		SmartDashboard::PutNumber("AutonomousSelection", 2);
+		break;
+	case fire2FromCenterNarrow:
+		SmartDashboard::PutNumber("AutonomousSelection", 3);
+		break;
+	case fire2FromCenterWide:
+		SmartDashboard::PutNumber("AutonomousSelection", 4);
+		break;
+	case fire3FromCenter:
+		SmartDashboard::PutNumber("AutonomousSelection", 5);
+		break;
+	case wideTurnTest:
+		SmartDashboard::PutNumber("AutonomousSelection", 6);
+		break;
+	case narrowTurnTest:
+		SmartDashboard::PutNumber("AutonomousSelection", 7);
+		break;
+	case testVisionSystem:
+		SmartDashboard::PutNumber("AutonomousSelection", 8);
+		break;
+	}	}
 void Robot::LEDSet(int led) {
 	if (led == 0) {
 		odroid->lEDSelect1->Set(false);
