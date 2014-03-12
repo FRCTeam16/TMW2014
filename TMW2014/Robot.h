@@ -42,8 +42,11 @@ public:
 	virtual void TestPeriodic();
 	virtual void DisabledPeriodic();
 private:
+	Kinect* kinect;
 	void SMDB();
 	void LEDSet(int led);
+	bool KinectRightSelect();
+	bool KinectLeftSelect();
 	RAWCConstants* File;
 	double FLOffset;
 	double FROffset;
@@ -52,7 +55,7 @@ private:
 	bool prevTrigger;
 	Preferences* Prefs;
 	typedef enum {fire2Left, fire2Right, testVisionSystem, fire2FromCenterNarrow, fire2FromCenterWide, fire1Left, fire1Right, fire3FromCenter, wideTurnTest, narrowTurnTest}AutoProgram;
-	typedef enum {RelieveStress, FirstResetShooter, ResetShooter, ResetShooterAndCollect, FindTarget, FirstTurn, Fire, Chill, WaitToFire, WaitToFire75, CollectBall, LoadBall, SecondTurn, DropPickup, RaisePickup, DriveForward, DriveForwardAndTurn, DriveForwardAndFire, End}AutoStep;
+	typedef enum {RelieveStress, FirstResetShooter, ResetShooterAndCollect, FindTarget, FirstTurn, Fire, Chill, WaitToFire, WaitToFire75, CollectBall, LoadBall, SecondTurn, DropPickup, RaisePickup, DriveForward, DriveForwardAndTurn, DriveForwardAndFire, End}AutoStep;
 	typedef enum {Led0, Led1, Led2, Led3, Led4, Led5, Led6, Led7}LEDType;
 	AutoStep autoStep;
 	AutoProgram autoProgram;
