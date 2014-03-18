@@ -62,16 +62,16 @@ void Robot::RobotInit() {
 	turnDirection = 0;
 	
 	autoChooser = new SendableChooser();
-	autoChooser->AddDefault("01. Shoot 1 From Left", (void*)fire1Left);
-	autoChooser->AddObject("02. Shoot 1 From Right", (void*)fire1Right);
+	autoChooser->AddDefault("01. Shoot 2 From Left", (void*)fire2Left);
+	autoChooser->AddObject("02. Shoot 2 From Right", (void*)fire2Right);
 	autoChooser->AddObject("03. Shoot 2 From Center-Narrow", (void*)fire2FromCenterNarrow);
 	autoChooser->AddObject("04. Shoot 2 From Center-Wide", (void*)fire2FromCenterWide);
-	autoChooser->AddObject("04. Shoot 3 From Center", (void*)fire3FromCenter);
+	autoChooser->AddObject("05. Shoot 3 From Center", (void*)fire3FromCenter);
 	autoChooser->AddObject("06. WideTurnTest", (void*)wideTurnTest);
 	autoChooser->AddObject("07. NarrowTurnTest", (void*)narrowTurnTest);
 	autoChooser->AddObject("08. TestVisionSystem", (void*)testVisionSystem);
+	autoChooser->AddObject("09. Drive Forward Shoot 2", (void*)fire2DriveForward);
 	SmartDashboard::PutData("Autonomous Chooser", autoChooser);
-
 	autoStepTimer = new BSTimer();
 	autoStepTimer->Start();
 	onTargetTimer = new BSTimer();
@@ -117,6 +117,37 @@ void Robot::DisabledPeriodic() {
 	SmartDashboard::PutBoolean("RightHand", KinectRightSelect());
 	SmartDashboard::PutBoolean("RightSelect", turnDirection == 1);
 	SmartDashboard::PutBoolean("LeftSelect", turnDirection == -1);
+	//Autonomous Selection Feedback
+	switch (static_cast<AutoProgram>((int)(autoChooser->GetSelected())))
+	{
+	case fire2Left:
+		SmartDashboard::PutNumber("AutonomousSelection", 1);
+		break;
+	case fire2Right:
+		SmartDashboard::PutNumber("AutonomousSelection", 2);
+		break;
+	case fire2FromCenterNarrow:
+		SmartDashboard::PutNumber("AutonomousSelection", 3);
+		break;
+	case fire2FromCenterWide:
+		SmartDashboard::PutNumber("AutonomousSelection", 4);
+		break;
+	case fire3FromCenter:
+		SmartDashboard::PutNumber("AutonomousSelection", 5);
+		break;
+	case wideTurnTest:
+		SmartDashboard::PutNumber("AutonomousSelection", 6);
+		break;
+	case narrowTurnTest:
+		SmartDashboard::PutNumber("AutonomousSelection", 7);
+		break;
+	case testVisionSystem:
+		SmartDashboard::PutNumber("AutonomousSelection", 8);
+		break;
+	case fire2DriveForward:
+		SmartDashboard::PutNumber("AutonomousSelection", 9);
+		break;
+	}	
 }
 	
 void Robot::AutonomousInit() {
@@ -134,11 +165,6 @@ void Robot::AutonomousInit() {
 	y = 0;
 	twist = 0;
 	switch(autoProgram) {
-	case testVisionSystem:
-		genericAutoProgram.push_back(FindTarget);
-		genericAutoProgram.push_back(FirstTurn);
-		genericAutoProgram.push_back(End);
-		break;
 	
 	case fire2FromCenterNarrow: case fire2FromCenterWide:
 		genericAutoProgram.push_back(DropPickup);
@@ -154,6 +180,31 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(End);
 		break;
 		
+	case fire2Left: case fire2Right:
+		genericAutoProgram.push_back(DropPickup);
+		genericAutoProgram.push_back(FirstResetShooter);
+		genericAutoProgram.push_back(WaitForFirstShot);
+		genericAutoProgram.push_back(Fire);	
+		genericAutoProgram.push_back(ResetShooterAndCollect);
+		genericAutoProgram.push_back(LoadBall);
+		genericAutoProgram.push_back(DriveForward);
+		genericAutoProgram.push_back(Fire);
+		genericAutoProgram.push_back(End);		
+		break;
+	case fire2DriveForward:
+		genericAutoProgram.push_back(DropPickup);
+		genericAutoProgram.push_back(DriveForwardFirstTurn);
+		genericAutoProgram.push_back(Fire);
+		genericAutoProgram.push_back(ResetShooterAndCollect);
+		genericAutoProgram.push_back(LoadBall);
+		genericAutoProgram.push_back(SecondTurn);
+		genericAutoProgram.push_back(DropPickup);
+		genericAutoProgram.push_back(WaitToFire75);
+		genericAutoProgram.push_back(Fire);
+		genericAutoProgram.push_back(End);
+		
+		break;
+		
 	case fire3FromCenter:
 		genericAutoProgram.push_back(FirstResetShooter);
 		genericAutoProgram.push_back(FirstTurn);
@@ -163,7 +214,7 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(LoadBall);
 		genericAutoProgram.push_back(SecondTurn);
 		genericAutoProgram.push_back(DropPickup);
-		genericAutoProgram.push_back(WaitToFire);
+		genericAutoProgram.push_back(WaitToFire50);
 		genericAutoProgram.push_back(Fire);		
 		genericAutoProgram.push_back(ResetShooterAndCollect);
 		genericAutoProgram.push_back(LoadBall);
@@ -174,17 +225,6 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(End);
 		break;
 		
-	case fire1Left: case fire1Right:
-		genericAutoProgram.push_back(FirstResetShooter);
-		genericAutoProgram.push_back(FindTarget);
-		genericAutoProgram.push_back(DriveForward);
-		genericAutoProgram.push_back(WaitToFire);
-		genericAutoProgram.push_back(Chill);
-		genericAutoProgram.push_back(DropPickup);
-		genericAutoProgram.push_back(Fire);	
-		genericAutoProgram.push_back(End);
-		break;
-				
 	case wideTurnTest: case narrowTurnTest:
 		genericAutoProgram.push_back(FindTarget);
 		genericAutoProgram.push_back(FirstTurn);
@@ -194,21 +234,14 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(FirstTurn);
 		genericAutoProgram.push_back(SecondTurn);
 		genericAutoProgram.push_back(End);
+		break;
 		
-	case fire2Left: case fire2Right:
-		genericAutoProgram.push_back(DropPickup);
-		genericAutoProgram.push_back(FirstResetShooter);
+	case testVisionSystem:
 		genericAutoProgram.push_back(FindTarget);
-		genericAutoProgram.push_back(Fire);	
-		genericAutoProgram.push_back(ResetShooterAndCollect);
-		genericAutoProgram.push_back(LoadBall);
-		genericAutoProgram.push_back(DriveForward);
-		genericAutoProgram.push_back(WaitToFire75);
-		genericAutoProgram.push_back(DropPickup);
-		genericAutoProgram.push_back(Fire);
-		genericAutoProgram.push_back(End);		
+		genericAutoProgram.push_back(FirstTurn);
+		genericAutoProgram.push_back(End);
+		break;
 	}
-	
 	autoStep = genericAutoProgram[autoStepIncrementer];
 	
 	driveTrain->DriveControlTwist->Enable();
@@ -232,7 +265,7 @@ void Robot::AutonomousPeriodic() {
 //	if (autonomousTimer->HasPeriodPassed(1))
 //		LEDSet(4);
 	LEDSet(7);
-	if(autoStep != FirstResetShooter && autoStep != FirstTurn) {
+	if(autoStep != FirstResetShooter && autoStep != FirstTurn && autoStep != WaitForFirstShot && autoStep !=DriveForwardFirstTurn) {
 		shooter->CamChecker();
 	}
 	
@@ -240,10 +273,6 @@ void Robot::AutonomousPeriodic() {
 	
 	if (autoProgram == fire2FromCenterWide || autoProgram == wideTurnTest || autoProgram == fire3FromCenter) {
 		turnDegree = 20;
-	}
-	
-	if(autoProgram == fire1Right || autoProgram == fire1Left) {
-		turnDegree = 0;
 	}
 	
 	switch(autoStep) {
@@ -283,7 +312,7 @@ void Robot::AutonomousPeriodic() {
 		
 		if(!shooter->GetResetCamComplete()) {
 			shooter->Reset();
-			if(autoProgram == fire3FromCenter || autoProgram == fire1Left || autoProgram == fire1Right){
+			if(autoProgram == fire3FromCenter){
 				pickup->beaterBar->Set(-.25);
 			}
 			else if(!autoStepTimer->HasPeriodPassed(0.25)){
@@ -296,14 +325,15 @@ void Robot::AutonomousPeriodic() {
 		else {
 			shooter->CamChecker();
 		}
-				
-		if(KinectLeftSelect() || autoStepTimer->HasPeriodPassed(2.0)) {
-			turnDirection = -1;
+		if(turnDirection == 0) {
+			if(KinectLeftSelect() || autoStepTimer->HasPeriodPassed(2.0)) {
+				turnDirection = -1;
+			}
+			else if (KinectRightSelect()) {
+				turnDirection = 1;
+			}
 		}
-		else if (KinectRightSelect()) {
-			turnDirection = 1;
-		}
-			
+		
 		SmartDashboard::PutString("AutoStep", "FirstResetShooter");
 		if(turnDirection != 0 && autoStepTimer->HasPeriodPassed(0.25)) {
 			autoStepComplete = true;
@@ -329,36 +359,50 @@ void Robot::AutonomousPeriodic() {
 			}
 		break;
 		
-	case WaitToFire:
+	case WaitForFirstShot:
+		x = 0;
+		y = 0;
+		
+		if(!shooter->GetResetCamComplete()) {
+			shooter->Reset();
+		}
+		else {
+			shooter->CamChecker();
+		}
+		SmartDashboard::PutString("AutoStep", "WaitForFirstShot");
+		if((turnDirection < 0 && autoProgram == fire2Left) || (turnDirection > 0 && autoProgram == fire2Right)) {
+			if(shooter->GetResetCamComplete()) {
+				autoStepComplete = true;
+			}
+		}
+		else {
+			if(autonomousTimer->HasPeriodPassed(5.0) && shooter->GetResetCamComplete()) {
+				autoStepComplete = true;
+			}
+		}
+		break;
+	case WaitToFire50:
 		x = 0;
 		y = 0;
 		SmartDashboard::PutString("AutoStep", "FindTarget");
-		if((turnDirection < 0 && autoProgram == fire1Left) || (turnDirection > 0 && autoProgram == fire1Right))
+		if(autonomousTimer->HasPeriodPassed(5.0))
 			autoStepComplete = true;
-		else
-			if(autonomousTimer->HasPeriodPassed(5.0))
-				autoStepComplete = true;
 		break;
-
 	case WaitToFire75:
 		x = 0;
 		y = 0;
 		SmartDashboard::PutString("AutoStep", "FindTarget");
-		if((turnDirection < 0 && autoProgram == fire1Left) || (turnDirection > 0 && autoProgram == fire1Right))
+		if(autonomousTimer->HasPeriodPassed(7.5))
 			autoStepComplete = true;
-		else
-			if(autonomousTimer->HasPeriodPassed(7.5))
-				autoStepComplete = true;
 		break;
 		
 	case FirstTurn:
 		twist = turnDegree*turnDirection;
 		x = 0;
 		y = 0;
-
 		if(!shooter->GetResetCamComplete()) {
 			shooter->Reset();
-			if(autoProgram == fire3FromCenter || autoProgram == fire1Left || autoProgram == fire1Right){
+			if(autoProgram == fire3FromCenter){
 				pickup->beaterBar->Set(-.25);
 			}
 			else if(!autoStepTimer->HasPeriodPassed(0.25)){
@@ -371,7 +415,6 @@ void Robot::AutonomousPeriodic() {
 		else {
 			shooter->CamChecker();
 		}
-
 		if(autoProgram == fire2FromCenterNarrow || autoProgram == fire2FromCenterWide) {
 			pickup->beaterBar->Set(.25);
 		}
@@ -384,6 +427,54 @@ void Robot::AutonomousPeriodic() {
 			autoStepComplete = true;
 			odroid->ringLights->Set(false);
 			pickup->beaterBar->Set(0);
+		}
+		break;
+		
+	case DriveForwardFirstTurn:
+		
+		if(pickup->ballInPickup->Get() == 0) {
+			pickup->beaterBar->Set(.5);
+		}
+		else {
+			pickup->beaterBar->Set(0);
+		}
+		
+		if(turnDirection == 0) {
+			if(KinectLeftSelect() || autoStepTimer->HasPeriodPassed(1.5)) {
+				turnDirection = -1;
+			}
+			else if (KinectRightSelect()) {
+				turnDirection = 1;
+			}
+		}
+		twist = turnDegree*turnDirection;
+		if(!autoStepTimer->HasPeriodPassed(1.5)) {
+			x = 0;
+			y = -.5;
+		}
+		else {
+			x = 0;
+			y = 0;
+		}
+		
+		if(!shooter->GetResetCamComplete()) {
+			shooter->Reset();
+			}
+		else {
+			shooter->CamChecker();
+		}
+		
+		driveTrain->DriveControlTwist->SetPID(.025, 0, .15);
+		SmartDashboard::PutString("AutoStep", "FirstTurn");
+		if(!driveTrain->DriveControlTwist->OnTarget()) {
+			onTargetTimer->Reset();
+		}
+		if(autoStepTimer->HasPeriodPassed(2.0) && onTargetTimer->HasPeriodPassed(.2) && shooter->GetResetCamComplete()){
+			autoStepComplete = true;
+			odroid->ringLights->Set(false);
+			pickup->beaterBar->Set(0);
+			x = 0;
+			y = 0;
 		}
 		break;
 	
@@ -476,7 +567,7 @@ void Robot::AutonomousPeriodic() {
 		
 	case DriveForward:
 		x = 0;
-		y = -1;
+		y = -1.0;
 		pickup->beaterBar->Set(-.5);
 		SmartDashboard::PutString("AutoStep", "DriveForward");
 		if(autoStepTimer->HasPeriodPassed(.75)) {
@@ -520,7 +611,6 @@ void Robot::AutonomousPeriodic() {
 	
 	driveTrain->DriveControlTwist->SetSetpoint(twist);
 	driveTrain->Crab(driveTrain->CrabSpeedTwist->Get(), y, x, true);
-
 	
 /***********************Increment Through Program****************************/	
 	if (autoStepComplete) {
@@ -595,7 +685,7 @@ void Robot::TeleopPeriodic() {
 			pickup->beaterBarOut->Set(true);
 			shooter->Fire(0.6 - beaterBarTimer->Get(), true);
 		}
-		else if (oi->getDriverJoystickRight()->GetRawButton(4)) {
+		else if (oi->getDriverJoystickRight()->GetRawButton(2)) {
 			shooter->Fire(0,false);
 		}
 	}
@@ -629,7 +719,6 @@ void Robot::TeleopPeriodic() {
 	
 	Scheduler::GetInstance()->Run();
 }
-
 void Robot::TestPeriodic() {
 	lw->Run();
 }
@@ -675,7 +764,8 @@ void Robot::SMDB() {
 	SmartDashboard::PutNumber("CamLeftCurrent", shooter->camLeft->GetOutputCurrent());
 	SmartDashboard::PutNumber("CamRightCurrent", shooter->camRight->GetOutputCurrent());
 	SmartDashboard::PutBoolean("BallNotPresent", shooter->ballNotPresent->Get());
-	SmartDashboard::PutBoolean("CamResetComplete", shooter->GetResetCamComplete());	
+	SmartDashboard::PutBoolean("CamResetComplete", shooter->GetResetCamComplete());
+	
 	//BeaterBar
 	SmartDashboard::PutNumber("BeaterBarCurrent", pickup->beaterBar->GetOutputCurrent());
 	
@@ -694,34 +784,7 @@ void Robot::SMDB() {
 		
 	//AutoInfo
 	//SmartDashboard::PutNumber("AutonomousSelection", (int)(autoChooser->GetSelected())+1);
-	
-	switch (static_cast<AutoProgram>((int)(autoChooser->GetSelected())))
-	{
-	case fire1Left:
-		SmartDashboard::PutNumber("AutonomousSelection", 1);
-		break;
-	case fire1Right:
-		SmartDashboard::PutNumber("AutonomousSelection", 2);
-		break;
-	case fire2FromCenterNarrow:
-		SmartDashboard::PutNumber("AutonomousSelection", 3);
-		break;
-	case fire2FromCenterWide:
-		SmartDashboard::PutNumber("AutonomousSelection", 4);
-		break;
-	case fire3FromCenter:
-		SmartDashboard::PutNumber("AutonomousSelection", 5);
-		break;
-	case wideTurnTest:
-		SmartDashboard::PutNumber("AutonomousSelection", 6);
-		break;
-	case narrowTurnTest:
-		SmartDashboard::PutNumber("AutonomousSelection", 7);
-		break;
-	case testVisionSystem:
-		SmartDashboard::PutNumber("AutonomousSelection", 8);
-		break;
-	}	}
+}
 void Robot::LEDSet(int led) {
 	if (led == 0) {
 		odroid->lEDSelect1->Set(false);
@@ -765,13 +828,10 @@ void Robot::LEDSet(int led) {
 	}
 	
 }
-
 bool Robot::KinectRightSelect() {
 	return kinect->GetSkeleton().GetWristRight().y > kinect->GetSkeleton().GetShoulderRight().y;
 }
-
 bool Robot::KinectLeftSelect() {
 	return kinect->GetSkeleton().GetWristLeft().y > kinect->GetSkeleton().GetShoulderLeft().y;
 }
-
 START_ROBOT_CLASS(Robot);

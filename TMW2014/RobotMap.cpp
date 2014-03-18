@@ -36,6 +36,7 @@ CANJaguar* RobotMap::pickupBeaterBar = NULL;
 Compressor* RobotMap::pickupComp = NULL;
 Solenoid* RobotMap::pickupBeaterBarOut = NULL;
 Solenoid* RobotMap::pickupWings = NULL;
+DigitalInput* RobotMap::pickupBallInPickup = NULL;
 DigitalInput* RobotMap::odroidOdroidHeartBeat = NULL;
 Solenoid* RobotMap::odroidRingLights = NULL;
 DigitalInput* RobotMap::odroidTargetLeft = NULL;
@@ -133,6 +134,9 @@ void RobotMap::init() {
 	
 	pickupWings = new Solenoid(2, 2);
 	lw->AddActuator("Pickup", "Wings", pickupWings);
+	
+	pickupBallInPickup = new DigitalInput(1, 9);
+	lw->AddSensor("Pickup", "BallInPickup", pickupBallInPickup);
 	
 	odroidOdroidHeartBeat = new DigitalInput(1, 3);
 	lw->AddSensor("Odroid", "OdroidHeartBeat", odroidOdroidHeartBeat);

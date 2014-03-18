@@ -114,7 +114,6 @@ public:
 	void Crab(float twist, float y, float x, bool UseGyro);
 	bool ZeroGyro(float InitTime);
 	void Lock();
-	void SideLock();
 	CrabSpeed* CrabSpeedTwist;
 	PIDController* DriveControlTwist;
 };

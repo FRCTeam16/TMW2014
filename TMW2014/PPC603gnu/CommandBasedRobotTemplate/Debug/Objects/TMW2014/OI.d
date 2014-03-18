@@ -415,8 +415,8 @@ CommandBasedRobotTemplate/Debug/Objects/TMW2014/OI.o:  \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Base.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSTimer.h \
+  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/Command1.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/InitGyro.h \
-  C:/WindRiver/workspace/TMW2014/TMW2014/Commands/RingLightOn.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetCamOffsets.h \
   C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetWheelOffsets.h
 
@@ -1250,9 +1250,9 @@ C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../OI.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/../BSTimer.h:
 
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/InitGyro.h:
+C:/WindRiver/workspace/TMW2014/TMW2014/Commands/Command1.h:
 
-C:/WindRiver/workspace/TMW2014/TMW2014/Commands/RingLightOn.h:
+C:/WindRiver/workspace/TMW2014/TMW2014/Commands/InitGyro.h:
 
 C:/WindRiver/workspace/TMW2014/TMW2014/Commands/SetCamOffsets.h:
 

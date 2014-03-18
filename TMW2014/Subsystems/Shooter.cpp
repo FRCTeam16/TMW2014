@@ -130,7 +130,6 @@ void Shooter::RelieveStress() {
 		RunCams(0, false);
 		stressReliefComplete = true;
 	}
-
 }
 void Shooter::SetCamOffsets(float primaryOffset, float backupOffset){
 	camPosOffset = primaryOffset;
@@ -152,7 +151,6 @@ void Shooter::Reset() {
 		resetCamComplete = true;
 		fireFlag = false;
 		fireDelayFlag = false;
-
 	}
 }
 bool Shooter::GetFiring() {

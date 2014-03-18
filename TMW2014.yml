@@ -539,6 +539,22 @@ Children:
           name: Output Channel (Solenoid)
           validators: *id017
           value: '2'
+    - Name: BallInPickup
+      Base: Digital Input
+      Children: []
+      Properties:
+        Input Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id018
+          default: '1'
+          name: Input Channel (Digital)
+          validators: *id019
+          value: '9'
+        Input Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id020
+          default: '1'
+          name: Input Module (Digital)
+          validators: *id021
+          value: '1'
     Properties:
       Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Default Command, type: Command, validators: null, value: None}
