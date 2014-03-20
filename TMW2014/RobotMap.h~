@@ -48,6 +48,7 @@ public:
 	static Compressor* pickupComp;
 	static Solenoid* pickupBeaterBarOut;
 	static Solenoid* pickupWings;
+	static DigitalInput* pickupBallInPickup;
 	static DigitalInput* odroidOdroidHeartBeat;
 	static Solenoid* odroidRingLights;
 	static DigitalInput* odroidTargetLeft;

@@ -11,13 +11,7 @@ void _GLOBAL__I__ZN9CamPIDOutC2EP9CANJaguarS1_S1_();
 
 void _GLOBAL__I__ZN17AutonomousCommandC2Ev();
 
-void _GLOBAL__I__ZN8Command1C2Ev();
-
 void _GLOBAL__I__ZN8InitGyroC2Ev();
-
-void _GLOBAL__I__ZN11RingLightOnC2Ev();
-
-void _GLOBAL__I__ZN10RingLightsC2Ev();
 
 void _GLOBAL__I__ZN13SetCamOffsetsC2Ev();
 
@@ -96,10 +90,7 @@ void (*_ctors[])() =
     {
     _GLOBAL__I__ZN9CamPIDOutC2EP9CANJaguarS1_S1_,
     _GLOBAL__I__ZN17AutonomousCommandC2Ev,
-    _GLOBAL__I__ZN8Command1C2Ev,
     _GLOBAL__I__ZN8InitGyroC2Ev,
-    _GLOBAL__I__ZN11RingLightOnC2Ev,
-    _GLOBAL__I__ZN10RingLightsC2Ev,
     _GLOBAL__I__ZN13SetCamOffsetsC2Ev,
     _GLOBAL__I__ZN15SetWheelOffsetsC2Ev,
     _GLOBAL__I__ZN2OIC2Ev,
@@ -143,13 +134,7 @@ void _GLOBAL__D__ZN9CamPIDOutC2EP9CANJaguarS1_S1_();
 
 void _GLOBAL__D__ZN17AutonomousCommandC2Ev();
 
-void _GLOBAL__D__ZN8Command1C2Ev();
-
 void _GLOBAL__D__ZN8InitGyroC2Ev();
-
-void _GLOBAL__D__ZN11RingLightOnC2Ev();
-
-void _GLOBAL__D__ZN10RingLightsC2Ev();
 
 void _GLOBAL__D__ZN13SetCamOffsetsC2Ev();
 
@@ -218,10 +203,7 @@ void (*_dtors[])() =
     {
     _GLOBAL__D__ZN9CamPIDOutC2EP9CANJaguarS1_S1_,
     _GLOBAL__D__ZN17AutonomousCommandC2Ev,
-    _GLOBAL__D__ZN8Command1C2Ev,
     _GLOBAL__D__ZN8InitGyroC2Ev,
-    _GLOBAL__D__ZN11RingLightOnC2Ev,
-    _GLOBAL__D__ZN10RingLightsC2Ev,
     _GLOBAL__D__ZN13SetCamOffsetsC2Ev,
     _GLOBAL__D__ZN15SetWheelOffsetsC2Ev,
     _GLOBAL__D__ZN2OIC2Ev,

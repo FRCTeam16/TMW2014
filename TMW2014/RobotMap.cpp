@@ -37,10 +37,6 @@ Compressor* RobotMap::pickupComp = NULL;
 Solenoid* RobotMap::pickupBeaterBarOut = NULL;
 Solenoid* RobotMap::pickupWings = NULL;
 DigitalInput* RobotMap::pickupBallInPickup = NULL;
-DigitalInput* RobotMap::odroidOdroidHeartBeat = NULL;
-Solenoid* RobotMap::odroidRingLights = NULL;
-DigitalInput* RobotMap::odroidTargetLeft = NULL;
-DigitalOutput* RobotMap::odroidSendProcessImage = NULL;
 DigitalOutput* RobotMap::odroidLEDSelect1 = NULL;
 DigitalOutput* RobotMap::odroidLEDSelect2 = NULL;
 DigitalOutput* RobotMap::odroidLEDSelect3 = NULL;
@@ -137,18 +133,6 @@ void RobotMap::init() {
 	
 	pickupBallInPickup = new DigitalInput(1, 9);
 	lw->AddSensor("Pickup", "BallInPickup", pickupBallInPickup);
-	
-	odroidOdroidHeartBeat = new DigitalInput(1, 3);
-	lw->AddSensor("Odroid", "OdroidHeartBeat", odroidOdroidHeartBeat);
-	
-	odroidRingLights = new Solenoid(2, 5);
-	lw->AddActuator("Odroid", "RingLights", odroidRingLights);
-	
-	odroidTargetLeft = new DigitalInput(1, 2);
-	lw->AddSensor("Odroid", "TargetLeft", odroidTargetLeft);
-	
-	odroidSendProcessImage = new DigitalOutput(1, 1);
-	
 	
 	odroidLEDSelect1 = new DigitalOutput(1, 5);
 	

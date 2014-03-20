@@ -49,10 +49,6 @@ public:
 	static Solenoid* pickupBeaterBarOut;
 	static Solenoid* pickupWings;
 	static DigitalInput* pickupBallInPickup;
-	static DigitalInput* odroidOdroidHeartBeat;
-	static Solenoid* odroidRingLights;
-	static DigitalInput* odroidTargetLeft;
-	static DigitalOutput* odroidSendProcessImage;
 	static DigitalOutput* odroidLEDSelect1;
 	static DigitalOutput* odroidLEDSelect2;
 	static DigitalOutput* odroidLEDSelect3;

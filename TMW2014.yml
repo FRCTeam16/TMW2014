@@ -561,55 +561,7 @@ Children:
   - Name: Odroid
     Base: Subsystem
     Children:
-    - Name: OdroidHeartBeat
-      Base: Digital Input
-      Children: []
-      Properties:
-        Input Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id018
-          default: '1'
-          name: Input Channel (Digital)
-          validators: *id019
-          value: '3'
-        Input Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id020
-          default: '1'
-          name: Input Module (Digital)
-          validators: *id021
-          value: '1'
-    - Name: RingLights
-      Base: Solenoid
-      Children: []
-      Properties:
-        Output Module (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id014
-          default: '1'
-          name: Output Module (Solenoid)
-          validators: *id015
-          value: '2'
-        Output Channel (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id016
-          default: '1'
-          name: Output Channel (Solenoid)
-          validators: *id017
-          value: '5'
-    - Name: TargetLeft
-      Base: Digital Input
-      Children: []
-      Properties:
-        Input Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id018
-          default: '1'
-          name: Input Channel (Digital)
-          validators: *id019
-          value: '2'
-        Input Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id020
-          default: '1'
-          name: Input Module (Digital)
-          validators: *id021
-          value: '1'
-    - Name: SendProcessImage
+    - Name: LEDSelect1
       Base: Digital Output
       Children: []
       Properties:
@@ -625,22 +577,6 @@ Children:
           default: '1'
           name: Output Channel (Digital)
           validators: &id025 [DigitalChannel]
-          value: '1'
-    - Name: LEDSelect1
-      Base: Digital Output
-      Children: []
-      Properties:
-        Output Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id022
-          default: '1'
-          name: Output Module (Digital)
-          validators: *id023
-          value: '1'
-        Output Channel (Digital): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id024
-          default: '1'
-          name: Output Channel (Digital)
-          validators: *id025
           value: '5'
     - Name: LEDSelect2
       Base: Digital Output
@@ -745,14 +681,6 @@ Children:
     Properties:
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: Shooter}
-      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
-  - Name: Command 1
-    Base: Command
-    Children: []
-    Properties:
-      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-        name: Requires, type: Subsystem, validators: null, value: None}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
   Properties: {}
