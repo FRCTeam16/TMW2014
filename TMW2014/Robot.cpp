@@ -70,7 +70,9 @@ void Robot::RobotInit() {
 	autoChooser->AddObject("06. WideTurnTest", (void*)wideTurnTest);
 	autoChooser->AddObject("07. NarrowTurnTest", (void*)narrowTurnTest);
 	autoChooser->AddObject("08. TestVisionSystem", (void*)testVisionSystem);
-	autoChooser->AddObject("09. Drive Forward Shoot 2", (void*)fire2DriveForward);
+	autoChooser->AddObject("09. Drive Forward Shoot 2 Narrow", (void*)fire2DriveForward);
+	autoChooser->AddObject("10. Drive Forward Shoot 2 Wide", (void*)fire2DriveForwardWide);
+	autoChooser->AddObject("11. Shoot 1", (void*)fire1);
 	SmartDashboard::PutData("Autonomous Chooser", autoChooser);
 	autoStepTimer = new BSTimer();
 	autoStepTimer->Start();
@@ -147,6 +149,8 @@ void Robot::DisabledPeriodic() {
 	case fire2DriveForward:
 		SmartDashboard::PutNumber("AutonomousSelection", 9);
 		break;
+	case fire1:
+		SmartDashboard::PutNumber("AutonomousSelection", 10);
 	}	
 }
 	
@@ -191,7 +195,8 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(Fire);
 		genericAutoProgram.push_back(End);		
 		break;
-	case fire2DriveForward:
+
+	case fire2DriveForward: case fire2DriveForwardWide:
 		genericAutoProgram.push_back(DropPickup);
 		genericAutoProgram.push_back(DriveForwardFirstTurn);
 		genericAutoProgram.push_back(Fire);
@@ -201,7 +206,10 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(DropPickup);
 		genericAutoProgram.push_back(WaitToFire75);
 		genericAutoProgram.push_back(Fire);
-		genericAutoProgram.push_back(End);
+		genericAutoProgram.push_back(End);		
+		break;
+
+	case fire1:
 		
 		break;
 		
@@ -269,9 +277,9 @@ void Robot::AutonomousPeriodic() {
 		shooter->CamChecker();
 	}
 	
-	int turnDegree = 10;
+	int turnDegree = 13;
 	
-	if (autoProgram == fire2FromCenterWide || autoProgram == wideTurnTest || autoProgram == fire3FromCenter) {
+	if (autoProgram == fire2FromCenterWide || autoProgram == wideTurnTest || autoProgram == fire3FromCenter || autoProgram == fire2DriveForwardWide) {
 		turnDegree = 20;
 	}
 	
@@ -432,29 +440,32 @@ void Robot::AutonomousPeriodic() {
 		
 	case DriveForwardFirstTurn:
 		
-		if(pickup->ballInPickup->Get() == 0) {
-			pickup->beaterBar->Set(.5);
+		if(pickup->ballInPickup->Get() == 1) {
+			pickup->beaterBar->Set(.75);
 		}
 		else {
 			pickup->beaterBar->Set(0);
 		}
 		
 		if(turnDirection == 0) {
-			if(KinectLeftSelect() || autoStepTimer->HasPeriodPassed(1.5)) {
+			if(KinectLeftSelect() || autoStepTimer->HasPeriodPassed(2.5)) {
 				turnDirection = -1;
 			}
 			else if (KinectRightSelect()) {
 				turnDirection = 1;
 			}
 		}
-		twist = turnDegree*turnDirection;
-		if(!autoStepTimer->HasPeriodPassed(1.5)) {
+		if(!autoStepTimer->HasPeriodPassed(1.3)) {
 			x = 0;
 			y = -.5;
+			twist = 0;
+			driveTrain->DriveControlTwist->SetPID(.010, 0, .05);
 		}
 		else {
 			x = 0;
 			y = 0;
+			twist = turnDegree*turnDirection;
+			driveTrain->DriveControlTwist->SetPID(.040, 0, .15);
 		}
 		
 		if(!shooter->GetResetCamComplete()) {
@@ -464,14 +475,12 @@ void Robot::AutonomousPeriodic() {
 			shooter->CamChecker();
 		}
 		
-		driveTrain->DriveControlTwist->SetPID(.025, 0, .15);
-		SmartDashboard::PutString("AutoStep", "FirstTurn");
+		SmartDashboard::PutString("AutoStep", "DriveForwardFirstTurn");
 		if(!driveTrain->DriveControlTwist->OnTarget()) {
 			onTargetTimer->Reset();
 		}
-		if(autoStepTimer->HasPeriodPassed(2.0) && onTargetTimer->HasPeriodPassed(.2) && shooter->GetResetCamComplete()){
+		if(autoStepTimer->HasPeriodPassed(1.6) && turnDirection != 0 && onTargetTimer->HasPeriodPassed(.5) && shooter->GetResetCamComplete()){
 			autoStepComplete = true;
-			odroid->ringLights->Set(false);
 			pickup->beaterBar->Set(0);
 			x = 0;
 			y = 0;
@@ -768,6 +777,7 @@ void Robot::SMDB() {
 	
 	//BeaterBar
 	SmartDashboard::PutNumber("BeaterBarCurrent", pickup->beaterBar->GetOutputCurrent());
+	SmartDashboard::PutBoolean("PickupBallSensor", pickup->ballInPickup->Get());
 	
 	//Jaguar Stauses
 	SmartDashboard::PutBoolean("06-FLSteerJagAlive",driveTrain->frontLeftSteer->IsAlive());
