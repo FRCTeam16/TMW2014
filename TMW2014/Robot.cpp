@@ -175,6 +175,7 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(Fire);
 		genericAutoProgram.push_back(End);		
 		break;
+		
 	case fire2DriveForward: case fire2DriveForwardWide:
 		genericAutoProgram.push_back(DropPickup);
 		genericAutoProgram.push_back(DriveForwardFirstTurn);
@@ -381,7 +382,7 @@ void Robot::AutonomousPeriodic() {
 				turnDirection = 1;
 			}
 		}
-		if(!autoStepTimer->HasPeriodPassed(1.3)) {
+		if(!autoStepTimer->HasPeriodPassed(1.45)) {
 			x = 0;
 			y = -.5;
 			twist = 0;
@@ -402,7 +403,7 @@ void Robot::AutonomousPeriodic() {
 		}
 		
 		SmartDashboard::PutString("AutoStep", "DriveForwardFirstTurn");
-		if(!driveTrain->DriveControlTwist->OnTarget() || turnDirection == 0) {
+		if(!driveTrain->DriveControlTwist->OnTarget() || turnDirection == 0 || twist == 0) {
 			onTargetTimer->Reset();
 		}
 		if(turnDirection != 0 && onTargetTimer->HasPeriodPassed(1.0) && shooter->GetResetCamComplete()){
@@ -608,11 +609,17 @@ void Robot::TeleopPeriodic() {
 	else
 		pickup->beaterBar->Set(oi->getGamePad()->GetRawAxis(2));
 	
-	if (oi->getGamePad()->GetRawButton(8) && !pickup->beaterBarOut->Get()) {
+	if(oi->getDriverJoystickLeft()->GetRawButton(4))
+		pickup->beaterBar->Set(1);
+	
+	if(oi->getDriverJoystickLeft()->GetRawButton(5))
+		pickup->beaterBar->Set(-1);
+	
+	if ((oi->getGamePad()->GetRawButton(8) || oi->getDriverJoystickLeft()->GetRawButton(2)) && !pickup->beaterBarOut->Get()) {
 		pickup->beaterBarOut->Set(true);
 		beaterBarTimer->Reset();
 	}
-	if (oi->getGamePad()->GetRawButton(6)) {
+	if (oi->getGamePad()->GetRawButton(6) || oi->getDriverJoystickLeft()->GetRawButton(3)) {
 		pickup->beaterBarOut->Set(false);
 	}
 	
