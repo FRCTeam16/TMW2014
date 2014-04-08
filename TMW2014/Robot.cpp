@@ -96,6 +96,7 @@ void Robot::RobotInit() {
 void Robot::DisabledPeriodic() {
 	if(oi->getDriverJoystickRight()->GetRawButton(7))
 		SMDB();
+	driveTrain->CheckForTurns();
 	
 	//SmartDashboard::PutNumber("AutoChooser", (int)autoProgram);
 	
@@ -226,6 +227,8 @@ void Robot::AutonomousPeriodic() {
 	SmartDashboard::PutBoolean("RightHand", KinectRightSelect());
 	SmartDashboard::PutBoolean("RightSelect", turnDirection == 1);
 	SmartDashboard::PutBoolean("LeftSelect", turnDirection == -1);
+	
+	driveTrain->CheckForTurns();
 	
 	if(oi->getDriverJoystickRight()->GetRawButton(7))
 		SMDB();
@@ -539,6 +542,8 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
 	LEDSet(5);
 	
+	driveTrain->CheckForTurns();
+	
 	if(oi->getDriverJoystickRight()->GetRawButton(7))
 		SMDB();
 		
@@ -551,7 +556,7 @@ void Robot::TeleopPeriodic() {
 	prevTrigger = oi->getDriverJoystickRight()->GetRawButton(1);
 	
 	if(oi->getDriverJoystickLeft()->GetRawButton(1))
-		driveTrain->Lock();
+		driveTrain->UndoTurns();
 	else if(oi->getDriverJoystickRight()->GetRawButton(1))
 		driveTrain->Crab(oi->getJoystickTwist(),-oi->getJoystickY(),oi->getJoystickX(),true);	
 	else 
