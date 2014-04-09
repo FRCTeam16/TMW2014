@@ -99,7 +99,7 @@ private:
 	float cFRVolt;
 	float cRLVolt;
 	float cRRVolt;
-	
+		
 	double CorrectSteerSetpoint(double setpoint);
 	void SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSetPoint, float RRSetPoint, bool UseShortcut);
 	void SetSteerSetpoint(float setpoint, AnalogChannel* actual, float offset, PIDController* PIDCon, int &inv, bool UseShortcut);
@@ -137,6 +137,15 @@ public:
 	void Lock();
 	void CheckForTurns();
 	void UndoTurns();
+	void UndoTurns(PIDController* PID, CANJaguar* can, int turns, double offset);
+	int GetFLTurns();
+	int GetFRTurns();
+	int GetRLTurns();
+	int GetRRTurns();
+	void SetFLTurns(int val);
+	void SetFRTurns(int val);
+	void SetRLTurns(int val);
+	void SetRRTurns(int val);
 	CrabSpeed* CrabSpeedTwist;
 	PIDController* DriveControlTwist;
 };

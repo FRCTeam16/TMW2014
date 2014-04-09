@@ -44,6 +44,11 @@ void Robot::RobotInit() {
 	RROffset = File->getValueForKey("RROff");
 	driveTrain->SetOffsets(FLOffset, FROffset, RLOffset, RROffset);
 	
+	driveTrain->SetFLTurns((int)File->getValueForKey("FLTurns"));
+	driveTrain->SetFRTurns((int)File->getValueForKey("FRTurns"));
+	driveTrain->SetRLTurns((int)File->getValueForKey("RLTurns"));
+	driveTrain->SetRRTurns((int)File->getValueForKey("RRTurns"));
+	
 	driveTrain->frontLeft->Enable();
 	driveTrain->frontRight->Enable();
 	driveTrain->rearLeft->Enable();
@@ -92,7 +97,17 @@ void Robot::RobotInit() {
 	x = 0;
 	y = 0;
 	twist = 0;
-}	
+}
+
+void Robot::DisabledInit() {
+	File->insertKeyAndValue("FLTurns", driveTrain->GetFLTurns());
+	File->insertKeyAndValue("FRTurns", driveTrain->GetFRTurns());
+	File->insertKeyAndValue("RLTurns", driveTrain->GetRLTurns());
+	File->insertKeyAndValue("RRTurns", driveTrain->GetRRTurns());
+	
+	File->save();
+}
+
 void Robot::DisabledPeriodic() {
 	if(oi->getDriverJoystickRight()->GetRawButton(7))
 		SMDB();
@@ -556,11 +571,27 @@ void Robot::TeleopPeriodic() {
 	prevTrigger = oi->getDriverJoystickRight()->GetRawButton(1);
 	
 	if(oi->getDriverJoystickLeft()->GetRawButton(1))
+	{
 		driveTrain->UndoTurns();
+		undoTurnsPressed = true;
+	}
 	else if(oi->getDriverJoystickRight()->GetRawButton(1))
+	{
 		driveTrain->Crab(oi->getJoystickTwist(),-oi->getJoystickY(),oi->getJoystickX(),true);	
+	}
 	else 
+	{
 		driveTrain->Steer(oi->getLeftJoystickXRadians(),oi->getJoystickY(),0.5);
+	}
+	
+	if (undoTurnsPressed && !oi->getDriverJoystickLeft()->GetRawButton(1))
+	{
+		driveTrain->frontLeft->Enable();
+		driveTrain->frontRight->Enable();
+		driveTrain->rearLeft->Enable();
+		driveTrain->rearRight->Enable();
+		undoTurnsPressed = false;
+	}
 	
 	
 /******************SHOOTER**************************************/

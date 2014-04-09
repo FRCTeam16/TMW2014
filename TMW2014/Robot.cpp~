@@ -77,8 +77,6 @@ void Robot::RobotInit() {
 	autonomousTimer->Start();
 	beaterBarTimer = new BSTimer();
 	beaterBarTimer->Start();
-	odroid->sendProcessImage->Set(0);
-	odroid->ringLights->Set(true);
 	driveForwardAngle = 0;
 	
 	/*LEDChooser = new SendableChooser();
@@ -98,6 +96,7 @@ void Robot::RobotInit() {
 void Robot::DisabledPeriodic() {
 	if(oi->getDriverJoystickRight()->GetRawButton(7))
 		SMDB();
+	driveTrain->CheckForTurns();
 	
 	//SmartDashboard::PutNumber("AutoChooser", (int)autoProgram);
 	
@@ -177,7 +176,7 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(Fire);
 		genericAutoProgram.push_back(End);		
 		break;
-
+		
 	case fire2DriveForward: case fire2DriveForwardWide:
 		genericAutoProgram.push_back(DropPickup);
 		genericAutoProgram.push_back(DriveForwardFirstTurn);
@@ -190,7 +189,6 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(Fire);
 		genericAutoProgram.push_back(End);		
 		break;
-
 		
 	case fire3FromCenter:
 		genericAutoProgram.push_back(FirstResetShooter);
@@ -217,7 +215,6 @@ void Robot::AutonomousInit() {
 	
 	driveTrain->DriveControlTwist->Enable();
 	driveForwardAngle = 0;
-	odroid->ringLights->Set(true);
 //	LEDSet(7);
 	//odroid->sendProcessImage->Set(true);
 }
@@ -230,6 +227,8 @@ void Robot::AutonomousPeriodic() {
 	SmartDashboard::PutBoolean("RightHand", KinectRightSelect());
 	SmartDashboard::PutBoolean("RightSelect", turnDirection == 1);
 	SmartDashboard::PutBoolean("LeftSelect", turnDirection == -1);
+	
+	driveTrain->CheckForTurns();
 	
 	if(oi->getDriverJoystickRight()->GetRawButton(7))
 		SMDB();
@@ -292,7 +291,6 @@ void Robot::AutonomousPeriodic() {
 		if(turnDirection != 0 && autoStepTimer->HasPeriodPassed(0.25)) {
 			autoStepComplete = true;
 			pickup->beaterBar->Set(0);
-			odroid->sendProcessImage->Set(1);
 		}
 		break;
 		
@@ -315,6 +313,7 @@ void Robot::AutonomousPeriodic() {
 	case WaitForHot:
 		if(KinectLeftSelect() || KinectRightSelect())
 			autoStepComplete = true;
+		SmartDashboard::PutString("AutoStep", "WaitForHot");
 		break;
 		
 	case FirstTurn:
@@ -343,25 +342,29 @@ void Robot::AutonomousPeriodic() {
 		}
 		if(onTargetTimer->HasPeriodPassed(.2) && shooter->GetResetCamComplete()){
 			autoStepComplete = true;
-			odroid->ringLights->Set(false);
 			pickup->beaterBar->Set(0);
 		}
 		break;
 		
 	case DriveForwardReset:
-		if(!autoStepTimer->HasPeriodPassed(1.3)) {
-			x = 0;
-			y = -.5;
-			twist = 0;
-			driveTrain->DriveControlTwist->SetPID(.010, 0, .05);		
-		}
-
+		driveTrain->DriveControlTwist->SetPID(.010, 0, .05);		
+		x = 0;
+		y = -.5;
+		twist = 0;
+		
 		if(!shooter->GetResetCamComplete()) {
 			shooter->Reset();
 			pickup->beaterBar->Set(-.25);
 			}
 		else {
 			shooter->CamChecker();
+		}
+		SmartDashboard::PutString("AutoStep", "DriveForwardReset");
+		if(autoStepTimer->HasPeriodPassed(1.3) && shooter->GetResetCamComplete()) {
+			autoStepComplete = true;
+			x = 0;
+			y = 0;
+			twist = 0;
 		}
 		break;
 		
@@ -382,7 +385,7 @@ void Robot::AutonomousPeriodic() {
 				turnDirection = 1;
 			}
 		}
-		if(!autoStepTimer->HasPeriodPassed(1.3)) {
+		if(!autoStepTimer->HasPeriodPassed(1.45)) {
 			x = 0;
 			y = -.5;
 			twist = 0;
@@ -403,10 +406,10 @@ void Robot::AutonomousPeriodic() {
 		}
 		
 		SmartDashboard::PutString("AutoStep", "DriveForwardFirstTurn");
-		if(!driveTrain->DriveControlTwist->OnTarget()) {
+		if(!driveTrain->DriveControlTwist->OnTarget() || turnDirection == 0 || twist == 0) {
 			onTargetTimer->Reset();
 		}
-		if(autoStepTimer->HasPeriodPassed(1.6) && turnDirection != 0 && onTargetTimer->HasPeriodPassed(.5) && shooter->GetResetCamComplete()){
+		if(turnDirection != 0 && onTargetTimer->HasPeriodPassed(1.0) && shooter->GetResetCamComplete()){
 			autoStepComplete = true;
 			pickup->beaterBar->Set(0);
 			x = 0;
@@ -534,11 +537,12 @@ void Robot::TeleopInit() {
 	// continue until interrupted by another command, remove
 	// this line or comment it out.
 	driveTrain->DriveControlTwist->Disable();
-	odroid->ringLights->Set(false);
 }
 	
 void Robot::TeleopPeriodic() {
 	LEDSet(5);
+	
+	driveTrain->CheckForTurns();
 	
 	if(oi->getDriverJoystickRight()->GetRawButton(7))
 		SMDB();
@@ -552,7 +556,7 @@ void Robot::TeleopPeriodic() {
 	prevTrigger = oi->getDriverJoystickRight()->GetRawButton(1);
 	
 	if(oi->getDriverJoystickLeft()->GetRawButton(1))
-		driveTrain->Lock();
+		driveTrain->UndoTurns();
 	else if(oi->getDriverJoystickRight()->GetRawButton(1))
 		driveTrain->Crab(oi->getJoystickTwist(),-oi->getJoystickY(),oi->getJoystickX(),true);	
 	else 
@@ -610,11 +614,17 @@ void Robot::TeleopPeriodic() {
 	else
 		pickup->beaterBar->Set(oi->getGamePad()->GetRawAxis(2));
 	
-	if (oi->getGamePad()->GetRawButton(8) && !pickup->beaterBarOut->Get()) {
+	if(oi->getDriverJoystickLeft()->GetRawButton(4))
+		pickup->beaterBar->Set(1);
+	
+	if(oi->getDriverJoystickLeft()->GetRawButton(5))
+		pickup->beaterBar->Set(-1);
+	
+	if ((oi->getGamePad()->GetRawButton(8) || oi->getDriverJoystickLeft()->GetRawButton(2)) && !pickup->beaterBarOut->Get()) {
 		pickup->beaterBarOut->Set(true);
 		beaterBarTimer->Reset();
 	}
-	if (oi->getGamePad()->GetRawButton(6)) {
+	if (oi->getGamePad()->GetRawButton(6) || oi->getDriverJoystickLeft()->GetRawButton(3)) {
 		pickup->beaterBarOut->Set(false);
 	}
 	
@@ -679,11 +689,7 @@ void Robot::SMDB() {
 	SmartDashboard::PutBoolean("11-CamLeftJagAlive",shooter->camLeft->IsAlive());
 	SmartDashboard::PutBoolean("12-CamRightJagAlive",shooter->camRight->IsAlive());
 	SmartDashboard::PutBoolean("13-BeaterBarJagAlive",pickup->beaterBar->IsAlive());
-	
-	//Vision Processing Info
-	SmartDashboard::PutBoolean("targetleft",odroid->targetLeft->Get());
-	SmartDashboard::PutBoolean("odroidHeartBeat",odroid->odroidHeartBeat->Get());
-		
+			
 	//AutoInfo
 	//SmartDashboard::PutNumber("AutonomousSelection", (int)(autoChooser->GetSelected())+1);
 }

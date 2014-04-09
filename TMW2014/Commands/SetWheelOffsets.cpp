@@ -33,6 +33,11 @@ void SetWheelOffsets::Initialize() {
 		File->save();
 		
 		Robot::driveTrain->SetOffsets(FLOffset, FROffset, RLOffset, RROffset);
+		
+		Robot::driveTrain->SetFLTurns(0);
+		Robot::driveTrain->SetFRTurns(0);
+		Robot::driveTrain->SetRLTurns(0);
+		Robot::driveTrain->SetRRTurns(0);
 	
 		SetTimeout(2);
 	}

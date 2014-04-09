@@ -150,7 +150,7 @@ Children:
         Maximum Output: !!robotbuilder.data.properties.DoubleProperty {default: 1,
           name: Maximum Output, validators: null, value: 0.75}
         Limit Input: !!robotbuilder.data.properties.BooleanProperty {default: false,
-          name: Limit Input, validators: null, value: false}
+          name: Limit Input, validators: null, value: true}
         Output: !!robotbuilder.data.properties.ChildSelectionProperty
           default: 0
           name: Output
@@ -218,7 +218,7 @@ Children:
         Maximum Output: !!robotbuilder.data.properties.DoubleProperty {default: 1,
           name: Maximum Output, validators: null, value: 0.75}
         Limit Input: !!robotbuilder.data.properties.BooleanProperty {default: false,
-          name: Limit Input, validators: null, value: false}
+          name: Limit Input, validators: null, value: true}
         Output: !!robotbuilder.data.properties.ChildSelectionProperty
           default: 0
           name: Output
@@ -286,7 +286,7 @@ Children:
         Maximum Output: !!robotbuilder.data.properties.DoubleProperty {default: 1,
           name: Maximum Output, validators: null, value: 0.75}
         Limit Input: !!robotbuilder.data.properties.BooleanProperty {default: false,
-          name: Limit Input, validators: null, value: false}
+          name: Limit Input, validators: null, value: true}
         Output: !!robotbuilder.data.properties.ChildSelectionProperty
           default: 0
           name: Output
@@ -354,7 +354,7 @@ Children:
         Maximum Output: !!robotbuilder.data.properties.DoubleProperty {default: 1,
           name: Maximum Output, validators: null, value: 0.75}
         Limit Input: !!robotbuilder.data.properties.BooleanProperty {default: false,
-          name: Limit Input, validators: null, value: false}
+          name: Limit Input, validators: null, value: true}
         Output: !!robotbuilder.data.properties.ChildSelectionProperty
           default: 0
           name: Output
