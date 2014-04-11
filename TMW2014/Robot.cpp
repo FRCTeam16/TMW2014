@@ -570,9 +570,9 @@ void Robot::TeleopPeriodic() {
 	
 	prevTrigger = oi->getDriverJoystickRight()->GetRawButton(1);
 	
-	if(oi->getDriverJoystickLeft()->GetRawButton(1))
+	if(oi->getDriverJoystickLeft()->GetRawButton(1) && oi->getDriverJoystickRight()->GetMagnitude() < .1)
 	{
-		driveTrain->UndoTurns();
+		driveTrain->Lock();
 		undoTurnsPressed = true;
 	}
 	else if(oi->getDriverJoystickRight()->GetRawButton(1))
@@ -584,7 +584,7 @@ void Robot::TeleopPeriodic() {
 		driveTrain->Steer(oi->getLeftJoystickXRadians(),oi->getJoystickY(),0.5);
 	}
 	
-	if (undoTurnsPressed && !oi->getDriverJoystickLeft()->GetRawButton(1))
+/*	if (undoTurnsPressed && !oi->getDriverJoystickLeft()->GetRawButton(1))
 	{
 		driveTrain->frontLeft->Enable();
 		driveTrain->frontRight->Enable();
@@ -592,7 +592,7 @@ void Robot::TeleopPeriodic() {
 		driveTrain->rearRight->Enable();
 		undoTurnsPressed = false;
 	}
-	
+*/	
 	
 /******************SHOOTER**************************************/
 	

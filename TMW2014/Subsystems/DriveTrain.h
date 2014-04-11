@@ -101,8 +101,8 @@ private:
 	float cRRVolt;
 		
 	double CorrectSteerSetpoint(double setpoint);
-	void SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSetPoint, float RRSetPoint, bool UseShortcut);
-	void SetSteerSetpoint(float setpoint, AnalogChannel* actual, float offset, PIDController* PIDCon, int &inv, bool UseShortcut);
+	//void SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSetPoint, float RRSetPoint, bool UseShortcut);
+	void SetSteerSetpoint(float setpoint, AnalogChannel* actual, float offset, PIDController* PIDCon, CANJaguar* steer, int turns, int &inv, bool UseShortcut);
 	void SetDriveSpeed(float FLSpeed, float FRSpeed, float RLSpeed, float RRSpeed);
 	void SetSteering(float FLSetPoint, float FRSetPoint, float RLSetPoint, float RRSetPoint, bool UseShortcut);
 	void TurnsCheck(float previous, float current, int &turns);
