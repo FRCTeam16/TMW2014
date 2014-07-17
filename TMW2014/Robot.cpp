@@ -67,12 +67,12 @@ void Robot::RobotInit() {
 	turnDirection = 0;
 	
 	autoChooser = new SendableChooser();
-	autoChooser->AddObject("01. Shoot 1 From Side", (void*)fire1Side);
-	autoChooser->AddObject("02. Shoot 1 From Center", (void*)fire1Center);
-	autoChooser->AddDefault("03. Shoot 2 Narrow Center", (void*)fire2DriveForward);
-	autoChooser->AddObject("04. Shoot 2 Wide Center", (void*)fire2DriveForwardWide);
-	autoChooser->AddObject("05. Shoot 2 From Side", (void*)fire2Side);
-	autoChooser->AddObject("06. Shoot 3 From Center", (void*)fire3FromCenter);
+//	autoChooser->AddObject("01. Shoot 1 From Side", (void*)fire1Side);
+//	autoChooser->AddObject("02. Shoot 1 From Center", (void*)fire1Center);
+	autoChooser->AddDefault("01. Shoot 2 Center", (void*)fire2DriveForward);
+//	autoChooser->AddObject("04. Shoot 2 Wide Center", (void*)fire2DriveForwardWide);
+//	autoChooser->AddObject("05. Shoot 2 From Side", (void*)fire2Side);
+	autoChooser->AddObject("02. Shoot 3 From Center", (void*)fire3FromCenter);
 	SmartDashboard::PutData("Autonomous Chooser", autoChooser);
 	autoStepTimer = new BSTimer();
 	autoStepTimer->Start();
@@ -198,9 +198,9 @@ void Robot::AutonomousInit() {
 		genericAutoProgram.push_back(Fire);
 		genericAutoProgram.push_back(ResetShooterAndCollect);
 		genericAutoProgram.push_back(LoadBall);
+		genericAutoProgram.push_back(WaitToFire50);
 		genericAutoProgram.push_back(SecondTurn);
-		genericAutoProgram.push_back(DropPickup);
-		genericAutoProgram.push_back(WaitToFire75);
+		//genericAutoProgram.push_back(DropPickup);
 		genericAutoProgram.push_back(Fire);
 		genericAutoProgram.push_back(End);		
 		break;
@@ -232,6 +232,14 @@ void Robot::AutonomousInit() {
 	driveForwardAngle = 0;
 //	LEDSet(7);
 	//odroid->sendProcessImage->Set(true);
+
+	turnDegree = 13;
+	
+	if (autoProgram == fire3FromCenter || autoProgram == fire2DriveForwardWide) {
+		turnDegree = 20;
+	}
+
+
 }
 	
 void Robot::AutonomousPeriodic() {
@@ -254,11 +262,6 @@ void Robot::AutonomousPeriodic() {
 		shooter->CamChecker();
 	}
 	
-	int turnDegree = 13;
-	
-	if (autoProgram == fire3FromCenter || autoProgram == fire2DriveForwardWide) {
-		turnDegree = 20;
-	}
 	
 	switch(autoStep) {
 	
@@ -275,7 +278,7 @@ void Robot::AutonomousPeriodic() {
 		}
 		pickup->beaterBar->Set(1);
 		SmartDashboard::PutString("AutoStep", "ResetShooter");
-		if(shooter->GetResetCamComplete() && (ballCollectedInc > 10 || autoStepTimer->HasPeriodPassed(1.5))) {
+		if(shooter->GetResetCamComplete() && (ballCollectedInc > 50 || autoStepTimer->HasPeriodPassed(1.5))) {
 			autoStepComplete = true;
 			pickup->beaterBar->Set(0);
 			ballCollectedInc = 0;
@@ -421,6 +424,15 @@ void Robot::AutonomousPeriodic() {
 		}
 		
 		SmartDashboard::PutString("AutoStep", "DriveForwardFirstTurn");
+		
+		if(turnDirection != 0 && (KinectRightSelect() || KinectLeftSelect())) {
+			turnDegree = 20;
+		}
+		else
+			turnDegree = 10;
+		
+		SmartDashboard::PutBoolean("Wide", turnDegree > 15);
+		
 		if(!driveTrain->DriveControlTwist->OnTarget() || turnDirection == 0 || twist == 0) {
 			onTargetTimer->Reset();
 		}
@@ -439,6 +451,15 @@ void Robot::AutonomousPeriodic() {
 		driveTrain->DriveControlTwist->SetPID(.035, 0, .15);
 		pickup->beaterBar->Set(-.25);
 		SmartDashboard::PutString("AutoStep", "SecondTurn");
+		
+		if((KinectRightSelect() || KinectLeftSelect())) {
+			turnDegree = 20;
+		}
+		else
+			turnDegree = 10;
+		
+		SmartDashboard::PutBoolean("Wide", turnDegree > 15);
+		
 		if(!driveTrain->DriveControlTwist->OnTarget()) {
 			onTargetTimer->Reset();
 		}
@@ -615,7 +636,7 @@ void Robot::TeleopPeriodic() {
 	}
 	else {
 		shooter->CamChecker(); //Runs every cycle to control cam postion
-		if((oi->getGamePad()->GetRawButton(4) || oi->getDriverJoystickRight()->GetRawButton(3)) && !shooter->GetFiring()) {
+		if((oi->getDriverJoystickRight()->GetRawButton(3)) && !shooter->GetFiring()) {
 			if(!pickup->beaterBarOut->Get())
 				beaterBarTimer->Reset();
 			pickup->beaterBarOut->Set(true);

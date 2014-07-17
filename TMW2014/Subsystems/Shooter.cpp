@@ -88,7 +88,7 @@ void Shooter::RunCams(float output, bool forceRun) {
 	else
 		f_output = output;
 	
-	if(GetCorrectedCamPos() < fireSetpoint && ballNotPresent->Get() && f_output > 0 && !forceRun)
+	if(GetCorrectedCamPos() > 4.9 && ballNotPresent->Get() && f_output > 0 && !forceRun)
 		f_output = 0;
 	
 	if(output == 1 && fabs(previousCamPos - camPos->GetAverageVoltage()) < 0){ 

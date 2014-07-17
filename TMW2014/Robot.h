@@ -61,6 +61,7 @@ private:
 	AutoStep autoStep;
 	AutoProgram autoProgram;
 	bool autoStepComplete;
+	int turnDegree;
 	BSTimer* autoStepTimer;
 	BSTimer* onTargetTimer;
 	BSTimer* autonomousTimer;

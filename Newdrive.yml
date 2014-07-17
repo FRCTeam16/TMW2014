@@ -52,11 +52,21 @@ Children:
       Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Default Command, type: Command, validators: null, value: None}
     Base: Subsystem
-    Name: drivetrain
+    Name: Drivetrain
   Properties: {}
   Base: Subsystems
   Name: Subsystems
-- Children: []
+- Children:
+  - Children: []
+    Properties:
+      Number: !!robotbuilder.data.properties.ChoicesProperty
+        choices: ['1', '2', '3', '4']
+        default: 1
+        name: Number
+        validators: [Joystick]
+        value: '1'
+    Base: Joystick
+    Name: robotcon
   Properties: {}
   Base: OI
   Name: Operator Interface
@@ -82,11 +92,11 @@ Properties:
     name: Java Package, validators: null, value: org.usfirst.frc0000}
   C++ Windriver Workspace: !!robotbuilder.data.properties.FileProperty {default: 'C:\Windriver\workspace',
     extension: null, folder: true, name: C++ Windriver Workspace, validators: null,
-    value: 'C:\Windriver\workspace'}
+    value: 'C:\Users\Owner\workspace'}
   Use Default Java Package: !!robotbuilder.data.properties.BooleanProperty {default: true,
     name: Use Default Java Package, validators: null, value: true}
   Team Number: !!robotbuilder.data.properties.IntegerProperty {default: 0, name: Team Number,
-    validators: null, value: 0}
+    validators: null, value: 16}
   Export Subsystems: !!robotbuilder.data.properties.BooleanProperty {default: true,
     name: Export Subsystems, validators: null, value: true}
   Wiring File: !!robotbuilder.data.properties.FileProperty {default: '', extension: html,
