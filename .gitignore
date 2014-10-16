@@ -12,3 +12,17 @@
 *.lai
 *.la
 *.a
+
+# Temp files
+*~
+
+#Project files
+.cproject
+.project
+.wrproject
+
+# Compiler files
+PPC*
+.ucpp
+.wrmakefile
+Makefile
